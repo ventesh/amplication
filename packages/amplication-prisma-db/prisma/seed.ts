@@ -37,6 +37,13 @@ async function main() {
       lastName: 'Simpson',
       password: '$2b$10$EpRnTzVlqHNP0.fUbXUwSOyuiXe/QLSUG6xNekdHgTGmrpHEfIoxm', // secret42
     },
+    {
+      id: 'ofek',
+      email: 'ofek.gabay.he@gmail.com',
+      firstName: 'Ofek',
+      lastName: 'Gabay',
+      password: '$2b$10$A.HmI1nSEUg710ufRlMXs.pGLqBiP/GmbYXyfSXGVUkzkOoCOdCwa',
+    },
   ];
   await Promise.all(
     accounts.map((account) =>
