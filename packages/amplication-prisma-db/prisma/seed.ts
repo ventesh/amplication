@@ -38,8 +38,8 @@ async function main() {
       password: '$2b$10$EpRnTzVlqHNP0.fUbXUwSOyuiXe/QLSUG6xNekdHgTGmrpHEfIoxm', // secret42
     },
     {
-      id: 'admin',
-      email: 'John.Doe@amplication.com',
+      id: 'testUser',
+      email: 'john.doe@amplication.com',
       firstName: 'John',
       lastName: 'Doe',
       password: '$2b$10$A.HmI1nSEUg710ufRlMXs.pGLqBiP/GmbYXyfSXGVUkzkOoCOdCwa',
