@@ -49,7 +49,6 @@ import { CanUserAccessArgs } from './dto/CanUserAccessArgs';
 import { CodeGenStorageService } from '../codeGenStorage/codeGenStorage.service';
 import { CodeGenInput } from 'src/models/CodeGenInput';
 
-
 export const HOST_VAR = 'HOST';
 export const GENERATE_STEP_MESSAGE = 'Generating Application';
 export const GENERATE_STEP_NAME = 'GENERATE_APPLICATION';
@@ -448,7 +447,14 @@ export class BuildService {
           }
         };
 
-        await this.codeGenStorageService.saveCodeGenInput(codeGenInput);
+        const putObjectOutput = await this.codeGenStorageService.saveCodeGenInput(
+          codeGenInput
+        );
+        
+        this.queueService.emitMessage(
+          this.configService.get('CODE_GEN_REQUEST_TOPIC'),
+          JSON.stringify(putObjectOutput)
+        );
 
         await Promise.all(logPromises);
 
@@ -738,9 +744,7 @@ export class BuildService {
    * @info this function must always return the entities in the same order to prevent unintended code changes
    * @returns all the entities for build order by date of creation
    */
-  private async getOrderedEntities(
-    buildId: string
-  ): Promise<Entity[]> {
+  private async getOrderedEntities(buildId: string): Promise<Entity[]> {
     const entities = await this.entityService.getEntitiesByVersions({
       where: {
         builds: {
