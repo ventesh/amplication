@@ -16,7 +16,7 @@ import {
   BuildResult,
   EnumBuildStatus as ContainerBuildStatus
 } from '@amplication/container-builder/dist/';
-import { AppRole, User } from 'src/models';
+import { AppRole, Entity, User } from 'src/models';
 import { Build } from './dto/Build';
 import { CreateBuildArgs } from './dto/CreateBuildArgs';
 import { FindManyBuildArgs } from './dto/FindManyBuildArgs';
@@ -46,6 +46,9 @@ import { QueueService } from '../queue/queue.service';
 import { previousBuild, BuildFilesSaver } from './utils';
 import { EnumGitProvider } from '../git/dto/enums/EnumGitProvider';
 import { CanUserAccessArgs } from './dto/CanUserAccessArgs';
+import { CodeGenStorageService } from '../codeGenStorage/codeGenStorage.service';
+import { CodeGenInput } from 'src/models/CodeGenInput';
+
 
 export const HOST_VAR = 'HOST';
 export const GENERATE_STEP_MESSAGE = 'Generating Application';
@@ -164,6 +167,7 @@ export class BuildService {
     private readonly userService: UserService,
     private readonly buildFilesSaver: BuildFilesSaver,
     private readonly queueService: QueueService,
+    private readonly codeGenStorageService: CodeGenStorageService,
 
     @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: winston.Logger
   ) {
@@ -417,19 +421,34 @@ export class BuildService {
 
         const url = `${host}/${build.appId}`;
 
-        const modules = await DataServiceGenerator.createDataService(
+        // const modules = await DataServiceGenerator.createDataService(
+        //   entities,
+        //   roles,
+        //   {
+        //     name: app.name,
+        //     description: app.description,
+        //     version: build.version,
+        //     id: build.appId,
+        //     url,
+        //     settings: appSettings
+        //   },
+        //   dataServiceGeneratorLogger
+        // );
+
+        const codeGenInput: CodeGenInput = {
           entities,
           roles,
-          {
+          appInfo: {
             name: app.name,
             description: app.description,
             version: build.version,
             id: build.appId,
             url,
             settings: appSettings
-          },
-          dataServiceGeneratorLogger
-        );
+          }
+        };
+
+        await this.codeGenStorageService.saveCodeGenInput(codeGenInput);
 
         await Promise.all(logPromises);
 
@@ -438,15 +457,15 @@ export class BuildService {
         await this.actionService.logInfo(step, ACTION_ZIP_LOG);
 
         // the path to the tar.gz artifact
-        const tarballURL = await this.save(build, modules);
+        // const tarballURL = await this.save(build, modules);
 
-        await this.buildFilesSaver.saveFiles(join(app.id, build.id), modules);
+        // await this.buildFilesSaver.saveFiles(join(app.id, build.id), modules);
 
         await this.saveToGitHub(build, oldBuildId);
 
         await this.actionService.logInfo(step, ACTION_JOB_DONE_LOG);
 
-        return tarballURL;
+        return '';
       }
     );
   }
@@ -721,7 +740,7 @@ export class BuildService {
    */
   private async getOrderedEntities(
     buildId: string
-  ): Promise<DataServiceGenerator.Entity[]> {
+  ): Promise<Entity[]> {
     const entities = await this.entityService.getEntitiesByVersions({
       where: {
         builds: {
@@ -732,11 +751,9 @@ export class BuildService {
       },
       include: ENTITIES_INCLUDE
     });
-    return (orderBy(
-      entities,
-      entity => entity.createdAt
-    ) as unknown) as DataServiceGenerator.Entity[];
+    return orderBy(entities, entity => entity.createdAt);
   }
+
   async canUserAccess({
     userId,
     buildId
