@@ -24,6 +24,7 @@
     "migrate:up": "cd ../amplication-prisma-db && npm run migrate:up"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.113.0",
     "@amplication/container-builder": "^0.13.1",
     "@amplication/data": "^0.13.1",
     "@amplication/data-service-generator": "^0.13.1",
@@ -72,6 +73,7 @@
     "get-stream": "6.0.1",
     "graphql": "15.7.2",
     "graphql-type-json": "0.3.2",
+    "jszip": "^3.10.0",
     "kafkajs": "1.16.0",
     "lodash.get": "4.4.2",
     "lodash.head": "4.0.1",

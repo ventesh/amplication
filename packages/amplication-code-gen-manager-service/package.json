@@ -21,6 +21,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@nestjs/config": "1.1.5",
     "@amplication/kafka": "^0.13.1",
     "@aws-sdk/client-codebuild": "^3.100.0",
     "@nestjs/common": "^8.0.0",

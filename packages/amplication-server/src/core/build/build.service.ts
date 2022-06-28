@@ -48,6 +48,7 @@ import { EnumGitProvider } from '../git/dto/enums/EnumGitProvider';
 import { CanUserAccessArgs } from './dto/CanUserAccessArgs';
 import { CodeGenStorageService } from '../codeGenStorage/codeGenStorage.service';
 import { CodeGenInput } from 'src/models/CodeGenInput';
+import * as JSZip from 'jszip';
 
 export const HOST_VAR = 'HOST';
 export const GENERATE_STEP_MESSAGE = 'Generating Application';
@@ -447,13 +448,17 @@ export class BuildService {
           }
         };
 
-        const putObjectOutput = await this.codeGenStorageService.saveCodeGenInput(
-          codeGenInput
-        );
-        
+        await this.codeGenStorageService.saveCodeGenInput(codeGenInput);
+      
+        //TODO: Supply generator version
+        const message = {
+          codeGenerationId: build.version,
+          codeGeneratorVersion: 'plugin-poc'
+        }
+
         this.queueService.emitMessage(
           this.configService.get('CODE_GEN_REQUEST_TOPIC'),
-          JSON.stringify(putObjectOutput)
+          JSON.stringify(message)
         );
 
         await Promise.all(logPromises);
