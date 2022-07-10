@@ -166,6 +166,9 @@ export class GithubService implements IGitClient {
     baseBranchName: string,
     installationId: string
   ): Promise<string> {
+    const owner = userName,
+      repo = repoName;
+
     const myOctokit = Octokit.plugin(createPullRequest);
 
     const token = await this.getInstallationAuthToken(installationId);
@@ -173,15 +176,7 @@ export class GithubService implements IGitClient {
       auth: token
     });
 
-    //do not override files in 'server/src/[entity]/[entity].[controller/resolver/service/module].ts'
-    //do not override server/scripts/customSeed.ts
-    const doNotOverride = [
-      /^server\/src\/[^\/]+\/.+\.controller.ts$/,
-      /^server\/src\/[^\/]+\/.+\.resolver.ts$/,
-      /^server\/src\/[^\/]+\/.+\.service.ts$/,
-      /^server\/src\/[^\/]+\/.+\.module.ts$/,
-      /^server\/scripts\/customSeed.ts$/
-    ];
+    const doNotOverride = await this.createDoNotOverride(octokit, owner, repo);
 
     const authFolder = 'server/src/auth';
 
@@ -212,8 +207,8 @@ export class GithubService implements IGitClient {
     // See https://octokit.github.io/rest.js/#octokit-routes-pulls-create
 
     const pr = await octokit.createPullRequest({
-      owner: userName,
-      repo: repoName,
+      owner,
+      repo,
       title: commitMessage,
       body: commitDescription,
       base: baseBranchName /* optional: defaults to default branch */,
@@ -272,5 +267,32 @@ export class GithubService implements IGitClient {
         installationId: installationId
       })
     ).token;
+  }
+
+  async createDoNotOverride(
+    octokit: Octokit,
+    owner: string,
+    repo: string
+  ): Promise<RegExp[]> {
+    //do not override files in 'server/src/[entity]/[entity].[controller/resolver/service/module].ts'
+    //do not override server/scripts/customSeed.ts
+    const defaultDoNotOverride = [
+      /^server\/src\/[^\/]+\/.+\.controller.ts$/,
+      /^server\/src\/[^\/]+\/.+\.resolver.ts$/,
+      /^server\/src\/[^\/]+\/.+\.service.ts$/,
+      /^server\/src\/[^\/]+\/.+\.module.ts$/,
+      /^server\/scripts\/customSeed.ts$/
+    ];
+
+    const ampignore = (
+      await octokit.rest.repos.getContent({ owner, repo, path: '.ampignore' })
+    ).data.toString();
+
+    const doNotOverride = [
+      ...ampignore.match(new RegExp(/.*/, 'g')),
+      ...defaultDoNotOverride
+    ] as RegExp[];
+
+    return doNotOverride;
   }
 }
