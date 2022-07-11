@@ -4,7 +4,8 @@ import {
   S3Client,
   PutObjectCommand,
   PutObjectCommandInput,
-  PutObjectCommandOutput
+  PutObjectCommandOutput,
+  GetObjectCommand
 } from '@aws-sdk/client-s3';
 import { CodeGenInput } from 'src/models/CodeGenInput';
 import JSZip from 'jszip';
@@ -34,4 +35,41 @@ export class CodeGenStorageService {
 
     return this.client.send(new PutObjectCommand(uploadParams));
   }
+
+  public async getCodeGenOutput(location: string): Promise<Buffer> {
+    const params = {
+      Bucket: this.configService.get('AWS_S3_CODE_GEN_INPUT_BUCKET'),
+      Key: location,
+    };
+
+    const goc = new GetObjectCommand(params);
+    try {
+      const data = await this.client.send(goc);
+  
+      const bodyContents = await this.streamToBuffer(data.Body);
+      return bodyContents;
+    } catch (e) {
+      console.log(e);
+      throw e;
+    }
+  }
+
+  private streamToString(stream): Promise<string> {
+    return new Promise<string>((resolve, reject) => {
+      const chunks = [];
+      stream.on("data", (chunk) => chunks.push(chunk));
+      stream.on("error", reject);
+      stream.on("end", () => resolve(Buffer.concat(chunks).toString("utf8")));
+    });
+  }
+
+  private streamToBuffer(stream): Promise<Buffer> {
+    return new Promise<Buffer>((resolve, reject) => {
+      const chunks = [];
+      stream.on("data", (chunk) => chunks.push(chunk));
+      stream.on("error", reject);
+      stream.on("end", () => resolve(Buffer.concat(chunks)));
+    });
+  }
+
 }

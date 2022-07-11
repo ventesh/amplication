@@ -44,7 +44,7 @@ import { CodeGenStorageModule } from '../codeGenStorage/codeGenStorage.module';
     CodeGenStorageModule,
   ],
   providers: [BuildService, BuildResolver, BuildFilesSaver],
-  exports: [BuildService, BuildResolver],
+  exports: [BuildService, BuildResolver, BuildFilesSaver],
   controllers: [BuildController]
 })
 export class BuildModule {}

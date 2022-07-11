@@ -8,11 +8,16 @@ import { join, normalize } from 'path';
 import { BASE_BUILDS_FOLDER } from 'src/constants';
 import { AmplicationError } from 'src/errors/AmplicationError';
 import { Logger } from 'winston';
+import JSZip from 'jszip';
+import { CodeGenStorageService } from 'src/core/codeGenStorage/codeGenStorage.service';
+
+
 @Injectable()
 export class BuildFilesSaver {
   private baseBuildsPath: string;
   constructor(
     configService: ConfigService,
+    private readonly codeGenStorageService: CodeGenStorageService,
     @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger
   ) {
     const envFilePath = configService.get<string>(BASE_BUILDS_FOLDER);
@@ -36,6 +41,28 @@ export class BuildFilesSaver {
       throw new AmplicationError(
         'There was a error in saving the generated files to the amplication file system'
       );
+    }
+  }
+
+  async unzip(source: string, target: string): Promise<void> {
+    const data = await this.codeGenStorageService.getCodeGenOutput(source);
+
+    const zipper = new JSZip();
+    try {
+      const archive = await zipper.loadAsync(data);
+
+      const filePromises: Promise<void>[] = Object.entries(archive.files).map(async arr => {
+        const [ relativePath, file ] = arr;
+
+        const fileText = await file.async('string');
+        const filePath = join(this.baseBuildsPath, target, relativePath);
+        return outputFile(filePath, fileText);
+      });
+
+      await Promise.all(filePromises);
+    } catch (e) {
+      console.log(e);
+      throw e;
     }
   }
 }

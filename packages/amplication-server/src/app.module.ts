@@ -16,6 +16,10 @@ import { SendGridModule } from '@ntegral/nestjs-sendgrid';
 import { SendgridConfigService } from './services/sendgridConfig.service';
 import { GoogleSecretsManagerModule } from 'src/services/googleSecretsManager.module';
 import { GoogleSecretsManagerService } from 'src/services/googleSecretsManager.service';
+import { AppController } from './app.controller';
+import { QueueModule } from './core/queue/queue.module';
+import { HttpModule } from '@nestjs/axios';
+import { BuildModule } from './core/build/build.module';
 
 @Module({
   imports: [
@@ -61,9 +65,12 @@ import { GoogleSecretsManagerService } from 'src/services/googleSecretsManager.s
     SegmentAnalyticsModule.registerAsync({
       useClass: SegmentAnalyticsOptionsService
     }),
-    CoreModule
+    CoreModule,
+    QueueModule,
+    HttpModule,
+    BuildModule,
   ],
-  controllers: [],
+  controllers: [AppController],
   providers: [
     {
       provide: APP_INTERCEPTOR,
