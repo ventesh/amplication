@@ -48,7 +48,7 @@ import { EnumGitProvider } from '../git/dto/enums/EnumGitProvider';
 import { CanUserAccessArgs } from './dto/CanUserAccessArgs';
 import { CodeGenStorageService } from '../codeGenStorage/codeGenStorage.service';
 import { CodeGenInput } from 'src/models/CodeGenInput';
-import * as JSZip from 'jszip';
+import { BuildContext } from 'src/models/BuildContext';
 
 export const HOST_VAR = 'HOST';
 export const GENERATE_STEP_MESSAGE = 'Generating Application';
@@ -235,9 +235,6 @@ export class BuildService {
 
     logger.info(JOB_STARTED_LOG);
     const tarballURL = await this.generate(build, user, oldBuild?.id);
-    if (!skipPublish) {
-      await this.buildDockerImage(build, tarballURL);
-    }
     logger.info(JOB_DONE_LOG);
 
     return build;
@@ -395,7 +392,7 @@ export class BuildService {
     build: Build,
     user: User,
     oldBuildId: string
-  ): Promise<string> {
+  ): Promise<void> {
     return this.actionService.run(
       build.actionId,
       GENERATE_STEP_NAME,
@@ -421,20 +418,6 @@ export class BuildService {
 
         const url = `${host}/${build.appId}`;
 
-        // const modules = await DataServiceGenerator.createDataService(
-        //   entities,
-        //   roles,
-        //   {
-        //     name: app.name,
-        //     description: app.description,
-        //     version: build.version,
-        //     id: build.appId,
-        //     url,
-        //     settings: appSettings
-        //   },
-        //   dataServiceGeneratorLogger
-        // );
-
         const codeGenInput: CodeGenInput = {
           entities,
           roles,
@@ -447,6 +430,13 @@ export class BuildService {
             settings: appSettings
           }
         };
+
+        // const buildContext: BuildContext = {
+        //   buildId: build.id,
+        //   resourceId: build.appId,
+        //   projectId: '',
+        //   data: codeGenInput
+        // };
 
         await this.codeGenStorageService.saveCodeGenInput(codeGenInput);
       
@@ -475,8 +465,7 @@ export class BuildService {
         await this.saveToGitHub(build, oldBuildId);
 
         await this.actionService.logInfo(step, ACTION_JOB_DONE_LOG);
-
-        return '';
+        
       }
     );
   }
