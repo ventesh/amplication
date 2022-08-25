@@ -53,7 +53,10 @@ async function createProjectConfiguration(
     }
   });
 
-  await createDefaultProjectConfigurationSettings(newProjectConfiguration.id, userId);
+  await createDefaultProjectConfigurationSettings(
+    newProjectConfiguration.id,
+    userId
+  );
   return newProjectConfiguration;
 }
 
@@ -61,9 +64,11 @@ async function createDefaultProjectConfigurationSettings(
   resourceId: string,
   userId: string
 ): Promise<ProjectConfigurationSettings> {
-  const existingProjectConfigurationSettings = findOneProjectConfigurationSettings({
-    where: { id: resourceId }
-  });
+  const existingProjectConfigurationSettings = findOneProjectConfigurationSettings(
+    {
+      where: { id: resourceId }
+    }
+  );
 
   if (!isEmpty(existingProjectConfigurationSettings)) {
     throw new ProjectConfigurationSettingsExistError();
@@ -85,10 +90,10 @@ async function createDefaultProjectConfigurationSettings(
   return projectConfigurationSettings;
 }
 
-async function findOneProjectConfigurationSettings(args: FindOneArgs): Promise<ProjectConfigurationSettings> {
-  const [
-    projectConfigurationSettings
-  ] = await findManyBlocksByBlockType(
+async function findOneProjectConfigurationSettings(
+  args: FindOneArgs
+): Promise<ProjectConfigurationSettings> {
+  const [projectConfigurationSettings] = await findManyBlocksByBlockType(
     {
       where: {
         resource: {
