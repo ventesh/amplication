@@ -13,6 +13,9 @@ $modal-menu-top: 30px;
   background: var(--black2);
   border-bottom: $border-black5;
 
+  .medium {
+    min-width: var(--menu-item-width);
+  }
   &__left,
   &__right {
     flex: 1;
@@ -91,10 +94,12 @@ $modal-menu-top: 30px;
       }
       &__text {
         margin-left: var(--default-spacing-small);
-        @include regular-14();
+        @include regular-12();
         color: var(--black100);
         &__desc {
+          @include regular-10();
           color: var(--black80);
+          margin-top: 4px;
         }
       }
     }
