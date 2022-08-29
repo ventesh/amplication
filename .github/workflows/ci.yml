@@ -97,12 +97,13 @@ jobs:
 
   tests:
     runs-on: ubuntu-20.04
-    needs: [changes]
+    needs:
+      - changes
     timeout-minutes: 45
     strategy:
       matrix:
-        package: ${{ needs.changes.outputs.packages }}
-        node-version: [14.x, 16.x]
+        package: ${{ fromJson(needs.changes.outputs.packages) }}
+        node-version: [ 16.x ]
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
