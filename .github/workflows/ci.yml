@@ -64,7 +64,10 @@ jobs:
         with:
           folders: ${{ steps.changed-folders.outputs.folders }}
 
-      - run: echo ${{ steps.packages.outputs.package_names }}
+      - run: |
+          echo ${{ toJson(steps.packages.outputs.package_names) }}
+          echo ${{ fromJSON(steps.packages.outputs.package_names) }}
+          echo ${{ steps.packages.outputs.package_names }}
 
   tests:
     runs-on: ubuntu-20.04
@@ -115,7 +118,7 @@ jobs:
         run: lerna run --scope=${{matrix.package.name}} --loglevel=silent test
 
   hashes:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     outputs:
       hashes: ${{ steps.service-hashes.outputs.service_hashes }}
     steps:
