@@ -77,23 +77,23 @@ jobs:
           echo "__________3______________"
           echo "_________________________"
           echo ${{ steps.packages.outputs.package_names }}
-  t:
-    runs-on: ubuntu-20.04
-    needs: [changes]
-    steps:
-      - run: |
-          echo "_________________________"
-          echo "__________1______________"
-          echo "_________________________"
-          echo ${{ toJson(needs.changes.outputs.packages) }}
-          echo "_________________________"
-          echo "__________2______________"
-          echo "_________________________"
-          echo ${{ fromJSON(needs.changes.outputs.packages) }}
-          echo "_________________________"
-          echo "__________3______________"
-          echo "_________________________"
-          echo ${{ needs.changes.outputs.packages }}
+#  t:
+#    runs-on: ubuntu-20.04
+#    needs: [changes]
+#    steps:
+#      - run: |
+#          echo "_________________________"
+#          echo "__________1______________"
+#          echo "_________________________"
+#          echo ${{ toJson(needs.changes.outputs.packages) }}
+#          echo "_________________________"
+#          echo "__________2______________"
+#          echo "_________________________"
+#          echo ${{ fromJSON(needs.changes.outputs.packages) }}
+#          echo "_________________________"
+#          echo "__________3______________"
+#          echo "_________________________"
+#          echo ${{ needs.changes.outputs.packages }}
 
   tests:
     runs-on: ubuntu-20.04
