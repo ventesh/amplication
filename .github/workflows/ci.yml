@@ -20,7 +20,7 @@ jobs:
   changes:
     runs-on: ubuntu-18.04
     outputs:
-      packages: ${{ steps.packages.outputs.package_names }}
+      packages: ${{ toJson(steps.packages.outputs.package_names) }}
     steps:
 
       - uses: actions/checkout@v2
