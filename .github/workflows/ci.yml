@@ -97,8 +97,7 @@ jobs:
 
   tests:
     runs-on: ubuntu-20.04
-    needs:
-      - changes
+    needs: [changes]
     timeout-minutes: 45
     strategy:
       matrix:
