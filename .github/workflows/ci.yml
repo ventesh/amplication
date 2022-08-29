@@ -65,8 +65,17 @@ jobs:
           folders: ${{ steps.changed-folders.outputs.folders }}
 
       - run: |
+          echo "_________________________"
+          echo "__________1______________"
+          echo "_________________________"
           echo ${{ toJson(steps.packages.outputs.package_names) }}
+          echo "_________________________"
+          echo "__________2______________"
+          echo "_________________________"
           echo ${{ fromJSON(steps.packages.outputs.package_names) }}
+          echo "_________________________"
+          echo "__________3______________"
+          echo "_________________________"
           echo ${{ steps.packages.outputs.package_names }}
 
   tests:
