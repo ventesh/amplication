@@ -1,8 +1,8 @@
 ARG ALPINE_VERSION=alpine3.14
 ARG NODE_VERSION=16.13.1
 
-FROM node:$NODE_VERSION-$ALPINE_VERSION AS base
-COPY ./ /app
+FROM node:$NODE_VERSION AS base
+COPY . /app
 
 WORKDIR /app
 
@@ -14,7 +14,7 @@ RUN npm run build -- --scope @amplication/data-service-generator --include-depen
 
 RUN npm run clean -- --yes
 # Rebuild production node_modules
-RUN npm run bootstrap -- -- --production --scope @amplication/data-service-generator --include-dependencies
+RUN npm run bootstrap -- --scope @amplication/data-service-generator --include-dependencies -- --production
 
 FROM node:$NODE_VERSION-$ALPINE_VERSION as final
 WORKDIR /app
