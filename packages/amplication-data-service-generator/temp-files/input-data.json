@@ -1,0 +1,227 @@
+{
+  "buildId": "cl7hly1pe117901hbedk4p0v1",
+  "resourceId": "cl7hlj5te036301hbirt7z8r8",
+  "projectId": "",
+  "data": {
+    "entities": [
+      {
+        "id": "cl7hlj5tt037601hbctpspcfi",
+        "createdAt": "2022-08-31T12:30:13.313Z",
+        "updatedAt": "2022-08-31T12:41:47.680Z",
+        "resourceId": "cl7hlj5te036301hbirt7z8r8",
+        "name": "User",
+        "displayName": "User",
+        "pluralDisplayName": "Users",
+        "description": "An automatically created entity to manage users in the service",
+        "lockedByUserId": null,
+        "lockedAt": null,
+        "deletedAt": null,
+        "fields": [
+          {
+            "id": "cl7hly1lq096901hb2jh5ghib",
+            "createdAt": "2022-08-31T12:30:13.313Z",
+            "updatedAt": "2022-08-31T12:30:13.317Z",
+            "entityVersionId": "cl7hly1kk091701hb2u1ww6p5",
+            "permanentId": "cl7hlj5tt038901hbfdx0zpve",
+            "name": "id",
+            "displayName": "ID",
+            "dataType": "Id",
+            "properties": {},
+            "required": true,
+            "searchable": true,
+            "description": "An automatically created unique identifier of the entity",
+            "position": null,
+            "unique": true
+          },
+          {
+            "id": "cl7hly1lq097001hb3i51k4j8",
+            "createdAt": "2022-08-31T12:30:13.313Z",
+            "updatedAt": "2022-08-31T12:30:13.317Z",
+            "entityVersionId": "cl7hly1kk091701hb2u1ww6p5",
+            "permanentId": "cl7hlj5tt039101hbf27qf9rl",
+            "name": "createdAt",
+            "displayName": "Created At",
+            "dataType": "CreatedAt",
+            "properties": {},
+            "required": true,
+            "searchable": false,
+            "description": "An automatically created field of the time the entity created at",
+            "position": null,
+            "unique": false
+          },
+          {
+            "id": "cl7hly1lr097101hbr0ktvy6v",
+            "createdAt": "2022-08-31T12:30:13.313Z",
+            "updatedAt": "2022-08-31T12:30:13.317Z",
+            "entityVersionId": "cl7hly1kk091701hb2u1ww6p5",
+            "permanentId": "cl7hlj5tt039201hbe5ezd9cu",
+            "name": "updatedAt",
+            "displayName": "Updated At",
+            "dataType": "UpdatedAt",
+            "properties": {},
+            "required": true,
+            "searchable": false,
+            "description": "An automatically created field of the last time the entity updated at",
+            "position": null,
+            "unique": false
+          },
+          {
+            "id": "cl7hly1lr097201hb2gjujwfx",
+            "createdAt": "2022-08-31T12:30:13.314Z",
+            "updatedAt": "2022-08-31T12:30:13.317Z",
+            "entityVersionId": "cl7hly1kk091701hb2u1ww6p5",
+            "permanentId": "cl7hlj5tu039501hb018hrz06",
+            "name": "firstName",
+            "displayName": "First Name",
+            "dataType": "SingleLineText",
+            "properties": { "maxLength": 256 },
+            "required": false,
+            "searchable": true,
+            "description": "An automatically created field of the first name of the user",
+            "position": null,
+            "unique": false
+          },
+          {
+            "id": "cl7hly1lr097301hbecoorlvw",
+            "createdAt": "2022-08-31T12:30:13.314Z",
+            "updatedAt": "2022-08-31T12:30:13.317Z",
+            "entityVersionId": "cl7hly1kk091701hb2u1ww6p5",
+            "permanentId": "cl7hlj5tu039601hbdxfar674",
+            "name": "lastName",
+            "displayName": "Last Name",
+            "dataType": "SingleLineText",
+            "properties": { "maxLength": 256 },
+            "required": false,
+            "searchable": true,
+            "description": "An automatically created field of the last name of the user",
+            "position": null,
+            "unique": false
+          },
+          {
+            "id": "cl7hly1lr097401hbl3yskiam",
+            "createdAt": "2022-08-31T12:30:13.314Z",
+            "updatedAt": "2022-08-31T12:30:13.317Z",
+            "entityVersionId": "cl7hly1kk091701hb2u1ww6p5",
+            "permanentId": "cl7hlj5tu039901hbhu4sozjn",
+            "name": "username",
+            "displayName": "Username",
+            "dataType": "Username",
+            "properties": { "maxLength": 256 },
+            "required": true,
+            "searchable": true,
+            "description": "An automatically created field of the username of the user",
+            "position": null,
+            "unique": false
+          },
+          {
+            "id": "cl7hly1lr097501hboyy9pe19",
+            "createdAt": "2022-08-31T12:30:13.314Z",
+            "updatedAt": "2022-08-31T12:30:13.317Z",
+            "entityVersionId": "cl7hly1kk091701hb2u1ww6p5",
+            "permanentId": "cl7hlj5tu040001hbdpkbkcx7",
+            "name": "password",
+            "displayName": "Password",
+            "dataType": "Password",
+            "properties": { "maxLength": 256 },
+            "required": true,
+            "searchable": false,
+            "description": "An automatically created field of the password of the user",
+            "position": null,
+            "unique": false
+          },
+          {
+            "id": "cl7hly1lr097601hb0zm57n48",
+            "createdAt": "2022-08-31T12:30:13.314Z",
+            "updatedAt": "2022-08-31T12:30:13.317Z",
+            "entityVersionId": "cl7hly1kk091701hb2u1ww6p5",
+            "permanentId": "cl7hlj5tu040301hb6nz667j8",
+            "name": "roles",
+            "displayName": "Roles",
+            "dataType": "Roles",
+            "properties": {},
+            "required": true,
+            "searchable": false,
+            "description": "An automatically created field of the roles of the user",
+            "position": null,
+            "unique": false
+          }
+        ],
+        "permissions": [
+          {
+            "id": "cl7hly1mh102501hbvrrfissg",
+            "entityVersionId": "cl7hly1kk091701hb2u1ww6p5",
+            "action": "Create",
+            "type": "AllRoles",
+            "permissionRoles": [],
+            "permissionFields": []
+          },
+          {
+            "id": "cl7hly1mh102601hbdy41ic6q",
+            "entityVersionId": "cl7hly1kk091701hb2u1ww6p5",
+            "action": "Update",
+            "type": "AllRoles",
+            "permissionRoles": [],
+            "permissionFields": []
+          },
+          {
+            "id": "cl7hly1mh102701hbi9brslz1",
+            "entityVersionId": "cl7hly1kk091701hb2u1ww6p5",
+            "action": "View",
+            "type": "AllRoles",
+            "permissionRoles": [],
+            "permissionFields": []
+          },
+          {
+            "id": "cl7hly1mh102801hbct0xkhd1",
+            "entityVersionId": "cl7hly1kk091701hb2u1ww6p5",
+            "action": "Delete",
+            "type": "AllRoles",
+            "permissionRoles": [],
+            "permissionFields": []
+          },
+          {
+            "id": "cl7hly1mh102901hblovp7695",
+            "entityVersionId": "cl7hly1kk091701hb2u1ww6p5",
+            "action": "Search",
+            "type": "AllRoles",
+            "permissionRoles": [],
+            "permissionFields": []
+          }
+        ]
+      }
+    ],
+    "roles": [
+      {
+        "id": "cl7hlj5te036401hb1u2e3uq6",
+        "createdAt": "2022-08-31T12:30:13.298Z",
+        "updatedAt": "2022-08-31T12:30:13.299Z",
+        "resourceId": "cl7hlj5te036301hbirt7z8r8",
+        "name": "user",
+        "displayName": "User",
+        "description": null
+      }
+    ],
+    "serviceInfo": {
+      "name": "My service",
+      "description": "",
+      "version": "zz6qt2ej",
+      "id": "cl7hlj5te036301hbirt7z8r8",
+      "url": "https://server-eugene.amplication-dev.com/cl7hlj5te036301hbirt7z8r8",
+      "settings": {
+        "dbHost": "localhost",
+        "dbName": "",
+        "dbPassword": "admin",
+        "dbPort": 5432,
+        "dbUser": "admin",
+        "resourceId": "cl7hlj5te036301hbirt7z8r8",
+        "authProvider": "Jwt",
+        "serverSettings": {
+          "serverPath": "",
+          "generateGraphQL": true,
+          "generateRestApi": true
+        },
+        "adminUISettings": { "adminUIPath": "", "generateAdminUI": true }
+      }
+    }
+  }
+}
