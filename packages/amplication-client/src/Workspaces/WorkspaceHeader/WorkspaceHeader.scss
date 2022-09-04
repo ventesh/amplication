@@ -13,9 +13,6 @@ $modal-menu-top: 30px;
   background: var(--black2);
   border-bottom: $border-black5;
 
-  .medium {
-    min-width: var(--menu-item-width);
-  }
   &__left,
   &__right {
     flex: 1;
