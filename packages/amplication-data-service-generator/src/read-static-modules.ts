@@ -18,7 +18,13 @@ export async function readStaticModules(
   const staticModules = await fg(`${directory}**/*`, {
     absolute: false,
     dot: true,
-    ignore: ["**.js", "**.js.map", "**.d.ts", "**/node_modules/**"],
+    ignore: [
+      "**.js",
+      "**.js.map",
+      "**.d.ts",
+      "**/node_modules/**",
+      "**/package-lock.json",
+    ],
   });
 
   return Promise.all(
