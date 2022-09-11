@@ -1,5 +1,7 @@
 import * as models from "./models";
 import { Lookup, MultiSelectOptionSet, OptionSet } from "./types";
+import { namedTypes } from "ast-types";
+import { DSGResourceData } from "./dsg-resource-data";
 
 export {
   EnumEntityPermissionType,
@@ -14,28 +16,7 @@ export type WorkerResult = {
   error?: any;
 };
 
-export type WorkerParam = {
-  entities: Entity[];
-  roles: Role[];
-  appInfo: AppInfo;
-};
-
-export type ServiceSettings = Omit<
-  models.ServiceSettings,
-  | "__typename"
-  | "id"
-  | "createdAt"
-  | "updatedAt"
-  | "parentBlock"
-  | "displayName"
-  | "description"
-  | "blockType"
-  | "versionNumber"
-  | "inputParameters"
-  | "outputParameters"
-  | "lockedByUserId"
-  | "lockedAt"
->;
+export type ServiceSettings = BlockOmittedFields<models.ServiceSettings>;
 
 export type AppInfo = {
   name: string;
@@ -144,7 +125,74 @@ export type Module = {
   code: string;
 };
 
+export type ClassDeclaration = namedTypes.ClassDeclaration & {
+  decorators: namedTypes.Decorator[];
+};
+
+export type NamedClassDeclaration = ClassDeclaration & {
+  id: namedTypes.Identifier;
+};
+
+export type NamedClassProperty = namedTypes.ClassProperty & {
+  key: namedTypes.Identifier;
+  typeAnnotation: namedTypes.TSTypeAnnotation;
+  optional?: boolean;
+};
+
+export type EntityDTOs = {
+  entity: NamedClassDeclaration;
+  createInput: NamedClassDeclaration;
+  updateInput: NamedClassDeclaration;
+  whereInput: NamedClassDeclaration;
+  whereUniqueInput: NamedClassDeclaration;
+  deleteArgs: NamedClassDeclaration;
+  findManyArgs: NamedClassDeclaration;
+  findOneArgs: NamedClassDeclaration;
+  createArgs?: NamedClassDeclaration;
+  updateArgs?: NamedClassDeclaration;
+  orderByInput: NamedClassDeclaration;
+  listRelationFilter: NamedClassDeclaration;
+};
+
+export type EntityEnumDTOs = {
+  [dto: string]: namedTypes.TSEnumDeclaration;
+};
+
+export type DTOs = {
+  [entity: string]: EntityEnumDTOs & EntityDTOs;
+};
+
 export type ResourceGenerationConfig = {
   dataServiceGeneratorVersion: string;
   appInfo: AppInfo;
 };
+
+export enum EnumMessagePatternConnectionOptions {
+  "None" = "None",
+  "Receive" = "Receive",
+  "Send" = "Send",
+}
+
+export type Plugin = BlockOmittedFields<models.PluginInstallation>;
+
+export * from "./dsg-resource-data";
+
+type BlockOmittedFields<T> = Omit<
+  T,
+  | "__typename"
+  | "id"
+  | "createdAt"
+  | "updatedAt"
+  | "parentBlock"
+  | "displayName"
+  | "description"
+  | "blockType"
+  | "versionNumber"
+  | "inputParameters"
+  | "outputParameters"
+  | "lockedByUserId"
+  | "lockedAt"
+>;
+
+export type Topic = BlockOmittedFields<models.Topic>;
+export type ServiceTopics = BlockOmittedFields<models.ServiceTopics>;

@@ -4,29 +4,35 @@ import { createDTOs } from "./server/resource/create-dtos";
 import {
   Entity,
   EntityField,
-  Role,
-  AppInfo,
   Module,
   EnumDataType,
   LookupResolvedProperties,
   types,
+  DSGResourceData,
 } from "@amplication/code-gen-types";
 import { createUserEntityIfNotExist } from "./server/user-entity";
 import { createAdminModules } from "./admin/create-admin";
 import { createServerModules } from "./server/create-server";
-
+import DsgContext from "./dsg-context";
 import pluralize from "pluralize";
 import { camelCase } from "camel-case";
+import registerPlugins from "./register-plugin";
 
 export async function createDataServiceImpl(
-  entities: Entity[],
-  roles: Role[],
-  appInfo: AppInfo,
+  dSGResourceData: DSGResourceData,
   logger: winston.Logger
 ): Promise<Module[]> {
   logger.info("Creating application...");
+  const {
+    plugins: resourcePlugins,
+    entities,
+    roles,
+    resourceInfo: appInfo,
+  } = dSGResourceData;
   const timer = logger.startTimer();
-
+  if (!entities || !roles || !appInfo) {
+    throw new Error("Missing required data");
+  }
   // make sure that the user table is existed if not it will crate one
   const [entitiesWithUserEntity, userEntity] = createUserEntityIfNotExist(
     entities
@@ -38,8 +44,17 @@ export async function createDataServiceImpl(
 
   const normalizedEntities = resolveLookupFields(entitiesWithPluralName);
 
+  const context = DsgContext.getInstance;
+  context.appInfo = appInfo;
+  context.roles = roles;
+  context.entities = normalizedEntities;
+  const plugins = await registerPlugins(resourcePlugins);
+
+  context.plugins = plugins;
+
   logger.info("Creating DTOs...");
   const dtos = await createDTOs(normalizedEntities);
+  context.DTOs = dtos;
 
   logger.info("Copying static modules...");
 
@@ -54,7 +69,7 @@ export async function createDataServiceImpl(
         logger
       ),
       (appInfo.settings.adminUISettings.generateAdminUI &&
-        createAdminModules(normalizedEntities, roles, appInfo, dtos, logger)) ||
+        createAdminModules()) ||
         [],
     ])
   ).flat();
