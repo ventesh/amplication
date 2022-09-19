@@ -32,7 +32,7 @@ async function bootstrap() {
 
   const app = await NestFactory.create(AppModule, {});
   app.connectMicroservice<MicroserviceOptions>(createNestjsKafkaConfig());
-
+  console.log('kafka loaded');
   await app.startAllMicroservices();
 
   if (process.env.ENABLE_SHUTDOWN_HOOKS) {
