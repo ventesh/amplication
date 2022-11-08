@@ -117,6 +117,7 @@
     "@nrwl/web": "14.8.2",
     "@nrwl/workspace": "^14.8.2",
     "@nx-tools/nx-docker": "^3.0.4",
+    "@playwright/test": "^1.27.1",
     "@types/adm-zip": "^0.4.34",
     "@types/bcrypt": "^5.0.0",
     "@types/cron": "^1.7.3",
