@@ -5,13 +5,15 @@ import postcss from "rollup-plugin-postcss";
 import copy from "rollup-plugin-copy";
 import pkg from "./package.json";
 import json from "@rollup/plugin-json";
+import { join } from "path";
+
+const dir = "../../dist/packages/amplication-design-system"
 
 /** @type {import("rollup").InputOptions} */
 export default {
-
   input: "src/index.ts",
   output: {
-    dir: "../../dist/packages/amplication-design-system",
+    dir,
     format: "cjs",
     exports: "named",
     sourcemap: true,
@@ -24,7 +26,7 @@ export default {
       },
     }),
     copy({
-      targets: [{ src: "src/assets/**", dest: "dist/assets", flatten: false }],
+      targets: [{ src: "src/assets/**", dest: join(dir, "assets"), flatten: false }],
     }),
     json(),
   ],
