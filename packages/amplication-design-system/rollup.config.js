@@ -6,10 +6,12 @@ import copy from "rollup-plugin-copy";
 import pkg from "./package.json";
 import json from "@rollup/plugin-json";
 
+/** @type {import("rollup").InputOptions} */
 export default {
+
   input: "src/index.ts",
   output: {
-    dir: "dist",
+    dir: "../../dist/packages/amplication-design-system",
     format: "cjs",
     exports: "named",
     sourcemap: true,
@@ -29,4 +31,5 @@ export default {
   external: Object.keys(pkg.dependencies).concat(
     Object.keys(pkg.peerDependencies)
   ),
+
 };

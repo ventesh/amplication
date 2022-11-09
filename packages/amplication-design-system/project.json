@@ -23,27 +23,15 @@
       }
     },
     "build": {
-      "executor": "@nrwl/web:rollup",
+      "executor": "nx:run-commands",
       "outputs": [
         "{options.outputPath}"
       ],
       "options": {
-        "outputPath": "dist/packages/amplication-design-system",
-        "tsConfig": "packages/amplication-design-system/tsconfig.lib.json",
-        "project": "packages/amplication-design-system/package.json",
-        "entryFile": "packages/amplication-design-system/src/index.ts",
-        "external": [
-          "react/jsx-runtime"
+        "commands": [
+          "npx rollup -c"
         ],
-        "rollupConfig": "packages/amplication-design-system/rollup.config.js",
-        "compiler": "swc",
-        "assets": [
-          {
-            "glob": "packages/amplication-design-system/README.md",
-            "input": ".",
-            "output": "."
-          }
-        ]
+        "cwd": "packages/amplication-design-system"
       }
     },
     "format": {
