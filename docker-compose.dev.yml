@@ -64,5 +64,97 @@ services:
       timeout: 10s
       retries: 10
 
+  build-manager:
+    build:
+      context: ./
+      dockerfile: ./packages/amplication-build-manager/Dockerfile
+    env_file:
+      - ./packages/amplication-build-manager/.env
+    depends_on:
+      db:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+    profiles:
+      - core
+      - client
+
+  git-pull-request-service:
+    build:
+      context: ./
+      dockerfile: ./packages/amplication-git-pull-request-service/Dockerfile
+    env_file:
+      - ./packages/amplication-git-pull-request-service/.env
+    depends_on:
+      db:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+    profiles:
+      - core
+      - client
+
+  plugin-api:
+    build:
+      context: ./
+      dockerfile: ./packages/amplication-plugin-api/Dockerfile
+    env_file:
+      - ./packages/amplication-plugin-api/.env
+    ports:
+      - "3005:3005"
+    depends_on:
+      db:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+    profiles:
+      - core
+      - client
+
+  server:
+    build:
+      context: ./
+      dockerfile: ./packages/amplication-server/Dockerfile
+    env_file:
+      - ./packages/amplication-server/.env
+      - ./packages/amplication-server/.env.local
+    ports:
+      - "3000:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+    profiles:
+      - client
+
+  storage-gateway:
+    build:
+      context: ./
+      dockerfile: ./packages/amplication-storage-gateway/Dockerfile
+    env_file:
+      - ./packages/amplication-storage-gateway/.env
+    ports:
+      - "3002:3002"
+    depends_on:
+      db:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+    profiles:
+      - core
+      - client
+
+  local-data-service-generator-controller:
+    build:
+      context: ./
+      dockerfile: ./packages/local-data-service-generator-controller/Dockerfile
+    env_file:
+      - ./packages/local-data-service-generator-controller/.env
+    ports:
+      - "8900:8900"
+    profiles:
+      - core
+      - client
 volumes:
   postgres: ~
