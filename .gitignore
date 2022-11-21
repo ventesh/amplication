@@ -62,3 +62,5 @@ infra/tilt/.temp/**
 .env.local
 
 src/schema.graphql
+
+generated-test

@@ -10,3 +10,9 @@ WORKDIR /workspace/packages/amplication-data-service-generator
 COPY ./dist/packages/amplication-data-service-generator/package.json .
 RUN npm i --omit-dev
 COPY ./dist/packages/amplication-data-service-generator .
+
+RUN mkdir /.amplication
+RUN mkdir /.amplication/transfer
+RUN mkdir /.amplication/build-input
+RUN mkdir /.amplication/build-output
+RUN mkdir /.amplication/injected-plugins

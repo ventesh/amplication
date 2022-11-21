@@ -61,6 +61,8 @@ export async function prepareContext(
     throw new Error("Missing required data");
   }
 
+  console.log("resourcePlugins", resourcePlugins);
+
   const pluginsWithDefaultPlugins = prepareDefaultPlugins(resourcePlugins);
   const plugins = await registerPlugins(pluginsWithDefaultPlugins);
 
@@ -197,8 +199,7 @@ function resolveLookupFields(entities: Entity[]): Entity[] {
             );
           }
 
-          const relatedFieldProperties =
-            relatedField.properties as types.Lookup;
+          const relatedFieldProperties = relatedField.properties as types.Lookup;
 
           const isOneToOne =
             !fieldProperties.allowMultipleSelection &&
