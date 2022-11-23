@@ -1,5 +1,5 @@
-FROM node:16.16-alpine AS base
-RUN apk add g++ make python3
+FROM node:16.16 AS base
+# RUN apk add g++ make python3
 
 WORKDIR /workspace/packages/amplication-code-gen-types
 COPY ./dist/packages/amplication-code-gen-types/package.json .
