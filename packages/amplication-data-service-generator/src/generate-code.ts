@@ -6,67 +6,75 @@ import { createDataServiceImpl } from "./create-data-service-impl";
 import { defaultLogger } from "./server/logging";
 import axios from "axios";
 
-const [, , source, destination] = process.argv;
-if (!source) {
-  throw new Error("SOURCE is not defined");
+const INPUT_FILE_PATH = process.env.INPUT_FILE_PATH;
+const OUTPUT_PATH = process.env.OUTPUT_PATH;
+
+if (!INPUT_FILE_PATH) {
+  throw new Error("INPUT_FILE_PATH is not defined");
 }
-if (!destination) {
-  throw new Error("DESTINATION is not defined");
+if (!OUTPUT_PATH) {
+  throw new Error("OUTPUT_PATH is not defined");
 }
 
-generateCode(source, destination).catch((err) => {
+const isRemoteEnv = process.env.REMOTE_ENV === "true";
+
+generateCode(INPUT_FILE_PATH, OUTPUT_PATH).catch((err) => {
   console.error(err);
   process.exit(1);
 });
 
 export default async function generateCode(
-  source: string,
-  destination: string
+  inputFilePath: string,
+  destinationPath: string
 ): Promise<void> {
   try {
-    const file = await readFile(source, "utf8");
+    const file = await readFile(inputFilePath, "utf8");
     const resourceData: DSGResourceData = JSON.parse(file);
     const modules = await createDataServiceImpl(resourceData, defaultLogger);
-    await writeModules(modules, destination);
+    await writeModules(modules, destinationPath);
     console.log("Code generation completed successfully");
-    await axios.post(
-      new URL(
-        "build-runner/code-generation-success",
-        process.env.BUILD_MANAGER_URL
-      ).href,
-      {
-        resourceId: process.env.RESOURCE_ID,
-        buildId: process.env.BUILD_ID,
-      }
-    );
+    if (isRemoteEnv) {
+      await axios.post(
+        new URL(
+          "build-runner/code-generation-success",
+          process.env.BUILD_MANAGER_URL
+        ).href,
+        {
+          resourceId: process.env.RESOURCE_ID,
+          buildId: process.env.BUILD_ID,
+        }
+      );
+    }
   } catch (err) {
     console.error(err);
-    await axios.post(
-      new URL(
-        "build-runner/code-generation-failure",
-        process.env.BUILD_MANAGER_URL
-      ).href,
-      {
-        resourceId: process.env.RESOURCE_ID,
-        buildId: process.env.BUILD_ID,
-      }
-    );
+    if (isRemoteEnv) {
+      await axios.post(
+        new URL(
+          "build-runner/code-generation-failure",
+          process.env.BUILD_MANAGER_URL
+        ).href,
+        {
+          resourceId: process.env.RESOURCE_ID,
+          buildId: process.env.BUILD_ID,
+        }
+      );
+    }
   }
 }
 
 async function writeModules(
   modules: Module[],
-  destination: string
+  destinationPath: string
 ): Promise<void> {
   console.log("Creating base directory");
-  await mkdir(destination, { recursive: true });
-  console.info(`Writing modules to ${destination} ...`);
+  await mkdir(destinationPath, { recursive: true });
+  console.info(`Writing modules to ${destinationPath} ...`);
   await Promise.all(
     modules.map(async (module) => {
-      const filePath = join(destination, module.path);
+      const filePath = join(destinationPath, module.path);
       await mkdir(dirname(filePath), { recursive: true });
       await writeFile(filePath, module.code);
     })
   );
-  console.info(`Successfully wrote modules to ${destination}`);
+  console.info(`Successfully wrote modules to ${destinationPath}`);
 }

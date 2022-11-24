@@ -22,8 +22,15 @@ async function* getPluginFuncGenerator(
     let index = 0;
 
     do {
-      const packageName = pluginList[index].npm;
-      const func = await import(packageName);
+      let func;
+
+      if ((pluginList[index] as any).importPath) {
+        func = await require((pluginList[index] as any).importPath);
+      } else {
+        // NPM import
+        const packageName = pluginList[index].npm;
+        func = await import(packageName);
+      }
 
       ++index;
       if (!func.hasOwnProperty("default")) yield EmptyClass;
