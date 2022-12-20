@@ -4664,6 +4664,8 @@ import * as graphql from \\"@nestjs/graphql\\";
 import * as apollo from \\"apollo-server-express\\";
 import { isRecordNotFoundError } from \\"../../prisma.util\\";
 import { MetaQueryPayload } from \\"../../util/MetaQueryPayload\\";
+import { AclFilterResponseInterceptor } from \\"../../interceptors/aclFilterResponse.interceptor\\";
+import { AclValidateRequestInterceptor } from \\"../../interceptors/aclValidateRequest.interceptor\\";
 import { Public } from \\"../../decorators/public.decorator\\";
 import { CreateCustomerArgs } from \\"./CreateCustomerArgs\\";
 import { UpdateCustomerArgs } from \\"./UpdateCustomerArgs\\";
@@ -4692,14 +4694,32 @@ export class CustomerResolverBase {
     };
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.Query(() => [Customer])
+  @nestAccessControl.UseRoles({
+    resource: \\"Customer\\",
+    action: \\"search\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async customers(
     @graphql.Args() args: CustomerFindManyArgs
   ): Promise<Customer[]> {
     return this.service.findMany(args);
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.Query(() => Customer, { nullable: true })
+  @nestAccessControl.UseRoles({
+    resource: \\"Customer\\",
+    action: \\"view\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async customer(
     @graphql.Args() args: CustomerFindUniqueArgs
   ): Promise<Customer | null> {
@@ -4710,7 +4730,16 @@ export class CustomerResolverBase {
     return result;
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @graphql.Mutation(() => Customer)
+  @nestAccessControl.UseRoles({
+    resource: \\"Customer\\",
+    action: \\"create\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async createCustomer(
     @graphql.Args() args: CreateCustomerArgs
   ): Promise<Customer> {
@@ -4734,7 +4763,16 @@ export class CustomerResolverBase {
     });
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @graphql.Mutation(() => Customer)
+  @nestAccessControl.UseRoles({
+    resource: \\"Customer\\",
+    action: \\"update\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async updateCustomer(
     @graphql.Args() args: UpdateCustomerArgs
   ): Promise<Customer | null> {
@@ -4768,6 +4806,14 @@ export class CustomerResolverBase {
   }
 
   @graphql.Mutation(() => Customer)
+  @nestAccessControl.UseRoles({
+    resource: \\"Customer\\",
+    action: \\"delete\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async deleteCustomer(
     @graphql.Args() args: DeleteCustomerArgs
   ): Promise<Customer | null> {
@@ -4798,7 +4844,16 @@ export class CustomerResolverBase {
     return results;
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => Organization, { nullable: true })
+  @nestAccessControl.UseRoles({
+    resource: \\"Organization\\",
+    action: \\"view\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async organization(
     @graphql.Parent() parent: Customer
   ): Promise<Organization | null> {
@@ -4810,7 +4865,16 @@ export class CustomerResolverBase {
     return result;
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => Organization, { nullable: true })
+  @nestAccessControl.UseRoles({
+    resource: \\"Organization\\",
+    action: \\"view\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async vipOrganization(
     @graphql.Parent() parent: Customer
   ): Promise<Organization | null> {
@@ -5420,6 +5484,7 @@ import * as graphql from \\"@nestjs/graphql\\";
 import * as apollo from \\"apollo-server-express\\";
 import { isRecordNotFoundError } from \\"../../prisma.util\\";
 import { MetaQueryPayload } from \\"../../util/MetaQueryPayload\\";
+import { AclFilterResponseInterceptor } from \\"../../interceptors/aclFilterResponse.interceptor\\";
 import { DeleteEmptyArgs } from \\"./DeleteEmptyArgs\\";
 import { EmptyFindManyArgs } from \\"./EmptyFindManyArgs\\";
 import { EmptyFindUniqueArgs } from \\"./EmptyFindUniqueArgs\\";
@@ -5442,12 +5507,30 @@ export class EmptyResolverBase {
     };
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.Query(() => [Empty])
+  @nestAccessControl.UseRoles({
+    resource: \\"Empty\\",
+    action: \\"search\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async empties(@graphql.Args() args: EmptyFindManyArgs): Promise<Empty[]> {
     return this.service.findMany(args);
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.Query(() => Empty, { nullable: true })
+  @nestAccessControl.UseRoles({
+    resource: \\"Empty\\",
+    action: \\"view\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async empty(
     @graphql.Args() args: EmptyFindUniqueArgs
   ): Promise<Empty | null> {
@@ -5459,6 +5542,14 @@ export class EmptyResolverBase {
   }
 
   @graphql.Mutation(() => Empty)
+  @nestAccessControl.UseRoles({
+    resource: \\"Empty\\",
+    action: \\"delete\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async deleteEmpty(
     @graphql.Args() args: DeleteEmptyArgs
   ): Promise<Empty | null> {
@@ -6457,6 +6548,7 @@ import * as apollo from \\"apollo-server-express\\";
 import { isRecordNotFoundError } from \\"../../prisma.util\\";
 import { MetaQueryPayload } from \\"../../util/MetaQueryPayload\\";
 import { Public } from \\"../../decorators/public.decorator\\";
+import { AclFilterResponseInterceptor } from \\"../../interceptors/aclFilterResponse.interceptor\\";
 import { CreateOrderArgs } from \\"./CreateOrderArgs\\";
 import { UpdateOrderArgs } from \\"./UpdateOrderArgs\\";
 import { DeleteOrderArgs } from \\"./DeleteOrderArgs\\";
@@ -6558,7 +6650,16 @@ export class OrderResolverBase {
     }
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => Customer, { nullable: true })
+  @nestAccessControl.UseRoles({
+    resource: \\"Customer\\",
+    action: \\"view\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async customer(@graphql.Parent() parent: Order): Promise<Customer | null> {
     const result = await this.service.getCustomer(parent.id);
 
@@ -7446,6 +7547,8 @@ import * as graphql from \\"@nestjs/graphql\\";
 import * as apollo from \\"apollo-server-express\\";
 import { isRecordNotFoundError } from \\"../../prisma.util\\";
 import { MetaQueryPayload } from \\"../../util/MetaQueryPayload\\";
+import { AclFilterResponseInterceptor } from \\"../../interceptors/aclFilterResponse.interceptor\\";
+import { AclValidateRequestInterceptor } from \\"../../interceptors/aclValidateRequest.interceptor\\";
 import { CreateOrganizationArgs } from \\"./CreateOrganizationArgs\\";
 import { UpdateOrganizationArgs } from \\"./UpdateOrganizationArgs\\";
 import { DeleteOrganizationArgs } from \\"./DeleteOrganizationArgs\\";
@@ -7474,14 +7577,32 @@ export class OrganizationResolverBase {
     };
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.Query(() => [Organization])
+  @nestAccessControl.UseRoles({
+    resource: \\"Organization\\",
+    action: \\"search\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async organizations(
     @graphql.Args() args: OrganizationFindManyArgs
   ): Promise<Organization[]> {
     return this.service.findMany(args);
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.Query(() => Organization, { nullable: true })
+  @nestAccessControl.UseRoles({
+    resource: \\"Organization\\",
+    action: \\"view\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async organization(
     @graphql.Args() args: OrganizationFindUniqueArgs
   ): Promise<Organization | null> {
@@ -7492,7 +7613,16 @@ export class OrganizationResolverBase {
     return result;
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @graphql.Mutation(() => Organization)
+  @nestAccessControl.UseRoles({
+    resource: \\"Organization\\",
+    action: \\"create\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async createOrganization(
     @graphql.Args() args: CreateOrganizationArgs
   ): Promise<Organization> {
@@ -7502,7 +7632,16 @@ export class OrganizationResolverBase {
     });
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @graphql.Mutation(() => Organization)
+  @nestAccessControl.UseRoles({
+    resource: \\"Organization\\",
+    action: \\"update\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async updateOrganization(
     @graphql.Args() args: UpdateOrganizationArgs
   ): Promise<Organization | null> {
@@ -7522,6 +7661,14 @@ export class OrganizationResolverBase {
   }
 
   @graphql.Mutation(() => Organization)
+  @nestAccessControl.UseRoles({
+    resource: \\"Organization\\",
+    action: \\"delete\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async deleteOrganization(
     @graphql.Args() args: DeleteOrganizationArgs
   ): Promise<Organization | null> {
@@ -7537,7 +7684,16 @@ export class OrganizationResolverBase {
     }
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => [User])
+  @nestAccessControl.UseRoles({
+    resource: \\"User\\",
+    action: \\"search\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async users(
     @graphql.Parent() parent: Organization,
     @graphql.Args() args: UserFindManyArgs
@@ -7551,7 +7707,16 @@ export class OrganizationResolverBase {
     return results;
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => [Customer])
+  @nestAccessControl.UseRoles({
+    resource: \\"Customer\\",
+    action: \\"search\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async customers(
     @graphql.Parent() parent: Organization,
     @graphql.Args() args: CustomerFindManyArgs
@@ -7565,7 +7730,16 @@ export class OrganizationResolverBase {
     return results;
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => [Customer])
+  @nestAccessControl.UseRoles({
+    resource: \\"Customer\\",
+    action: \\"search\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async vipCustomers(
     @graphql.Parent() parent: Organization,
     @graphql.Args() args: CustomerFindManyArgs
@@ -8334,6 +8508,8 @@ import * as graphql from \\"@nestjs/graphql\\";
 import * as apollo from \\"apollo-server-express\\";
 import { isRecordNotFoundError } from \\"../../prisma.util\\";
 import { MetaQueryPayload } from \\"../../util/MetaQueryPayload\\";
+import { AclFilterResponseInterceptor } from \\"../../interceptors/aclFilterResponse.interceptor\\";
+import { AclValidateRequestInterceptor } from \\"../../interceptors/aclValidateRequest.interceptor\\";
 import { CreateProfileArgs } from \\"./CreateProfileArgs\\";
 import { UpdateProfileArgs } from \\"./UpdateProfileArgs\\";
 import { DeleteProfileArgs } from \\"./DeleteProfileArgs\\";
@@ -8359,14 +8535,32 @@ export class ProfileResolverBase {
     };
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.Query(() => [Profile])
+  @nestAccessControl.UseRoles({
+    resource: \\"Profile\\",
+    action: \\"search\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async profiles(
     @graphql.Args() args: ProfileFindManyArgs
   ): Promise<Profile[]> {
     return this.service.findMany(args);
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.Query(() => Profile, { nullable: true })
+  @nestAccessControl.UseRoles({
+    resource: \\"Profile\\",
+    action: \\"view\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async profile(
     @graphql.Args() args: ProfileFindUniqueArgs
   ): Promise<Profile | null> {
@@ -8377,7 +8571,16 @@ export class ProfileResolverBase {
     return result;
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @graphql.Mutation(() => Profile)
+  @nestAccessControl.UseRoles({
+    resource: \\"Profile\\",
+    action: \\"create\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async createProfile(
     @graphql.Args() args: CreateProfileArgs
   ): Promise<Profile> {
@@ -8395,7 +8598,16 @@ export class ProfileResolverBase {
     });
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @graphql.Mutation(() => Profile)
+  @nestAccessControl.UseRoles({
+    resource: \\"Profile\\",
+    action: \\"update\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async updateProfile(
     @graphql.Args() args: UpdateProfileArgs
   ): Promise<Profile | null> {
@@ -8423,6 +8635,14 @@ export class ProfileResolverBase {
   }
 
   @graphql.Mutation(() => Profile)
+  @nestAccessControl.UseRoles({
+    resource: \\"Profile\\",
+    action: \\"delete\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async deleteProfile(
     @graphql.Args() args: DeleteProfileArgs
   ): Promise<Profile | null> {
@@ -8438,7 +8658,16 @@ export class ProfileResolverBase {
     }
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => User, { nullable: true })
+  @nestAccessControl.UseRoles({
+    resource: \\"User\\",
+    action: \\"view\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async user(@graphql.Parent() parent: Profile): Promise<User | null> {
     const result = await this.service.getUser(parent.id);
 
@@ -10154,6 +10383,8 @@ import * as graphql from \\"@nestjs/graphql\\";
 import * as apollo from \\"apollo-server-express\\";
 import { isRecordNotFoundError } from \\"../../prisma.util\\";
 import { MetaQueryPayload } from \\"../../util/MetaQueryPayload\\";
+import { AclFilterResponseInterceptor } from \\"../../interceptors/aclFilterResponse.interceptor\\";
+import { AclValidateRequestInterceptor } from \\"../../interceptors/aclValidateRequest.interceptor\\";
 import { CreateUserArgs } from \\"./CreateUserArgs\\";
 import { UpdateUserArgs } from \\"./UpdateUserArgs\\";
 import { DeleteUserArgs } from \\"./DeleteUserArgs\\";
@@ -10181,12 +10412,30 @@ export class UserResolverBase {
     };
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.Query(() => [User])
+  @nestAccessControl.UseRoles({
+    resource: \\"User\\",
+    action: \\"search\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async users(@graphql.Args() args: UserFindManyArgs): Promise<User[]> {
     return this.service.findMany(args);
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.Query(() => User, { nullable: true })
+  @nestAccessControl.UseRoles({
+    resource: \\"User\\",
+    action: \\"view\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async user(@graphql.Args() args: UserFindUniqueArgs): Promise<User | null> {
     const result = await this.service.findOne(args);
     if (result === null) {
@@ -10195,7 +10444,16 @@ export class UserResolverBase {
     return result;
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @graphql.Mutation(() => User)
+  @nestAccessControl.UseRoles({
+    resource: \\"User\\",
+    action: \\"create\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async createUser(@graphql.Args() args: CreateUserArgs): Promise<User> {
     return await this.service.create({
       ...args,
@@ -10217,7 +10475,16 @@ export class UserResolverBase {
     });
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @graphql.Mutation(() => User)
+  @nestAccessControl.UseRoles({
+    resource: \\"User\\",
+    action: \\"update\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async updateUser(@graphql.Args() args: UpdateUserArgs): Promise<User | null> {
     try {
       return await this.service.update({
@@ -10249,6 +10516,14 @@ export class UserResolverBase {
   }
 
   @graphql.Mutation(() => User)
+  @nestAccessControl.UseRoles({
+    resource: \\"User\\",
+    action: \\"delete\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async deleteUser(@graphql.Args() args: DeleteUserArgs): Promise<User | null> {
     try {
       return await this.service.delete(args);
@@ -10262,7 +10537,16 @@ export class UserResolverBase {
     }
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => [User])
+  @nestAccessControl.UseRoles({
+    resource: \\"User\\",
+    action: \\"search\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async employees(
     @graphql.Parent() parent: User,
     @graphql.Args() args: UserFindManyArgs
@@ -10276,7 +10560,16 @@ export class UserResolverBase {
     return results;
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => [Organization])
+  @nestAccessControl.UseRoles({
+    resource: \\"Organization\\",
+    action: \\"search\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async organizations(
     @graphql.Parent() parent: User,
     @graphql.Args() args: OrganizationFindManyArgs
@@ -10290,7 +10583,16 @@ export class UserResolverBase {
     return results;
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => User, { nullable: true })
+  @nestAccessControl.UseRoles({
+    resource: \\"User\\",
+    action: \\"view\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async manager(@graphql.Parent() parent: User): Promise<User | null> {
     const result = await this.service.getManager(parent.id);
 
@@ -10300,7 +10602,16 @@ export class UserResolverBase {
     return result;
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => Profile, { nullable: true })
+  @nestAccessControl.UseRoles({
+    resource: \\"Profile\\",
+    action: \\"view\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async profile(@graphql.Parent() parent: User): Promise<Profile | null> {
     const result = await this.service.getProfile(parent.id);
 

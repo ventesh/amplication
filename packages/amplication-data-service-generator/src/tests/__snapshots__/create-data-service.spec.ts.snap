@@ -4826,6 +4826,8 @@ import { Request } from \\"express\\";
 import { plainToClass } from \\"class-transformer\\";
 import { ApiNestedQuery } from \\"../../decorators/api-nested-query.decorator\\";
 import { CustomerService } from \\"../customer.service\\";
+import { AclValidateRequestInterceptor } from \\"../../interceptors/aclValidateRequest.interceptor\\";
+import { AclFilterResponseInterceptor } from \\"../../interceptors/aclFilterResponse.interceptor\\";
 import { Public } from \\"../../decorators/public.decorator\\";
 import { CustomerCreateInput } from \\"./CustomerCreateInput\\";
 import { CustomerWhereInput } from \\"./CustomerWhereInput\\";
@@ -4840,8 +4842,17 @@ import { OrderWhereUniqueInput } from \\"../../order/base/OrderWhereUniqueInput\
 export class CustomerControllerBase {
   constructor(protected readonly service: CustomerService) {}
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Post()
   @swagger.ApiCreatedResponse({ type: Customer })
+  @nestAccessControl.UseRoles({
+    resource: \\"Customer\\",
+    action: \\"create\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async create(@common.Body() data: CustomerCreateInput): Promise<Customer> {
     return await this.service.create({
       data: {
@@ -4890,9 +4901,18 @@ export class CustomerControllerBase {
     });
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get()
   @swagger.ApiOkResponse({ type: [Customer] })
   @ApiNestedQuery(CustomerFindManyArgs)
+  @nestAccessControl.UseRoles({
+    resource: \\"Customer\\",
+    action: \\"search\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async findMany(@common.Req() request: Request): Promise<Customer[]> {
     const args = plainToClass(CustomerFindManyArgs, request.query);
     return this.service.findMany({
@@ -4928,9 +4948,18 @@ export class CustomerControllerBase {
     });
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get(\\"/:id\\")
   @swagger.ApiOkResponse({ type: Customer })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
+  @nestAccessControl.UseRoles({
+    resource: \\"Customer\\",
+    action: \\"view\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async findOne(
     @common.Param() params: CustomerWhereUniqueInput
   ): Promise<Customer | null> {
@@ -4973,9 +5002,18 @@ export class CustomerControllerBase {
     return result;
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Patch(\\"/:id\\")
   @swagger.ApiOkResponse({ type: Customer })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
+  @nestAccessControl.UseRoles({
+    resource: \\"Customer\\",
+    action: \\"update\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async update(
     @common.Param() params: CustomerWhereUniqueInput,
     @common.Body() data: CustomerUpdateInput
@@ -5040,6 +5078,14 @@ export class CustomerControllerBase {
   @common.Delete(\\"/:id\\")
   @swagger.ApiOkResponse({ type: Customer })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
+  @nestAccessControl.UseRoles({
+    resource: \\"Customer\\",
+    action: \\"delete\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async delete(
     @common.Param() params: CustomerWhereUniqueInput
   ): Promise<Customer | null> {
@@ -5118,7 +5164,16 @@ export class CustomerControllerBase {
     return results;
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Post(\\"/:id/orders\\")
+  @nestAccessControl.UseRoles({
+    resource: \\"Customer\\",
+    action: \\"update\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async connectOrders(
     @common.Param() params: CustomerWhereUniqueInput,
     @common.Body() body: OrderWhereUniqueInput[]
@@ -5135,7 +5190,16 @@ export class CustomerControllerBase {
     });
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Patch(\\"/:id/orders\\")
+  @nestAccessControl.UseRoles({
+    resource: \\"Customer\\",
+    action: \\"update\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async updateOrders(
     @common.Param() params: CustomerWhereUniqueInput,
     @common.Body() body: OrderWhereUniqueInput[]
@@ -5153,6 +5217,14 @@ export class CustomerControllerBase {
   }
 
   @common.Delete(\\"/:id/orders\\")
+  @nestAccessControl.UseRoles({
+    resource: \\"Customer\\",
+    action: \\"delete\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async disconnectOrders(
     @common.Param() params: CustomerWhereUniqueInput,
     @common.Body() body: OrderWhereUniqueInput[]
@@ -5207,6 +5279,8 @@ import * as graphql from \\"@nestjs/graphql\\";
 import * as apollo from \\"apollo-server-express\\";
 import { isRecordNotFoundError } from \\"../../prisma.util\\";
 import { MetaQueryPayload } from \\"../../util/MetaQueryPayload\\";
+import { AclFilterResponseInterceptor } from \\"../../interceptors/aclFilterResponse.interceptor\\";
+import { AclValidateRequestInterceptor } from \\"../../interceptors/aclValidateRequest.interceptor\\";
 import { Public } from \\"../../decorators/public.decorator\\";
 import { CreateCustomerArgs } from \\"./CreateCustomerArgs\\";
 import { UpdateCustomerArgs } from \\"./UpdateCustomerArgs\\";
@@ -5235,14 +5309,32 @@ export class CustomerResolverBase {
     };
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.Query(() => [Customer])
+  @nestAccessControl.UseRoles({
+    resource: \\"Customer\\",
+    action: \\"search\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async customers(
     @graphql.Args() args: CustomerFindManyArgs
   ): Promise<Customer[]> {
     return this.service.findMany(args);
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.Query(() => Customer, { nullable: true })
+  @nestAccessControl.UseRoles({
+    resource: \\"Customer\\",
+    action: \\"view\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async customer(
     @graphql.Args() args: CustomerFindUniqueArgs
   ): Promise<Customer | null> {
@@ -5253,7 +5345,16 @@ export class CustomerResolverBase {
     return result;
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @graphql.Mutation(() => Customer)
+  @nestAccessControl.UseRoles({
+    resource: \\"Customer\\",
+    action: \\"create\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async createCustomer(
     @graphql.Args() args: CreateCustomerArgs
   ): Promise<Customer> {
@@ -5277,7 +5378,16 @@ export class CustomerResolverBase {
     });
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @graphql.Mutation(() => Customer)
+  @nestAccessControl.UseRoles({
+    resource: \\"Customer\\",
+    action: \\"update\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async updateCustomer(
     @graphql.Args() args: UpdateCustomerArgs
   ): Promise<Customer | null> {
@@ -5311,6 +5421,14 @@ export class CustomerResolverBase {
   }
 
   @graphql.Mutation(() => Customer)
+  @nestAccessControl.UseRoles({
+    resource: \\"Customer\\",
+    action: \\"delete\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async deleteCustomer(
     @graphql.Args() args: DeleteCustomerArgs
   ): Promise<Customer | null> {
@@ -5341,7 +5459,16 @@ export class CustomerResolverBase {
     return results;
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => Organization, { nullable: true })
+  @nestAccessControl.UseRoles({
+    resource: \\"Organization\\",
+    action: \\"view\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async organization(
     @graphql.Parent() parent: Customer
   ): Promise<Organization | null> {
@@ -5353,7 +5480,16 @@ export class CustomerResolverBase {
     return result;
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => Organization, { nullable: true })
+  @nestAccessControl.UseRoles({
+    resource: \\"Organization\\",
+    action: \\"view\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async vipOrganization(
     @graphql.Parent() parent: Customer
   ): Promise<Organization | null> {
@@ -6100,6 +6236,8 @@ import { Request } from \\"express\\";
 import { plainToClass } from \\"class-transformer\\";
 import { ApiNestedQuery } from \\"../../decorators/api-nested-query.decorator\\";
 import { EmptyService } from \\"../empty.service\\";
+import { AclValidateRequestInterceptor } from \\"../../interceptors/aclValidateRequest.interceptor\\";
+import { AclFilterResponseInterceptor } from \\"../../interceptors/aclFilterResponse.interceptor\\";
 import { EmptyCreateInput } from \\"./EmptyCreateInput\\";
 import { EmptyWhereInput } from \\"./EmptyWhereInput\\";
 import { EmptyWhereUniqueInput } from \\"./EmptyWhereUniqueInput\\";
@@ -6110,8 +6248,17 @@ import { Empty } from \\"./Empty\\";
 export class EmptyControllerBase {
   constructor(protected readonly service: EmptyService) {}
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Post()
   @swagger.ApiCreatedResponse({ type: Empty })
+  @nestAccessControl.UseRoles({
+    resource: \\"Empty\\",
+    action: \\"create\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async create(@common.Body() data: EmptyCreateInput): Promise<Empty> {
     return await this.service.create({
       data: data,
@@ -6123,9 +6270,18 @@ export class EmptyControllerBase {
     });
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get()
   @swagger.ApiOkResponse({ type: [Empty] })
   @ApiNestedQuery(EmptyFindManyArgs)
+  @nestAccessControl.UseRoles({
+    resource: \\"Empty\\",
+    action: \\"search\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async findMany(@common.Req() request: Request): Promise<Empty[]> {
     const args = plainToClass(EmptyFindManyArgs, request.query);
     return this.service.findMany({
@@ -6138,9 +6294,18 @@ export class EmptyControllerBase {
     });
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get(\\"/:id\\")
   @swagger.ApiOkResponse({ type: Empty })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
+  @nestAccessControl.UseRoles({
+    resource: \\"Empty\\",
+    action: \\"view\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async findOne(
     @common.Param() params: EmptyWhereUniqueInput
   ): Promise<Empty | null> {
@@ -6160,9 +6325,18 @@ export class EmptyControllerBase {
     return result;
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Patch(\\"/:id\\")
   @swagger.ApiOkResponse({ type: Empty })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
+  @nestAccessControl.UseRoles({
+    resource: \\"Empty\\",
+    action: \\"update\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async update(
     @common.Param() params: EmptyWhereUniqueInput,
     @common.Body() data: EmptyUpdateInput
@@ -6190,6 +6364,14 @@ export class EmptyControllerBase {
   @common.Delete(\\"/:id\\")
   @swagger.ApiOkResponse({ type: Empty })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
+  @nestAccessControl.UseRoles({
+    resource: \\"Empty\\",
+    action: \\"delete\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async delete(
     @common.Param() params: EmptyWhereUniqueInput
   ): Promise<Empty | null> {
@@ -6250,6 +6432,7 @@ import * as graphql from \\"@nestjs/graphql\\";
 import * as apollo from \\"apollo-server-express\\";
 import { isRecordNotFoundError } from \\"../../prisma.util\\";
 import { MetaQueryPayload } from \\"../../util/MetaQueryPayload\\";
+import { AclFilterResponseInterceptor } from \\"../../interceptors/aclFilterResponse.interceptor\\";
 import { DeleteEmptyArgs } from \\"./DeleteEmptyArgs\\";
 import { EmptyFindManyArgs } from \\"./EmptyFindManyArgs\\";
 import { EmptyFindUniqueArgs } from \\"./EmptyFindUniqueArgs\\";
@@ -6272,12 +6455,30 @@ export class EmptyResolverBase {
     };
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.Query(() => [Empty])
+  @nestAccessControl.UseRoles({
+    resource: \\"Empty\\",
+    action: \\"search\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async empties(@graphql.Args() args: EmptyFindManyArgs): Promise<Empty[]> {
     return this.service.findMany(args);
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.Query(() => Empty, { nullable: true })
+  @nestAccessControl.UseRoles({
+    resource: \\"Empty\\",
+    action: \\"view\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async empty(
     @graphql.Args() args: EmptyFindUniqueArgs
   ): Promise<Empty | null> {
@@ -6289,6 +6490,14 @@ export class EmptyResolverBase {
   }
 
   @graphql.Mutation(() => Empty)
+  @nestAccessControl.UseRoles({
+    resource: \\"Empty\\",
+    action: \\"delete\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async deleteEmpty(
     @graphql.Args() args: DeleteEmptyArgs
   ): Promise<Empty | null> {
@@ -7637,6 +7846,7 @@ import * as apollo from \\"apollo-server-express\\";
 import { isRecordNotFoundError } from \\"../../prisma.util\\";
 import { MetaQueryPayload } from \\"../../util/MetaQueryPayload\\";
 import { Public } from \\"../../decorators/public.decorator\\";
+import { AclFilterResponseInterceptor } from \\"../../interceptors/aclFilterResponse.interceptor\\";
 import { CreateOrderArgs } from \\"./CreateOrderArgs\\";
 import { UpdateOrderArgs } from \\"./UpdateOrderArgs\\";
 import { DeleteOrderArgs } from \\"./DeleteOrderArgs\\";
@@ -7738,7 +7948,16 @@ export class OrderResolverBase {
     }
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => Customer, { nullable: true })
+  @nestAccessControl.UseRoles({
+    resource: \\"Customer\\",
+    action: \\"view\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async customer(@graphql.Parent() parent: Order): Promise<Customer | null> {
     const result = await this.service.getCustomer(parent.id);
 
@@ -8767,6 +8986,8 @@ import { Request } from \\"express\\";
 import { plainToClass } from \\"class-transformer\\";
 import { ApiNestedQuery } from \\"../../decorators/api-nested-query.decorator\\";
 import { OrganizationService } from \\"../organization.service\\";
+import { AclValidateRequestInterceptor } from \\"../../interceptors/aclValidateRequest.interceptor\\";
+import { AclFilterResponseInterceptor } from \\"../../interceptors/aclFilterResponse.interceptor\\";
 import { OrganizationCreateInput } from \\"./OrganizationCreateInput\\";
 import { OrganizationWhereInput } from \\"./OrganizationWhereInput\\";
 import { OrganizationWhereUniqueInput } from \\"./OrganizationWhereUniqueInput\\";
@@ -8783,8 +9004,17 @@ import { CustomerWhereUniqueInput } from \\"../../customer/base/CustomerWhereUni
 export class OrganizationControllerBase {
   constructor(protected readonly service: OrganizationService) {}
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Post()
   @swagger.ApiCreatedResponse({ type: Organization })
+  @nestAccessControl.UseRoles({
+    resource: \\"Organization\\",
+    action: \\"create\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async create(
     @common.Body() data: OrganizationCreateInput
   ): Promise<Organization> {
@@ -8799,9 +9029,18 @@ export class OrganizationControllerBase {
     });
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get()
   @swagger.ApiOkResponse({ type: [Organization] })
   @ApiNestedQuery(OrganizationFindManyArgs)
+  @nestAccessControl.UseRoles({
+    resource: \\"Organization\\",
+    action: \\"search\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async findMany(@common.Req() request: Request): Promise<Organization[]> {
     const args = plainToClass(OrganizationFindManyArgs, request.query);
     return this.service.findMany({
@@ -8815,9 +9054,18 @@ export class OrganizationControllerBase {
     });
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get(\\"/:id\\")
   @swagger.ApiOkResponse({ type: Organization })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
+  @nestAccessControl.UseRoles({
+    resource: \\"Organization\\",
+    action: \\"view\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async findOne(
     @common.Param() params: OrganizationWhereUniqueInput
   ): Promise<Organization | null> {
@@ -8838,9 +9086,18 @@ export class OrganizationControllerBase {
     return result;
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Patch(\\"/:id\\")
   @swagger.ApiOkResponse({ type: Organization })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
+  @nestAccessControl.UseRoles({
+    resource: \\"Organization\\",
+    action: \\"update\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async update(
     @common.Param() params: OrganizationWhereUniqueInput,
     @common.Body() data: OrganizationUpdateInput
@@ -8869,6 +9126,14 @@ export class OrganizationControllerBase {
   @common.Delete(\\"/:id\\")
   @swagger.ApiOkResponse({ type: Organization })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
+  @nestAccessControl.UseRoles({
+    resource: \\"Organization\\",
+    action: \\"delete\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async delete(
     @common.Param() params: OrganizationWhereUniqueInput
   ): Promise<Organization | null> {
@@ -8892,8 +9157,17 @@ export class OrganizationControllerBase {
     }
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get(\\"/:id/users\\")
   @ApiNestedQuery(UserFindManyArgs)
+  @nestAccessControl.UseRoles({
+    resource: \\"User\\",
+    action: \\"search\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async findManyUsers(
     @common.Req() request: Request,
     @common.Param() params: OrganizationWhereUniqueInput
@@ -8939,7 +9213,16 @@ export class OrganizationControllerBase {
     return results;
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Post(\\"/:id/users\\")
+  @nestAccessControl.UseRoles({
+    resource: \\"Organization\\",
+    action: \\"update\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async connectUsers(
     @common.Param() params: OrganizationWhereUniqueInput,
     @common.Body() body: UserWhereUniqueInput[]
@@ -8956,7 +9239,16 @@ export class OrganizationControllerBase {
     });
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Patch(\\"/:id/users\\")
+  @nestAccessControl.UseRoles({
+    resource: \\"Organization\\",
+    action: \\"update\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async updateUsers(
     @common.Param() params: OrganizationWhereUniqueInput,
     @common.Body() body: UserWhereUniqueInput[]
@@ -8974,6 +9266,14 @@ export class OrganizationControllerBase {
   }
 
   @common.Delete(\\"/:id/users\\")
+  @nestAccessControl.UseRoles({
+    resource: \\"Organization\\",
+    action: \\"delete\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async disconnectUsers(
     @common.Param() params: OrganizationWhereUniqueInput,
     @common.Body() body: UserWhereUniqueInput[]
@@ -8990,8 +9290,17 @@ export class OrganizationControllerBase {
     });
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get(\\"/:id/customers\\")
   @ApiNestedQuery(CustomerFindManyArgs)
+  @nestAccessControl.UseRoles({
+    resource: \\"Customer\\",
+    action: \\"search\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async findManyCustomers(
     @common.Req() request: Request,
     @common.Param() params: OrganizationWhereUniqueInput
@@ -9036,7 +9345,16 @@ export class OrganizationControllerBase {
     return results;
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Post(\\"/:id/customers\\")
+  @nestAccessControl.UseRoles({
+    resource: \\"Organization\\",
+    action: \\"update\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async connectCustomers(
     @common.Param() params: OrganizationWhereUniqueInput,
     @common.Body() body: CustomerWhereUniqueInput[]
@@ -9053,7 +9371,16 @@ export class OrganizationControllerBase {
     });
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Patch(\\"/:id/customers\\")
+  @nestAccessControl.UseRoles({
+    resource: \\"Organization\\",
+    action: \\"update\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async updateCustomers(
     @common.Param() params: OrganizationWhereUniqueInput,
     @common.Body() body: CustomerWhereUniqueInput[]
@@ -9071,6 +9398,14 @@ export class OrganizationControllerBase {
   }
 
   @common.Delete(\\"/:id/customers\\")
+  @nestAccessControl.UseRoles({
+    resource: \\"Organization\\",
+    action: \\"delete\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async disconnectCustomers(
     @common.Param() params: OrganizationWhereUniqueInput,
     @common.Body() body: CustomerWhereUniqueInput[]
@@ -9087,8 +9422,17 @@ export class OrganizationControllerBase {
     });
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get(\\"/:id/vipCustomers\\")
   @ApiNestedQuery(CustomerFindManyArgs)
+  @nestAccessControl.UseRoles({
+    resource: \\"Customer\\",
+    action: \\"search\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async findManyVipCustomers(
     @common.Req() request: Request,
     @common.Param() params: OrganizationWhereUniqueInput
@@ -9133,7 +9477,16 @@ export class OrganizationControllerBase {
     return results;
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Post(\\"/:id/vipCustomers\\")
+  @nestAccessControl.UseRoles({
+    resource: \\"Organization\\",
+    action: \\"update\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async connectVipCustomers(
     @common.Param() params: OrganizationWhereUniqueInput,
     @common.Body() body: CustomerWhereUniqueInput[]
@@ -9150,7 +9503,16 @@ export class OrganizationControllerBase {
     });
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Patch(\\"/:id/vipCustomers\\")
+  @nestAccessControl.UseRoles({
+    resource: \\"Organization\\",
+    action: \\"update\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async updateVipCustomers(
     @common.Param() params: OrganizationWhereUniqueInput,
     @common.Body() body: CustomerWhereUniqueInput[]
@@ -9168,6 +9530,14 @@ export class OrganizationControllerBase {
   }
 
   @common.Delete(\\"/:id/vipCustomers\\")
+  @nestAccessControl.UseRoles({
+    resource: \\"Organization\\",
+    action: \\"delete\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async disconnectVipCustomers(
     @common.Param() params: OrganizationWhereUniqueInput,
     @common.Body() body: CustomerWhereUniqueInput[]
@@ -9222,6 +9592,8 @@ import * as graphql from \\"@nestjs/graphql\\";
 import * as apollo from \\"apollo-server-express\\";
 import { isRecordNotFoundError } from \\"../../prisma.util\\";
 import { MetaQueryPayload } from \\"../../util/MetaQueryPayload\\";
+import { AclFilterResponseInterceptor } from \\"../../interceptors/aclFilterResponse.interceptor\\";
+import { AclValidateRequestInterceptor } from \\"../../interceptors/aclValidateRequest.interceptor\\";
 import { CreateOrganizationArgs } from \\"./CreateOrganizationArgs\\";
 import { UpdateOrganizationArgs } from \\"./UpdateOrganizationArgs\\";
 import { DeleteOrganizationArgs } from \\"./DeleteOrganizationArgs\\";
@@ -9250,14 +9622,32 @@ export class OrganizationResolverBase {
     };
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.Query(() => [Organization])
+  @nestAccessControl.UseRoles({
+    resource: \\"Organization\\",
+    action: \\"search\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async organizations(
     @graphql.Args() args: OrganizationFindManyArgs
   ): Promise<Organization[]> {
     return this.service.findMany(args);
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.Query(() => Organization, { nullable: true })
+  @nestAccessControl.UseRoles({
+    resource: \\"Organization\\",
+    action: \\"view\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async organization(
     @graphql.Args() args: OrganizationFindUniqueArgs
   ): Promise<Organization | null> {
@@ -9268,7 +9658,16 @@ export class OrganizationResolverBase {
     return result;
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @graphql.Mutation(() => Organization)
+  @nestAccessControl.UseRoles({
+    resource: \\"Organization\\",
+    action: \\"create\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async createOrganization(
     @graphql.Args() args: CreateOrganizationArgs
   ): Promise<Organization> {
@@ -9278,7 +9677,16 @@ export class OrganizationResolverBase {
     });
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @graphql.Mutation(() => Organization)
+  @nestAccessControl.UseRoles({
+    resource: \\"Organization\\",
+    action: \\"update\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async updateOrganization(
     @graphql.Args() args: UpdateOrganizationArgs
   ): Promise<Organization | null> {
@@ -9298,6 +9706,14 @@ export class OrganizationResolverBase {
   }
 
   @graphql.Mutation(() => Organization)
+  @nestAccessControl.UseRoles({
+    resource: \\"Organization\\",
+    action: \\"delete\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async deleteOrganization(
     @graphql.Args() args: DeleteOrganizationArgs
   ): Promise<Organization | null> {
@@ -9313,7 +9729,16 @@ export class OrganizationResolverBase {
     }
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => [User])
+  @nestAccessControl.UseRoles({
+    resource: \\"User\\",
+    action: \\"search\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async users(
     @graphql.Parent() parent: Organization,
     @graphql.Args() args: UserFindManyArgs
@@ -9327,7 +9752,16 @@ export class OrganizationResolverBase {
     return results;
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => [Customer])
+  @nestAccessControl.UseRoles({
+    resource: \\"Customer\\",
+    action: \\"search\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async customers(
     @graphql.Parent() parent: Organization,
     @graphql.Args() args: CustomerFindManyArgs
@@ -9341,7 +9775,16 @@ export class OrganizationResolverBase {
     return results;
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => [Customer])
+  @nestAccessControl.UseRoles({
+    resource: \\"Customer\\",
+    action: \\"search\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async vipCustomers(
     @graphql.Parent() parent: Organization,
     @graphql.Args() args: CustomerFindManyArgs
@@ -10251,6 +10694,8 @@ import { Request } from \\"express\\";
 import { plainToClass } from \\"class-transformer\\";
 import { ApiNestedQuery } from \\"../../decorators/api-nested-query.decorator\\";
 import { ProfileService } from \\"../profile.service\\";
+import { AclValidateRequestInterceptor } from \\"../../interceptors/aclValidateRequest.interceptor\\";
+import { AclFilterResponseInterceptor } from \\"../../interceptors/aclFilterResponse.interceptor\\";
 import { ProfileCreateInput } from \\"./ProfileCreateInput\\";
 import { ProfileWhereInput } from \\"./ProfileWhereInput\\";
 import { ProfileWhereUniqueInput } from \\"./ProfileWhereUniqueInput\\";
@@ -10261,8 +10706,17 @@ import { Profile } from \\"./Profile\\";
 export class ProfileControllerBase {
   constructor(protected readonly service: ProfileService) {}
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Post()
   @swagger.ApiCreatedResponse({ type: Profile })
+  @nestAccessControl.UseRoles({
+    resource: \\"Profile\\",
+    action: \\"create\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async create(@common.Body() data: ProfileCreateInput): Promise<Profile> {
     return await this.service.create({
       data: {
@@ -10289,9 +10743,18 @@ export class ProfileControllerBase {
     });
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get()
   @swagger.ApiOkResponse({ type: [Profile] })
   @ApiNestedQuery(ProfileFindManyArgs)
+  @nestAccessControl.UseRoles({
+    resource: \\"Profile\\",
+    action: \\"search\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async findMany(@common.Req() request: Request): Promise<Profile[]> {
     const args = plainToClass(ProfileFindManyArgs, request.query);
     return this.service.findMany({
@@ -10311,9 +10774,18 @@ export class ProfileControllerBase {
     });
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get(\\"/:id\\")
   @swagger.ApiOkResponse({ type: Profile })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
+  @nestAccessControl.UseRoles({
+    resource: \\"Profile\\",
+    action: \\"view\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async findOne(
     @common.Param() params: ProfileWhereUniqueInput
   ): Promise<Profile | null> {
@@ -10340,9 +10812,18 @@ export class ProfileControllerBase {
     return result;
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Patch(\\"/:id\\")
   @swagger.ApiOkResponse({ type: Profile })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
+  @nestAccessControl.UseRoles({
+    resource: \\"Profile\\",
+    action: \\"update\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async update(
     @common.Param() params: ProfileWhereUniqueInput,
     @common.Body() data: ProfileUpdateInput
@@ -10385,6 +10866,14 @@ export class ProfileControllerBase {
   @common.Delete(\\"/:id\\")
   @swagger.ApiOkResponse({ type: Profile })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
+  @nestAccessControl.UseRoles({
+    resource: \\"Profile\\",
+    action: \\"delete\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async delete(
     @common.Param() params: ProfileWhereUniqueInput
   ): Promise<Profile | null> {
@@ -10452,6 +10941,8 @@ import * as graphql from \\"@nestjs/graphql\\";
 import * as apollo from \\"apollo-server-express\\";
 import { isRecordNotFoundError } from \\"../../prisma.util\\";
 import { MetaQueryPayload } from \\"../../util/MetaQueryPayload\\";
+import { AclFilterResponseInterceptor } from \\"../../interceptors/aclFilterResponse.interceptor\\";
+import { AclValidateRequestInterceptor } from \\"../../interceptors/aclValidateRequest.interceptor\\";
 import { CreateProfileArgs } from \\"./CreateProfileArgs\\";
 import { UpdateProfileArgs } from \\"./UpdateProfileArgs\\";
 import { DeleteProfileArgs } from \\"./DeleteProfileArgs\\";
@@ -10477,14 +10968,32 @@ export class ProfileResolverBase {
     };
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.Query(() => [Profile])
+  @nestAccessControl.UseRoles({
+    resource: \\"Profile\\",
+    action: \\"search\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async profiles(
     @graphql.Args() args: ProfileFindManyArgs
   ): Promise<Profile[]> {
     return this.service.findMany(args);
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.Query(() => Profile, { nullable: true })
+  @nestAccessControl.UseRoles({
+    resource: \\"Profile\\",
+    action: \\"view\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async profile(
     @graphql.Args() args: ProfileFindUniqueArgs
   ): Promise<Profile | null> {
@@ -10495,7 +11004,16 @@ export class ProfileResolverBase {
     return result;
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @graphql.Mutation(() => Profile)
+  @nestAccessControl.UseRoles({
+    resource: \\"Profile\\",
+    action: \\"create\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async createProfile(
     @graphql.Args() args: CreateProfileArgs
   ): Promise<Profile> {
@@ -10513,7 +11031,16 @@ export class ProfileResolverBase {
     });
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @graphql.Mutation(() => Profile)
+  @nestAccessControl.UseRoles({
+    resource: \\"Profile\\",
+    action: \\"update\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async updateProfile(
     @graphql.Args() args: UpdateProfileArgs
   ): Promise<Profile | null> {
@@ -10541,6 +11068,14 @@ export class ProfileResolverBase {
   }
 
   @graphql.Mutation(() => Profile)
+  @nestAccessControl.UseRoles({
+    resource: \\"Profile\\",
+    action: \\"delete\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async deleteProfile(
     @graphql.Args() args: DeleteProfileArgs
   ): Promise<Profile | null> {
@@ -10556,7 +11091,16 @@ export class ProfileResolverBase {
     }
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => User, { nullable: true })
+  @nestAccessControl.UseRoles({
+    resource: \\"User\\",
+    action: \\"view\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async user(@graphql.Parent() parent: Profile): Promise<User | null> {
     const result = await this.service.getUser(parent.id);
 
@@ -12437,6 +12981,8 @@ import { Request } from \\"express\\";
 import { plainToClass } from \\"class-transformer\\";
 import { ApiNestedQuery } from \\"../../decorators/api-nested-query.decorator\\";
 import { UserService } from \\"../user.service\\";
+import { AclValidateRequestInterceptor } from \\"../../interceptors/aclValidateRequest.interceptor\\";
+import { AclFilterResponseInterceptor } from \\"../../interceptors/aclFilterResponse.interceptor\\";
 import { UserCreateInput } from \\"./UserCreateInput\\";
 import { UserWhereInput } from \\"./UserWhereInput\\";
 import { UserWhereUniqueInput } from \\"./UserWhereUniqueInput\\";
@@ -12450,8 +12996,17 @@ import { OrganizationWhereUniqueInput } from \\"../../organization/base/Organiza
 export class UserControllerBase {
   constructor(protected readonly service: UserService) {}
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Post()
   @swagger.ApiCreatedResponse({ type: User })
+  @nestAccessControl.UseRoles({
+    resource: \\"User\\",
+    action: \\"create\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async create(@common.Body() data: UserCreateInput): Promise<User> {
     return await this.service.create({
       data: {
@@ -12501,9 +13056,18 @@ export class UserControllerBase {
     });
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get()
   @swagger.ApiOkResponse({ type: [User] })
   @ApiNestedQuery(UserFindManyArgs)
+  @nestAccessControl.UseRoles({
+    resource: \\"User\\",
+    action: \\"search\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async findMany(@common.Req() request: Request): Promise<User[]> {
     const args = plainToClass(UserFindManyArgs, request.query);
     return this.service.findMany({
@@ -12540,9 +13104,18 @@ export class UserControllerBase {
     });
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get(\\"/:id\\")
   @swagger.ApiOkResponse({ type: User })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
+  @nestAccessControl.UseRoles({
+    resource: \\"User\\",
+    action: \\"view\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async findOne(
     @common.Param() params: UserWhereUniqueInput
   ): Promise<User | null> {
@@ -12586,9 +13159,18 @@ export class UserControllerBase {
     return result;
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Patch(\\"/:id\\")
   @swagger.ApiOkResponse({ type: User })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
+  @nestAccessControl.UseRoles({
+    resource: \\"User\\",
+    action: \\"update\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async update(
     @common.Param() params: UserWhereUniqueInput,
     @common.Body() data: UserUpdateInput
@@ -12654,6 +13236,14 @@ export class UserControllerBase {
   @common.Delete(\\"/:id\\")
   @swagger.ApiOkResponse({ type: User })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
+  @nestAccessControl.UseRoles({
+    resource: \\"User\\",
+    action: \\"delete\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async delete(
     @common.Param() params: UserWhereUniqueInput
   ): Promise<User | null> {
@@ -12700,8 +13290,17 @@ export class UserControllerBase {
     }
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get(\\"/:id/employees\\")
   @ApiNestedQuery(UserFindManyArgs)
+  @nestAccessControl.UseRoles({
+    resource: \\"User\\",
+    action: \\"search\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async findManyEmployees(
     @common.Req() request: Request,
     @common.Param() params: UserWhereUniqueInput
@@ -12747,7 +13346,16 @@ export class UserControllerBase {
     return results;
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Post(\\"/:id/employees\\")
+  @nestAccessControl.UseRoles({
+    resource: \\"User\\",
+    action: \\"update\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async connectEmployees(
     @common.Param() params: UserWhereUniqueInput,
     @common.Body() body: UserWhereUniqueInput[]
@@ -12764,7 +13372,16 @@ export class UserControllerBase {
     });
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Patch(\\"/:id/employees\\")
+  @nestAccessControl.UseRoles({
+    resource: \\"User\\",
+    action: \\"update\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async updateEmployees(
     @common.Param() params: UserWhereUniqueInput,
     @common.Body() body: UserWhereUniqueInput[]
@@ -12782,6 +13399,14 @@ export class UserControllerBase {
   }
 
   @common.Delete(\\"/:id/employees\\")
+  @nestAccessControl.UseRoles({
+    resource: \\"User\\",
+    action: \\"delete\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async disconnectEmployees(
     @common.Param() params: UserWhereUniqueInput,
     @common.Body() body: UserWhereUniqueInput[]
@@ -12798,8 +13423,17 @@ export class UserControllerBase {
     });
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get(\\"/:id/organizations\\")
   @ApiNestedQuery(OrganizationFindManyArgs)
+  @nestAccessControl.UseRoles({
+    resource: \\"Organization\\",
+    action: \\"search\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async findManyOrganizations(
     @common.Req() request: Request,
     @common.Param() params: UserWhereUniqueInput
@@ -12822,7 +13456,16 @@ export class UserControllerBase {
     return results;
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Post(\\"/:id/organizations\\")
+  @nestAccessControl.UseRoles({
+    resource: \\"User\\",
+    action: \\"update\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async connectOrganizations(
     @common.Param() params: UserWhereUniqueInput,
     @common.Body() body: OrganizationWhereUniqueInput[]
@@ -12839,7 +13482,16 @@ export class UserControllerBase {
     });
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Patch(\\"/:id/organizations\\")
+  @nestAccessControl.UseRoles({
+    resource: \\"User\\",
+    action: \\"update\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async updateOrganizations(
     @common.Param() params: UserWhereUniqueInput,
     @common.Body() body: OrganizationWhereUniqueInput[]
@@ -12857,6 +13509,14 @@ export class UserControllerBase {
   }
 
   @common.Delete(\\"/:id/organizations\\")
+  @nestAccessControl.UseRoles({
+    resource: \\"User\\",
+    action: \\"delete\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async disconnectOrganizations(
     @common.Param() params: UserWhereUniqueInput,
     @common.Body() body: OrganizationWhereUniqueInput[]
@@ -12911,6 +13571,8 @@ import * as graphql from \\"@nestjs/graphql\\";
 import * as apollo from \\"apollo-server-express\\";
 import { isRecordNotFoundError } from \\"../../prisma.util\\";
 import { MetaQueryPayload } from \\"../../util/MetaQueryPayload\\";
+import { AclFilterResponseInterceptor } from \\"../../interceptors/aclFilterResponse.interceptor\\";
+import { AclValidateRequestInterceptor } from \\"../../interceptors/aclValidateRequest.interceptor\\";
 import { CreateUserArgs } from \\"./CreateUserArgs\\";
 import { UpdateUserArgs } from \\"./UpdateUserArgs\\";
 import { DeleteUserArgs } from \\"./DeleteUserArgs\\";
@@ -12938,12 +13600,30 @@ export class UserResolverBase {
     };
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.Query(() => [User])
+  @nestAccessControl.UseRoles({
+    resource: \\"User\\",
+    action: \\"search\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async users(@graphql.Args() args: UserFindManyArgs): Promise<User[]> {
     return this.service.findMany(args);
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.Query(() => User, { nullable: true })
+  @nestAccessControl.UseRoles({
+    resource: \\"User\\",
+    action: \\"view\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async user(@graphql.Args() args: UserFindUniqueArgs): Promise<User | null> {
     const result = await this.service.findOne(args);
     if (result === null) {
@@ -12952,7 +13632,16 @@ export class UserResolverBase {
     return result;
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @graphql.Mutation(() => User)
+  @nestAccessControl.UseRoles({
+    resource: \\"User\\",
+    action: \\"create\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async createUser(@graphql.Args() args: CreateUserArgs): Promise<User> {
     return await this.service.create({
       ...args,
@@ -12974,7 +13663,16 @@ export class UserResolverBase {
     });
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @graphql.Mutation(() => User)
+  @nestAccessControl.UseRoles({
+    resource: \\"User\\",
+    action: \\"update\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async updateUser(@graphql.Args() args: UpdateUserArgs): Promise<User | null> {
     try {
       return await this.service.update({
@@ -13006,6 +13704,14 @@ export class UserResolverBase {
   }
 
   @graphql.Mutation(() => User)
+  @nestAccessControl.UseRoles({
+    resource: \\"User\\",
+    action: \\"delete\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async deleteUser(@graphql.Args() args: DeleteUserArgs): Promise<User | null> {
     try {
       return await this.service.delete(args);
@@ -13019,7 +13725,16 @@ export class UserResolverBase {
     }
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => [User])
+  @nestAccessControl.UseRoles({
+    resource: \\"User\\",
+    action: \\"search\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async employees(
     @graphql.Parent() parent: User,
     @graphql.Args() args: UserFindManyArgs
@@ -13033,7 +13748,16 @@ export class UserResolverBase {
     return results;
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => [Organization])
+  @nestAccessControl.UseRoles({
+    resource: \\"Organization\\",
+    action: \\"search\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async organizations(
     @graphql.Parent() parent: User,
     @graphql.Args() args: OrganizationFindManyArgs
@@ -13047,7 +13771,16 @@ export class UserResolverBase {
     return results;
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => User, { nullable: true })
+  @nestAccessControl.UseRoles({
+    resource: \\"User\\",
+    action: \\"view\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async manager(@graphql.Parent() parent: User): Promise<User | null> {
     const result = await this.service.getManager(parent.id);
 
@@ -13057,7 +13790,16 @@ export class UserResolverBase {
     return result;
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => Profile, { nullable: true })
+  @nestAccessControl.UseRoles({
+    resource: \\"Profile\\",
+    action: \\"view\\",
+    possession: \\"any\\",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async profile(@graphql.Parent() parent: User): Promise<Profile | null> {
     const result = await this.service.getProfile(parent.id);
 
