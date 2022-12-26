@@ -50,18 +50,8 @@ const PLUGINS: Plugin[] = [
     type: "test",
     versions: [
       {
-        version: "0.0.1",
-        settings: {
-          enableLogging: true,
-          defaultPort: "5432",
-        },
-      },
-      {
-        version: "0.0.2",
-        settings: {
-          enableLogging: true,
-          defaultPort: "5432",
-        },
+        version: "latest",
+        settings: {},
       },
     ],
   },
@@ -149,6 +139,25 @@ const PLUGINS: Plugin[] = [
     name: "Passport Basic Authentication",
     repo: "https://github.com/amplication/plugins/tree/master/plugins/auth-basic",
     npm: "@amplication/plugin-auth-basic",
+    github: "test",
+    website: "test",
+    category: "test",
+    type: "test",
+    versions: [
+      {
+        version: "latest",
+        settings: {},
+      },
+    ],
+  },
+  {
+    id: "formatter-prettier",
+    description:
+      "Prettier is an opinionated code formatter. It enforces a consistent style by parsing your code and re-printing it with its own rules that take the maximum line length into account, wrapping code when necessary.",
+    icon: "icons/formatter-prettier.png",
+    name: "Prettier",
+    repo: "https://github.com/amplication/plugins/tree/master/plugins/formatter-prettier",
+    npm: "@amplication/plugin-formatter-prettier",
     github: "test",
     website: "test",
     category: "test",
