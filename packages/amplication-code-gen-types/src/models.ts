@@ -672,7 +672,8 @@ export enum EnumGitOrganizationType {
 }
 
 export enum EnumGitProvider {
-  Github = 'Github'
+  Github = 'Github',
+  BitBucket = 'BitBucket'
 }
 
 export enum EnumMessagePatternConnectionOptions {
