@@ -1,3 +1,4 @@
+import { EnumGitProvider } from "@amplication/code-gen-types/models";
 import {
   EnumButtonStyle,
   SelectMenu,
@@ -14,7 +15,7 @@ import { GitOrganizationMenuItemContent } from "./GitOrganizationMenuItemContent
 type Props = {
   gitOrganizations: GitOrganizationFromGitRepository[];
   selectedGitOrganization: GitOrganizationFromGitRepository | null;
-  onAddGitOrganization: () => void;
+  onAddGitOrganization: (provider: EnumGitProvider) => void;
   onSelectGitOrganization: (
     organization: GitOrganizationFromGitRepository
   ) => void;
@@ -63,8 +64,24 @@ export default function ExistingConnectionsMenu({
                 </SelectMenuItem>
               ))}
               <hr className={`${CLASS_NAME}__hr`} />
-              <SelectMenuItem onSelectionChange={onAddGitOrganization}>
-                <span>Add another organization</span>
+              <SelectMenuItem
+                onSelectionChange={() =>
+                  onAddGitOrganization(EnumGitProvider.Github)
+                }
+              >
+                <span>Add GitHub organization</span>
+                <Icon
+                  icon="plus"
+                  className={`${CLASS_NAME}__add-icon`}
+                  size="xsmall"
+                />
+              </SelectMenuItem>
+              <SelectMenuItem
+                onSelectionChange={() =>
+                  onAddGitOrganization(EnumGitProvider.BitBucket)
+                }
+              >
+                <span>Add Bitbucket Workspace</span>
                 <Icon
                   icon="plus"
                   className={`${CLASS_NAME}__add-icon`}

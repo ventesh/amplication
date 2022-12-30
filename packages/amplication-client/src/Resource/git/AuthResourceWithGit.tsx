@@ -70,16 +70,16 @@ function AuthResourceWithGit({ resource, onDone }: Props) {
   const handleSelectRepoDialogOpen = useCallback(() => {
     setSelectRepoOpen(true);
   }, []);
-  const handleAuthWithGitClick = useCallback(() => {
+  const handleAuthWithGitClick = (provider: EnumGitProvider) => {
     trackEvent({
       eventName: AnalyticsEventNames.GitHubAuthResourceStart,
     });
     authWithGit({
       variables: {
-        gitProvider: "Github",
+        gitProvider: provider,
       },
     }).catch(console.error);
-  }, [authWithGit, trackEvent]);
+  };
 
   triggerOnDone = () => {
     onDone();
