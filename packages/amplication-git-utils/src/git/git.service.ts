@@ -36,20 +36,15 @@ export class GitService {
     installationId: string,
     isPublic: boolean
   ): Promise<RemoteGitRepository> {
-    const provider = this.gitServiceFactory.getService(gitProvider);
-    return await (gitOrganizationType === EnumGitOrganizationType.Organization
-      ? provider.createOrganizationRepository(
-          installationId,
-          gitOrganizationName,
-          repoName,
-          isPublic
-        )
-      : provider.createUserRepository(
-          installationId,
-          gitOrganizationName,
-          repoName,
-          isPublic
-        ));
+    return this.gitServiceFactory
+      .getService(gitProvider)
+      .createRepository(
+        installationId,
+        gitOrganizationType,
+        gitOrganizationName,
+        repoName,
+        isPublic
+      );
   }
   async getGitRemoteOrganization(
     installationId: string,

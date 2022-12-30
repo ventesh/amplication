@@ -1,4 +1,3 @@
-import { registerEnumType } from "@nestjs/graphql";
 import { Branch } from "./dto/branch";
 import { GithubFile } from "./dto/github-file.dto";
 import { RemoteGitOrganization } from "./dto/remote-git-organization.dto";
@@ -17,21 +16,9 @@ export enum EnumGitOrganizationType {
   Organization = "Organization",
 }
 
-registerEnumType(EnumGitOrganizationType, {
-  name: "EnumGitOrganizationType",
-});
-
 export enum EnumGitProvider {
   Github = "Github",
-}
-
-registerEnumType(EnumGitProvider, {
-  name: "EnumGitProvider",
-});
-
-export interface GitResourceMeta {
-  serverPath: string;
-  adminUIPath: string;
+  BitBucket = "BitBucket",
 }
 
 export interface GitResourceMeta {
@@ -40,19 +27,23 @@ export interface GitResourceMeta {
 }
 
 export interface GitClient {
-  createUserRepository(
+  getRepository(
     installationId: string,
+    owner: string,
+    repo: string
+  ): Promise<RemoteGitRepository>;
+
+  createRepository(
+    installationId: string,
+    versionControlUserType: EnumGitOrganizationType,
     owner: string,
     name: string,
     isPublic: boolean
   ): Promise<RemoteGitRepository>;
 
-  createOrganizationRepository(
-    installationId: string,
-    owner: string,
-    name: string,
-    isPublic: boolean
-  ): Promise<RemoteGitRepository>;
+  getGitRemoteOrganization(
+    installationId: string
+  ): Promise<RemoteGitOrganization>;
 
   getOrganizationRepos(
     installationId: string,
@@ -60,23 +51,9 @@ export interface GitClient {
     page: number
   ): Promise<RemoteGitRepos>;
 
-  isRepoExist(installationId: string, name: string): Promise<boolean>;
-
   getGitInstallationUrl(workspaceId: string): Promise<string>;
 
   deleteGitOrganization(installationId: string): Promise<boolean>;
-
-  getGitRemoteOrganization(
-    installationId: string
-  ): Promise<RemoteGitOrganization>;
-
-  getFile(
-    userName: string,
-    repoName: string,
-    path: string,
-    baseBranchName: string,
-    installationId: string
-  ): Promise<GithubFile>;
 
   createPullRequest(
     userName: string,
@@ -90,11 +67,13 @@ export interface GitClient {
     meta: GitResourceMeta
   ): Promise<string>;
 
-  getRepository(
-    installationId: string,
-    owner: string,
-    repo: string
-  ): Promise<RemoteGitRepository>;
+  getFile(
+    userName: string,
+    repoName: string,
+    path: string,
+    baseBranchName: string,
+    installationId: string
+  ): Promise<GithubFile>;
 
   createBranch(
     installationId: string,

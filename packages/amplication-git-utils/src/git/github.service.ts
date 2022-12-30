@@ -52,15 +52,24 @@ export class GithubService {
       privateKey: privateKey,
     });
   }
-  createUserRepository(
+  createRepository(
     installationId: string,
+    versionControlUserType: EnumGitOrganizationType,
     owner: string,
     name: string,
     isPublic: boolean
   ): Promise<RemoteGitRepository> {
-    console.log({ installationId, owner, name, isPublic });
-    throw new Error(UNSUPPORTED_GIT_ORGANIZATION_TYPE);
+    if (versionControlUserType === EnumGitOrganizationType.User) {
+      throw new Error(UNSUPPORTED_GIT_ORGANIZATION_TYPE);
+    }
+    return this.createOrganizationRepository(
+      installationId,
+      owner,
+      name,
+      isPublic
+    );
   }
+
   async createOrganizationRepository(
     installationId: string,
     owner: string,
@@ -94,6 +103,7 @@ export class GithubService {
       defaultBranch: repo.default_branch,
     };
   }
+
   async getOrganizationRepos(
     installationId: string,
     limit: number,
