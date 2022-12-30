@@ -16,11 +16,6 @@ export enum EnumGitOrganizationType {
   Organization = "Organization",
 }
 
-export enum EnumGitProvider {
-  Github = "Github",
-  BitBucket = "BitBucket",
-}
-
 export interface GitResourceMeta {
   serverPath: string;
   adminUIPath: string;
