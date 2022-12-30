@@ -5,16 +5,12 @@ import {
   RemoteGitRepos,
   RemoteGitRepository,
 } from "./dto/remote-git-repository";
+import { EnumGitOrganizationType } from "@amplication/code-gen-types/models";
 
 export type PrModule = {
   path: string;
   code: string | null;
 };
-
-export enum EnumGitOrganizationType {
-  User = "User",
-  Organization = "Organization",
-}
 
 export interface GitResourceMeta {
   serverPath: string;

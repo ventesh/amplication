@@ -14,11 +14,12 @@ import { ConnectGitRepositoryInput } from "./dto/inputs/ConnectGitRepositoryInpu
 import { CreateGitRepositoryInput } from "./dto/inputs/CreateGitRepositoryInput";
 import { RemoteGitRepositoriesWhereUniqueInput } from "./dto/inputs/RemoteGitRepositoriesWhereUniqueInput";
 import { RemoteGitRepos } from "./dto/objects/RemoteGitRepository";
-import { GitService, EnumGitOrganizationType } from "@amplication/git-utils";
+import { GitService } from "@amplication/git-utils";
 import {
   INVALID_RESOURCE_ID,
   ResourceService,
 } from "../resource/resource.service";
+import { EnumGitOrganizationType } from "@amplication/code-gen-types/models";
 
 const GIT_REPOSITORY_EXIST =
   "Git Repository already connected to an other Resource";
