@@ -1,4 +1,4 @@
-import { EnumGitProvider } from "@amplication/code-gen-types/models";
+import { EnumGitProvider } from "../../../models";
 import {
   EnumButtonStyle,
   SelectMenu,
@@ -78,7 +78,7 @@ export default function ExistingConnectionsMenu({
               </SelectMenuItem>
               <SelectMenuItem
                 onSelectionChange={() =>
-                  onAddGitOrganization(EnumGitProvider.BitBucket)
+                  onAddGitOrganization(EnumGitProvider.Bitbucket)
                 }
               >
                 <span>Add Bitbucket Workspace</span>

@@ -12,14 +12,17 @@ import {
 import { components } from "@octokit/openapi-types";
 import { join } from "path";
 import { AmplicationIgnoreManger } from "../utils/amplication-ignore-manger";
-import { GitResourceMeta, PrModule } from "./git.types";
+import {
+  EnumGitOrganizationType,
+  GitResourceMeta,
+  PrModule,
+} from "./git.types";
 import {
   RemoteGitRepos,
   RemoteGitRepository,
 } from "./dto/remote-git-repository";
 import { RemoteGitOrganization } from "./dto/remote-git-organization.dto";
 import { Branch } from "./dto/branch";
-import { EnumGitOrganizationType } from "@amplication/code-gen-types/models";
 
 const GITHUB_FILE_TYPE = "file";
 export const GITHUB_CLIENT_SECRET_VAR = "GITHUB_CLIENT_SECRET";

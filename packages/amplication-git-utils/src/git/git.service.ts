@@ -1,9 +1,10 @@
 import { Injectable } from "@nestjs/common";
-import { GitResourceMeta, PrModule } from "./git.types";
 import {
-  EnumGitProvider,
   EnumGitOrganizationType,
-} from "@amplication/code-gen-types/models";
+  EnumGitProvider,
+  GitResourceMeta,
+  PrModule,
+} from "./git.types";
 import { GithubFile } from "./dto/github-file.dto";
 import { GitServiceFactory } from "./git-service-factory";
 import {

@@ -1,4 +1,4 @@
-import { EnumGitProvider } from "@amplication/code-gen-types/models";
+import { EnumGitProvider } from "@amplication/git-utils";
 import { IsOptional, IsString, ValidateNested } from "class-validator";
 import { GitCommit } from "./GitCommit";
 import { GitResourceMeta } from "./GitResourceMeta";
