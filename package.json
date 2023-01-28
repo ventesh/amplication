@@ -14,7 +14,8 @@
     "db:migrate:deploy": "nx run-many --target=db:migrate:deploy",
     "prepare": "husky install",
     "precommit": "lint-staged --relative",
-    "help": "nx help"
+    "help": "nx help",
+    "dev-boot": "pm2 start ./script/ecosystem.config.js"
   },
   "lint-staged": {
     "*": [
