@@ -37,6 +37,7 @@ import {
   RemoteGitRepository,
   UpdateFile,
   OAuth2FlowResponse,
+  GitGroups,
 } from "../../types";
 import { ConverterUtil } from "../../utils/convert-to-number";
 import { NotImplementedError } from "../../utils/custom-error";
@@ -950,6 +951,13 @@ export class GithubService implements GitProvider {
   async completeOAuth2Flow(
     authorizationCode: string
   ): Promise<OAuth2FlowResponse> {
+    throw NotImplementedError;
+  }
+
+  async getGitGroups(
+    accessToken: string,
+    refreshToken: string
+  ): Promise<GitGroups[]> {
     throw NotImplementedError;
   }
 }

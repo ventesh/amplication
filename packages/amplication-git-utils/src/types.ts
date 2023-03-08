@@ -145,6 +145,45 @@ export interface CreateCommitArgs {
   files: UpdateFile[];
 }
 
+export interface PaginatedWorkspaceMembership {
+  size: number;
+  page: number;
+  pagelen: number;
+  next: string;
+  previous: string;
+  values: PaginationValues[];
+}
+
+interface PaginationValues {
+  type: string;
+  links: {
+    self: LinksMetadata;
+  };
+  user: {
+    types: string;
+    data: CurrentUser;
+  };
+  workspace: GitGroups;
+}
+
+export interface GitGroups {
+  name: string;
+  uuid: string;
+  slug: string;
+  type: string;
+  links: {
+    avatar: LinksMetadata;
+  };
+  html?: LinksMetadata;
+  members?: LinksMetadata;
+  owners?: LinksMetadata;
+  projects?: LinksMetadata;
+  repositories?: LinksMetadata;
+  self?: LinksMetadata;
+  createdOn?: string;
+  updatedOn?: string;
+}
+
 interface LinksMetadata {
   href: string;
   name: string;

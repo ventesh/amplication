@@ -25,6 +25,7 @@ import {
   RemoteGitRepository,
   GetRepositoryArgs,
   OAuth2FlowResponse,
+  GitGroups,
 } from "../types";
 import { AmplicationIgnoreManger } from "../utils/amplication-ignore-manger";
 import { prepareFilesForPullRequest } from "../utils/prepare-files-for-pull-request";
@@ -53,6 +54,13 @@ export class GitClientService {
     authorizationCode: string
   ): Promise<OAuth2FlowResponse> {
     return this.provider.completeOAuth2Flow(authorizationCode);
+  }
+
+  async getGitGroups(
+    accessToken: string,
+    refreshToken: string
+  ): Promise<GitGroups[]> {
+    return this.provider.getGitGroups(accessToken, refreshToken);
   }
 
   async getRepository(

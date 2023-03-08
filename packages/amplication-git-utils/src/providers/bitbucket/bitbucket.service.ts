@@ -25,12 +25,14 @@ import {
   GetBranchArgs,
   PullRequest,
   GitProviderArgs,
+  GitGroups,
 } from "../../types";
 import { NotImplementedError } from "../../utils/custom-error";
 import {
   authDataRequest,
   authorizeRequest,
   currentUserRequest,
+  currentUserWorkspacesRequest,
 } from "./requests";
 import { ILogger } from "@amplication/util/logging";
 
@@ -133,6 +135,21 @@ export class BitBucketService implements GitProvider {
         createdOn,
       },
     };
+  }
+
+  async getGitGroups(
+    accessToken: string,
+    refreshToken: string
+  ): Promise<GitGroups[]> {
+    const workspaces = await currentUserWorkspacesRequest(
+      accessToken,
+      this.clientId,
+      this.clientSecret,
+      refreshToken,
+      this.logger
+    );
+
+    return workspaces.values.map(({ workspace }) => workspace);
   }
 
   async getOrganization(): Promise<RemoteGitOrganization> {
