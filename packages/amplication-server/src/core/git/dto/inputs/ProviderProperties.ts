@@ -20,4 +20,20 @@ export class ProviderProperties {
   tokenType?: string;
   @Field(() => [String], { nullable: true })
   scopes?: string[];
+  @Field(() => [GitGroup], { nullable: true })
+  workspaces: GitGroup[];
+}
+
+@ObjectType({
+  isAbstract: true,
+})
+export class GitGroup {
+  @Field(() => String, { nullable: true })
+  name: string;
+  @Field(() => String, { nullable: true })
+  slug: string;
+  @Field(() => String, { nullable: true })
+  type: string;
+  @Field(() => String, { nullable: true })
+  uuid: string;
 }

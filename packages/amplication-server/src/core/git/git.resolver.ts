@@ -23,6 +23,8 @@ import { GitProviderService } from "./git.provider.service";
 import { DisconnectGitRepositoryArgs } from "./dto/args/DisconnectGitRepositoryArgs";
 import { ConnectToProjectGitRepositoryArgs } from "./dto/args/ConnectToProjectGitRepositoryArgs";
 import { CompleteGitOAuth2FlowArgs } from "./dto/args/CompleteGitOAuth2FlowArgs";
+import { GitGroup } from "./dto/inputs/ProviderProperties";
+import { GitGroupsArgs } from "./dto/args/GitGroupsArgs";
 
 @UseFilters(GqlResolverExceptionsFilter)
 @UseGuards(GqlAuthGuard)
@@ -111,6 +113,11 @@ export class GitResolver {
     return {
       url: await this.gitService.getGitInstallationUrl(args),
     };
+  }
+
+  @Query(() => [GitGroup])
+  GitGroups(@Args() args: GitGroupsArgs) {
+    return this.gitService.getGitGroups(args);
   }
 
   @Mutation(() => GitOrganization)

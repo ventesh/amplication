@@ -24,6 +24,8 @@ import { EnumGitOrganizationType } from "./dto/enums/EnumGitOrganizationType";
 import { AmplicationLogger } from "@amplication/util/nestjs/logging";
 import { ConfigService } from "@nestjs/config";
 import { Env } from "../../env";
+import { GitGroup } from "./dto/inputs/ProviderProperties";
+import { GitGroupsArgs } from "./dto/args/GitGroupsArgs";
 
 const GIT_REPOSITORY_EXIST =
   "Git Repository already connected to an other Resource";
@@ -352,6 +354,24 @@ export class GitProviderService {
     return this.prisma.gitOrganization.findFirst({
       where: { name: oAuthUserName },
     });
+  }
+
+  async getGitGroups(args: GitGroupsArgs): Promise<GitGroup[]> {
+    const { gitProvider, oAuthUserName } = args.where;
+    const gitClientService = await new GitClientService().create(
+      {
+        provider: gitProvider,
+        installationId: null,
+        clientId: this.clientId,
+        clientSecret: this.clientSecret,
+      },
+      this.logger
+    );
+    const currentUser = await this.getCurrentOAuthUser(oAuthUserName);
+    return await gitClientService.getGitGroups(
+      currentUser.providerProperties["accessToken"],
+      currentUser.providerProperties["refreshToken"]
+    );
   }
 
   async completeOAuth2Flow(
