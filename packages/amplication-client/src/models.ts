@@ -721,6 +721,18 @@ export type GitGetInstallationUrlInput = {
   gitProvider: EnumGitProvider;
 };
 
+export type GitGroup = {
+  name?: Maybe<Scalars['String']>;
+  slug?: Maybe<Scalars['String']>;
+  type?: Maybe<Scalars['String']>;
+  uuid?: Maybe<Scalars['String']>;
+};
+
+export type GitGroupsInput = {
+  gitProvider: EnumGitProvider;
+  oAuthUserName: Scalars['String'];
+};
+
 export type GitOAuth2FlowInput = {
   code: Scalars['String'];
   gitProvider: EnumGitProvider;
@@ -1406,6 +1418,7 @@ export type ProviderProperties = {
   tokenType?: Maybe<Scalars['String']>;
   username?: Maybe<Scalars['String']>;
   uuid?: Maybe<Scalars['String']>;
+  workspaces?: Maybe<Array<GitGroup>>;
 };
 
 export type ProvisionSubscriptionInput = {
@@ -1440,6 +1453,7 @@ export type Query = {
   currentWorkspace?: Maybe<Workspace>;
   entities: Array<Entity>;
   entity?: Maybe<Entity>;
+  getGitGroups: Array<GitGroup>;
   gitOrganization: GitOrganization;
   gitOrganizations: Array<GitOrganization>;
   me: User;
@@ -1556,6 +1570,11 @@ export type QueryEntitiesArgs = {
 
 export type QueryEntityArgs = {
   where: WhereUniqueInput;
+};
+
+
+export type QueryGetGitGroupsArgs = {
+  where: GitGroupsInput;
 };
 
 

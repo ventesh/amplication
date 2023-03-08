@@ -68,6 +68,7 @@ type Query {
   me: User!
   userApiTokens: [ApiToken!]!
   gitOrganization(where: WhereUniqueInput!): GitOrganization!
+  getGitGroups(where: GitGroupsInput!): [GitGroup!]!
   remoteGitRepositories(where: RemoteGitRepositoriesWhereUniqueInput!): RemoteGitRepos!
   gitOrganizations(where: GitOrganizationWhereInput, skip: Float, take: Float): [GitOrganization!]!
 }
@@ -165,6 +166,14 @@ type ProviderProperties {
   expiresIn: Float
   tokenType: String
   scopes: [String!]
+  workspaces: [GitGroup!]
+}
+
+type GitGroup {
+  name: String
+  slug: String
+  type: String
+  uuid: String
 }
 
 type Entity {
@@ -1036,6 +1045,11 @@ type ApiToken {
   token: String
   previewChars: String!
   lastAccessAt: DateTime!
+}
+
+input GitGroupsInput {
+  gitProvider: EnumGitProvider!
+  oAuthUserName: String!
 }
 
 type RemoteGitRepos {
