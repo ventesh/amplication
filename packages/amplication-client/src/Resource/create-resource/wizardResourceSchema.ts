@@ -1,4 +1,12 @@
-import { sampleServiceResourceWithEntities } from "../constants";
+import {
+  sampleCustomerRelationshipServiceResource,
+  sampleEventManagementServiceResource,
+  sampleInventoryManagementServiceResource,
+  sampleMessagingAndChatServiceResource,
+  sampleServiceResourceWithEntities,
+  sampleSocialMediaManagementServiceResource,
+  sampleUserManagementServiceResource,
+} from "../constants";
 import { EnumTemplateType } from "./wizard-pages/interfaces";
 
 const ResourceName = {
@@ -168,8 +176,44 @@ export const templateMapping: { [key: string]: TemplateSettings } = {
   [EnumTemplateType.orderManagement]: {
     type: EnumTemplateType.orderManagement,
     description: "Sample service for e-commerce",
-    eventName: "createResourceFromSample",
+    eventName: "createResourceFromOrderSample",
     entities: sampleServiceResourceWithEntities,
+  },
+  [EnumTemplateType.customerRelationshipManagement]: {
+    type: EnumTemplateType.customerRelationshipManagement,
+    description: "Sample service for customer relationship",
+    eventName: "createResourceFromCustomerRelationshipSample",
+    entities: sampleCustomerRelationshipServiceResource,
+  },
+  [EnumTemplateType.inventoryManagement]: {
+    type: EnumTemplateType.inventoryManagement,
+    description: "Sample service for inventory management",
+    eventName: "createResourceFromInventoryManagementSample",
+    entities: sampleInventoryManagementServiceResource,
+  },
+  [EnumTemplateType.userManagement]: {
+    type: EnumTemplateType.userManagement,
+    description: "Sample service for user management",
+    eventName: "createResourceFromUserManagementSample",
+    entities: sampleUserManagementServiceResource,
+  },
+  [EnumTemplateType.socialMediaManagement]: {
+    type: EnumTemplateType.socialMediaManagement,
+    description: "Sample service for social media management",
+    eventName: "createResourceFromSocialMediaManagementSample",
+    entities: sampleSocialMediaManagementServiceResource,
+  },
+  [EnumTemplateType.eventManagement]: {
+    type: EnumTemplateType.eventManagement,
+    description: "Sample service for event management",
+    eventName: "createResourceFromEventManagementSample",
+    entities: sampleEventManagementServiceResource,
+  },
+  [EnumTemplateType.messagingAndChat]: {
+    type: EnumTemplateType.messagingAndChat,
+    description: "Sample service for messaging and chat management",
+    eventName: "createResourceFromMessagingAndChatSample",
+    entities: sampleMessagingAndChatServiceResource,
   },
 };
 

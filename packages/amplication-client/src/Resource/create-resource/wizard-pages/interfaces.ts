@@ -24,6 +24,13 @@ export interface NextPage {
 export enum EnumTemplateType {
   empty = "empty",
   orderManagement = "orderManagement",
+  customerRelationshipManagement = "customerRelationshipManagement",
+  inventoryManagement = "inventoryManagement",
+  userManagement = "userManagement",
+  socialMediaManagement = "socialMediaManagement",
+  eventManagement = "eventManagement",
+  messagingAndChat = "messagingAndChat",
+  paymentProcessing = "paymentProcessing",
 }
 
 export interface WizardStepProps {
