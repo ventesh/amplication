@@ -1,0 +1,12 @@
+{
+  "name": "plugin-from-generator",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/plugin-from-generator/src",
+  "targets": {
+    "build": {
+      "executor": "@amplication/my-plugin:build"
+    }
+  },
+  "tags": []
+}

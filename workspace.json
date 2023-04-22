@@ -17,7 +17,7 @@
     "local-data-service-generator-controller": "packages/local-data-service-generator-controller",
     "my-plugin": "libs/my-plugin",
     "my-plugin-e2e": "packages/my-plugin-e2e",
-    "mylib": "libs/mylib",
+    "plugin-from-generator": "libs/plugin-from-generator",
     "ui-design-system": "libs/ui/design-system",
     "ui-design-system-e2e": "packages/ui-design-system-e2e",
     "util-code-gen-utils": "libs/util/code-gen-utils",
