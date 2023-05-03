@@ -1,0 +1,136 @@
+@import "../../style/index.scss";
+@import "../../style/css-variables.scss";
+
+$button-hover-color: #b7bac7;
+
+.amplication-button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  font-family: var(--primary-font-family);
+
+  box-sizing: border-box;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &.small {
+    font-size: var(--font-size-xsmall);
+    height: 28px;
+    gap: 4px;
+    padding: 0 var(--default-spacing);
+
+    &.right-icon {
+      padding-right: var(--default-spacing-small);
+    }
+
+    &.left-icon {
+      padding-left: var(--default-spacing-small);
+    }
+  }
+
+  &.medium {
+    font-size: var(--font-size-small);
+    height: 34px;
+    gap: 6px;
+    padding: 0 var(--default-spacing);
+
+    &.right-icon {
+      padding-right: var(--default-spacing-small);
+    }
+
+    &.left-icon {
+      padding-left: var(--default-spacing-small);
+    }
+  }
+
+  &.large {
+    font-size: var(--font-size-medium);
+    height: 40px;
+    gap: 6px;
+    padding: 0 var(--large-spacing);
+
+    &.right-icon {
+      padding-right: var(--default-spacing-small);
+    }
+
+    &.left-icon {
+      padding-left: var(--default-spacing-small);
+    }
+  }
+
+  &.primary {
+    border: none;
+    border-radius: var(--default-button-radius);
+
+    &.regular {
+      color: var(--static-white);
+      background-color: var(--primary);
+
+      &:hover,
+      &:active,
+      &:focus {
+        background-color: var(--secondary);
+      }
+    }
+
+    &.danger {
+      color: var(--static-white);
+      background-color: var(--negative);
+    }
+
+    &.success {
+      color: var(--static-white);
+      background-color: var(--positive-default);
+    }
+  }
+
+  &.outline {
+    border: solid;
+    border-radius: var(--default-button-radius);
+    background-color: transparent;
+
+    &.regular {
+      color: var(--static-white);
+
+      &:hover,
+      &:active,
+      &:focus {
+        color: $button-hover-color;
+      }
+    }
+
+    &.danger {
+      color: var(--negative);
+    }
+
+    &.success {
+      color: var(--positive-default);
+    }
+  }
+
+  &.text {
+    border: none;
+    background-color: transparent;
+
+    &.regular {
+      color: var(--static-white);
+
+      &:hover,
+      &:active,
+      &:focus {
+        color: $button-hover-color;
+      }
+    }
+
+    &.danger {
+      color: var(--negative);
+    }
+
+    &.success {
+      color: var(--positive-default);
+    }
+  }
+}
