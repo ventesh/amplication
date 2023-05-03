@@ -2,6 +2,9 @@ import React, { ButtonHTMLAttributes } from "react";
 import classNames from "classnames";
 import { Icon, IconSize } from "../Icon/Icon";
 
+import { Button as PrimerButton } from "@primer/react/deprecated";
+import type { ButtonProps as PrimerButtonProps } from "@primer/react/deprecated";
+
 import "./Button.scss";
 
 export enum ButtonStyle {
@@ -27,7 +30,7 @@ export enum ButtonIconPosition {
   Right = "right",
 }
 
-export interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
+export type Props = {
   className?: string;
   buttonFormat?: ButtonFormat;
   buttonSize?: ButtonSize;
@@ -37,7 +40,8 @@ export interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   iconPosition?: ButtonIconPosition;
   iconClassName?: string;
   children?: React.ReactNode;
-}
+} & ButtonHTMLAttributes<HTMLButtonElement> &
+  PrimerButtonProps;
 
 const CLASS_NAME = "amplication-button";
 
@@ -55,7 +59,7 @@ export const Button = ({
   ...rest
 }: Props) => {
   return (
-    <button
+    <PrimerButton
       className={classNames(
         CLASS_NAME,
         className,
@@ -85,7 +89,7 @@ export const Button = ({
         />
       )}
       {iconPosition === ButtonIconPosition.Left && children}
-    </button>
+    </PrimerButton>
   );
 };
 

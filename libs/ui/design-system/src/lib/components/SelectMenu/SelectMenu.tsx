@@ -57,6 +57,7 @@ export const SelectMenu = ({
   children,
   className,
   buttonStyle,
+  buttonFormat,
   buttonClassName,
   title,
   icon,
@@ -68,6 +69,7 @@ export const SelectMenu = ({
       <div className={classNames("select-menu", className)}>
         <SelectButton
           disabled={disabled}
+          buttonFormat={buttonFormat}
           buttonStyle={buttonStyle}
           buttonClassName={buttonClassName}
           icon={icon}
@@ -85,6 +87,7 @@ export const SelectMenu = ({
         <SelectButton
           disabled={disabled}
           buttonStyle={buttonStyle}
+          buttonFormat={buttonFormat}
           buttonClassName={buttonClassName}
           icon={icon}
           openIcon={openIcon}
