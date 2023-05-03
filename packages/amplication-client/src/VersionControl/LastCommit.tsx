@@ -1,7 +1,12 @@
 import { useContext, useEffect } from "react";
 import classNames from "classnames";
 import { isEmpty } from "lodash";
-import { Tooltip, Button, ButtonStyle } from "@amplication/ui/design-system";
+import {
+  Tooltip,
+  Button,
+  ButtonStyle,
+  ButtonFormat,
+} from "@amplication/ui/design-system";
 import { ClickableId } from "../Components/ClickableId";
 import "./LastCommit.scss";
 import { AppContext } from "../context/appContext";
@@ -74,7 +79,12 @@ const LastCommit = ({ resourceId }: Props) => {
             to={`/${currentWorkspace?.id}/${currentProject?.id}/code-view`}
             className={`${CLASS_NAME}__view-code`}
           >
-            <Button disabled={commitRunning}>Go to view code</Button>
+            <Button
+              buttonFormat={ButtonFormat.Outline}
+              disabled={commitRunning}
+            >
+              Go to view code
+            </Button>
           </Link>
         )}
       </div>

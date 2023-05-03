@@ -64,8 +64,11 @@
     color: var(--black60);
   }
 
-  .amp-button.amp-button--secondary {
-    @include regular-14;
-    width: 100%;
+  &__view-code {
+    display: flex;
+
+    button {
+      flex: 1;
+    }
   }
 }
