@@ -2,7 +2,7 @@ import React, { useCallback } from "react";
 import * as designSystem from "@amplication/ui/design-system";
 import { useTracking, Event as TrackEvent } from "../util/analytics";
 
-export { EnumButtonStyle } from "@amplication/ui/design-system";
+export { ButtonStyle as EnumButtonStyle } from "@amplication/ui/design-system";
 
 export type Props = designSystem.ButtonProps & {
   eventData?: TrackEvent;

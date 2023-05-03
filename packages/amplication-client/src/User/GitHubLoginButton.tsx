@@ -17,7 +17,6 @@ export const GitHubLoginButton = () => {
     >
       <Button
         type="button"
-        buttonStyle={EnumButtonStyle.Primary}
         eventData={{
           eventName: AnalyticsEventNames.SignInWithGitHub,
         }}

@@ -1,4 +1,4 @@
-import { Button, EnumButtonStyle, Icon } from "@amplication/ui/design-system";
+import { Button, Icon } from "@amplication/ui/design-system";
 import { EnumGitProvider } from "../../../models";
 import React, { useCallback } from "react";
 
@@ -21,9 +21,7 @@ export default function ProviderItem({
         <Icon icon={"github"} size={"medium"}></Icon>
         {provider === EnumGitProvider.Github ? "GitHub" : ""}
       </div>
-      <Button buttonStyle={EnumButtonStyle.Primary} onClick={handleClick}>
-        {`Connect`}
-      </Button>
+      <Button onClick={handleClick}>Connect</Button>
     </div>
   );
 }

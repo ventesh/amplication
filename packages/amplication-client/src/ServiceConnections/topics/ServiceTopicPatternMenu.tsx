@@ -1,5 +1,5 @@
 import {
-  EnumButtonStyle,
+  ButtonFormat,
   SelectMenu,
   SelectMenuItem,
   SelectMenuList,
@@ -25,7 +25,7 @@ export default function ServiceTopicPatternMenu({
       <div className={`${CLASS_NAME}__label`}>Message pattern</div>
       <SelectMenu
         title={selectedPatternType}
-        buttonStyle={EnumButtonStyle.Secondary}
+        buttonFormat={ButtonFormat.Outline}
         icon="chevron_down"
       >
         <SelectMenuModal>

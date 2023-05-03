@@ -1,7 +1,7 @@
 import {
   Button,
-  EnumButtonStyle,
-  EnumIconPosition,
+  ButtonFormat,
+  ButtonIconPosition,
   Modal,
   Snackbar,
 } from "@amplication/ui/design-system";
@@ -108,17 +108,14 @@ const CreateMessageBrokerWizard: React.FC<Props> = ({ moduleClass }) => {
       )}
       <div className={`${moduleClass}__footer`}>
         <Button
-          buttonStyle={EnumButtonStyle.Secondary}
+          buttonFormat={ButtonFormat.Outline}
           icon="arrow_left"
-          iconPosition={EnumIconPosition.Left}
+          iconPosition={ButtonIconPosition.Left}
           onClick={handleBackToProjectClick}
         >
           {"Back to project"}
         </Button>
-        <Button
-          buttonStyle={EnumButtonStyle.Primary}
-          onClick={handleCreateServiceClick}
-        >
+        <Button onClick={handleCreateServiceClick}>
           <label>Create Message broker</label>
         </Button>
       </div>

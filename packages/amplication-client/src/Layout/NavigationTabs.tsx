@@ -4,9 +4,10 @@ import classNames from "classnames";
 import NavigationTabsContext, {
   NavigationTabItem,
 } from "./NavigationTabsContext";
-import { Button, EnumButtonStyle } from "../Components/Button";
+import { Button } from "../Components/Button";
 
 import "./NavigationTabs.scss";
+import { ButtonFormat } from "@amplication/ui/design-system";
 
 const CLASS_NAME = "navigation-tabs";
 
@@ -58,7 +59,7 @@ const Tab = ({ item, defaultTabUrl, tabsCount }: TabProps) => {
       <Link to={item.url}>{item.name}</Link>
       <Button
         disabled={item.url === defaultTabUrl && tabsCount === 1}
-        buttonStyle={EnumButtonStyle.Text}
+        buttonFormat={ButtonFormat.Text}
         icon="close"
         iconSize="xsmall"
         onClick={handleCloseTab}

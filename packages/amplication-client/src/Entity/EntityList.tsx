@@ -135,7 +135,6 @@ const EntityList: React.FC<Props> = ({ match, innerRoutes }) => {
           />
           <Button
             className={`${CLASS_NAME}__add-button`}
-            buttonStyle={EnumButtonStyle.Primary}
             onClick={handleNewEntityClick}
             icon="plus"
           >

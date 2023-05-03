@@ -7,6 +7,7 @@ import {
   SelectMenuModal,
   SelectMenuList,
   SelectMenuItem,
+  ButtonFormat,
 } from "@amplication/ui/design-system";
 import { isValidJSON } from "@amplication/util/json";
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
@@ -149,7 +150,7 @@ const InstalledPluginSettings: React.FC<Props> = ({
                   selectedVersion ||
                   pluginInstallation.PluginInstallation.version
                 }
-                buttonStyle={EnumButtonStyle.Secondary}
+                buttonFormat={ButtonFormat.Outline}
                 className={`${moduleClass}__menu`}
                 icon="chevron_down"
               >
@@ -185,14 +186,13 @@ const InstalledPluginSettings: React.FC<Props> = ({
           <div className={`${moduleClass}__row`}>
             <Button
               className={`${moduleClass}__reset`}
-              buttonStyle={EnumButtonStyle.Secondary}
+              buttonFormat={ButtonFormat.Outline}
               onClick={handleResetClick}
             >
               Reset to default
             </Button>
             <Button
               className={`${moduleClass}__save`}
-              buttonStyle={EnumButtonStyle.Primary}
               onClick={handlePluginInstalledSave}
               disabled={isValid}
             >

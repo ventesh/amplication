@@ -3,7 +3,7 @@ import classNames from "classnames";
 import PendingChangesBar from "../VersionControl/PendingChangesBar";
 import "./PendingChangesMenuItem.scss";
 import { AsidePanel } from "../util/teleporter";
-import { Tooltip } from "@amplication/ui/design-system";
+import { ButtonFormat, Tooltip } from "@amplication/ui/design-system";
 import { Button, EnumButtonStyle } from "../Components/Button";
 import { AppContext } from "../context/appContext";
 
@@ -36,7 +36,7 @@ const PendingChangesMenuItem = ({ projectId }: Props) => {
       <div>
         <Tooltip aria-label={"Pending Changes"} direction={DIRECTION} noDelay>
           <Button
-            buttonStyle={EnumButtonStyle.Text}
+            buttonFormat={ButtonFormat.Text}
             onClick={handleClick}
             icon="pending_changes_outline"
             iconSize={ICON_SIZE}

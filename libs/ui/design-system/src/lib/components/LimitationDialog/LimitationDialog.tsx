@@ -39,11 +39,7 @@ export const LimitationDialog = ({
           Keep building without limitations by upgrading your workspace plan
         </div>
       </div>
-      <Button
-        className={`${CLASS_NAME}__upgrade_button`}
-        buttonStyle={EnumButtonStyle.Primary}
-        onClick={onConfirm}
-      >
+      <Button className={`${CLASS_NAME}__upgrade_button`} onClick={onConfirm}>
         Upgrade Now
       </Button>
     </Dialog>

@@ -43,11 +43,7 @@ export const PlanUpgradeConfirmation = ({
           to you
         </div>
       </div>
-      <Button
-        className={`${CLASS_NAME}__upgrade_button`}
-        buttonStyle={EnumButtonStyle.Primary}
-        onClick={onConfirm}
-      >
+      <Button className={`${CLASS_NAME}__upgrade_button`} onClick={onConfirm}>
         Back to work
       </Button>
     </Dialog>

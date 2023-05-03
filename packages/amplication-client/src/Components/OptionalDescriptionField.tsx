@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { useField } from "formik";
 import { isEmpty } from "lodash";
-import { TextField, Icon } from "@amplication/ui/design-system";
+import { TextField, Icon, ButtonFormat } from "@amplication/ui/design-system";
 import { Button, EnumButtonStyle } from "../Components/Button";
 
 type Props = {
@@ -32,7 +32,7 @@ const OptionalDescriptionField = (props: Props) => {
       rows={3}
     />
   ) : (
-    <Button onClick={handleClick} buttonStyle={EnumButtonStyle.Text}>
+    <Button onClick={handleClick} buttonFormat={ButtonFormat.Text}>
       <Icon icon="plus" />
       Add description
     </Button>

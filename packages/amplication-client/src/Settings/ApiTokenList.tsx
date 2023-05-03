@@ -4,6 +4,7 @@ import {
   Panel,
   Snackbar,
   CircularProgress,
+  ButtonFormat,
 } from "@amplication/ui/design-system";
 import { gql, useQuery } from "@apollo/client";
 import React, { useCallback, useState } from "react";
@@ -72,7 +73,6 @@ const ApiTokenList = React.memo(() => {
         <h3>API Tokens</h3>
         <Button
           className={`${CLASS_NAME}__add-button`}
-          buttonStyle={EnumButtonStyle.Primary}
           onClick={handleNewTokenClick}
           icon="plus"
         >
@@ -99,8 +99,8 @@ const ApiTokenList = React.memo(() => {
           </div>
           <Button
             className={`${CLASS_NAME}__add-button`}
-            buttonStyle={
-              !tokenCopied ? EnumButtonStyle.Primary : EnumButtonStyle.Text
+            buttonFormat={
+              !tokenCopied ? ButtonFormat.Primary : ButtonFormat.Text
             }
             onClick={handleCopyToken}
             icon={!tokenCopied ? "copy" : "check"}

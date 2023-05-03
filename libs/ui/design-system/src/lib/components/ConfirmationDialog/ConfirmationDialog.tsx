@@ -1,6 +1,6 @@
 import React from "react";
 import { Dialog, Props as DialogProps } from "../Dialog/Dialog";
-import { Button, EnumButtonStyle } from "../Button/Button";
+import { Button, ButtonFormat } from "../ButtonV3/Button";
 import "./ConfirmationDialog.scss";
 
 const CLASS_NAME = "confirmation-dialog";
@@ -43,7 +43,7 @@ export const ConfirmationDialog = ({
       <div className={`${CLASS_NAME}__buttons`}>
         <div className="spacer" />
         <Button
-          buttonStyle={EnumButtonStyle.Text}
+          buttonFormat={ButtonFormat.Text}
           icon={dismissButton.icon}
           onClick={onDismiss}
         >
@@ -51,7 +51,6 @@ export const ConfirmationDialog = ({
         </Button>
 
         <Button
-          buttonStyle={EnumButtonStyle.Primary}
           onClick={onConfirm}
           icon={confirmButton.icon}
           disabled={confirmButton.disabled}

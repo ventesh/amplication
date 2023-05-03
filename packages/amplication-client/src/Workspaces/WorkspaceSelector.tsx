@@ -5,6 +5,7 @@ import {
   CircleBadge,
   Dialog,
   CircularProgress,
+  ButtonFormat,
 } from "@amplication/ui/design-system";
 import WorkspaceSelectorList from "./WorkspaceSelectorList";
 import NewWorkspace from "./NewWorkspace";
@@ -91,8 +92,7 @@ function WorkspaceSelector() {
               </span>
             </div>
             <Button
-              buttonStyle={EnumButtonStyle.Text}
-              type="button"
+              buttonFormat={ButtonFormat.Text}
               icon={isOpen ? "chevron_up" : "chevron_down"}
               iconSize="xsmall"
             />

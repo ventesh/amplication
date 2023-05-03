@@ -58,7 +58,6 @@ function GithubSyncDetails({
         {showGitRepositoryBtn && (
           <div className={`${CLASS_NAME}__action`}>
             <Button
-              buttonStyle={EnumButtonStyle.Primary}
               eventData={{
                 eventName: AnalyticsEventNames.GithubRepositoryChange,
               }}

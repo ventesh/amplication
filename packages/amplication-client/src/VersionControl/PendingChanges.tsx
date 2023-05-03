@@ -5,6 +5,7 @@ import { formatError } from "../util/error";
 import PendingChange from "./PendingChange";
 import { Button, EnumButtonStyle } from "../Components/Button";
 import {
+  ButtonFormat,
   CircularProgress,
   Snackbar,
   Tooltip,
@@ -108,7 +109,7 @@ const PendingChanges = ({ projectId }: Props) => {
               to={`/${currentWorkspace?.id}/${currentProject?.id}/pending-changes`}
             >
               <Button
-                buttonStyle={EnumButtonStyle.Text}
+                buttonFormat={ButtonFormat.Text}
                 disabled={pendingChangesDataLoading || noChanges}
                 icon="compare"
               />
@@ -116,7 +117,7 @@ const PendingChanges = ({ projectId }: Props) => {
           </Tooltip>
           <Tooltip aria-label={"Discard Pending Changes"} direction="nw">
             <Button
-              buttonStyle={EnumButtonStyle.Text}
+              buttonFormat={ButtonFormat.Text}
               onClick={handleToggleDiscardDialog}
               disabled={pendingChangesDataLoading || noChanges}
               icon="trash_2"

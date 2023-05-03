@@ -8,6 +8,7 @@ import {
   Panel,
   EnumPanelStyle,
   PanelHeader,
+  ButtonFormat,
 } from "@amplication/ui/design-system";
 import { ActionRoleList } from "./ActionRoleList";
 import { GET_ENTITY_PERMISSIONS } from "./PermissionsForm";
@@ -152,7 +153,7 @@ export const EntityPermissionField = ({
           {permissionField.field.name}
         </span>
         <Button
-          buttonStyle={EnumButtonStyle.Text}
+          buttonFormat={ButtonFormat.Text}
           icon="trash_2"
           onClick={handleDeleteField}
         />

@@ -1,8 +1,8 @@
 import {
   Button,
   Dialog,
-  EnumButtonStyle,
-  EnumIconPosition,
+  ButtonIconPosition,
+  ButtonFormat,
 } from "@amplication/ui/design-system";
 import React, { useCallback, useState } from "react";
 import "./AddNewProject.scss";
@@ -35,12 +35,11 @@ const AddNewProject = () => {
       <Button
         onClick={handleNewProjectClick}
         type="button"
-        buttonStyle={EnumButtonStyle.Text}
+        buttonFormat={ButtonFormat.Text}
         icon="plus"
-        iconPosition={EnumIconPosition.Left}
-        iconSize="small"
+        iconPosition={ButtonIconPosition.Left}
       >
-        <span className={`${CLASS_NAME}__label`}>Add New Project</span>
+        Add New Project
       </Button>
     </>
   );

@@ -3,4 +3,10 @@
 .resource-menu {
   border-right: $border-black5;
   min-width: var(--menu-width);
+
+  &__app-icon {
+    .amplication-button {
+      padding: 0;
+    }
+  }
 }

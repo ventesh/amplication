@@ -5,7 +5,7 @@ import {
   DialogProps as PrimerDialogProps,
   ThemeProvider,
 } from "@primer/react";
-import { Button, EnumButtonStyle } from "../Button/Button";
+import { Button, ButtonFormat } from "../ButtonV3/Button";
 import "./Dialog.scss";
 
 const CLASS_NAME = "amp-dialog";
@@ -63,7 +63,7 @@ export const Dialog: React.FC<Props> = ({
           {showCloseButton && (
             <Button
               icon="close"
-              buttonStyle={EnumButtonStyle.Text}
+              buttonFormat={ButtonFormat.Text}
               onClick={onDismiss}
             />
           )}

@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from "react";
+import { useCallback, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 
@@ -6,7 +6,7 @@ import * as models from "../models";
 import {
   CircularProgress,
   Button,
-  EnumButtonStyle,
+  ButtonFormat,
 } from "@amplication/ui/design-system";
 
 import { GET_ENTITIES } from "../Entity/EntityList";
@@ -57,9 +57,9 @@ function EntitiesTile({ resourceId }: Props) {
       message="Use Amplication's simple and intuitive user interface to define your data model."
       footer={
         <Button
-          buttonStyle={EnumButtonStyle.Secondary}
           type="button"
           onClick={handleClick}
+          buttonFormat={ButtonFormat.Outline}
         >
           Go to entities
         </Button>

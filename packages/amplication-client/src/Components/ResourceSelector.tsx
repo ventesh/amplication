@@ -1,12 +1,11 @@
 import {
-  EnumButtonStyle,
   SelectMenu,
   SelectMenuItem,
   SelectMenuList,
   SelectMenuModal,
   Label,
+  ButtonFormat,
 } from "@amplication/ui/design-system";
-import React from "react";
 import { Resource } from "../models";
 import "./CommitSelector.scss";
 import { ResourceSelectorItem } from "./ResourceSelectorItem";
@@ -31,7 +30,7 @@ const ResourceSelector = ({
       </div>
       <SelectMenu
         title={<ResourceSelectorItem resource={selectedResource} />}
-        buttonStyle={EnumButtonStyle.Secondary}
+        buttonFormat={ButtonFormat.Outline}
         className={`${CLASS_NAME}__menu`}
         icon="chevron_down"
       >

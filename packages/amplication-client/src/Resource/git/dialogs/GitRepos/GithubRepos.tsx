@@ -8,6 +8,7 @@ import {
   SelectMenuModal,
   HorizontalRule,
   EnumHorizontalRuleStyle,
+  ButtonFormat,
 } from "@amplication/ui/design-system";
 import { gql, NetworkStatus, useMutation, useQuery } from "@apollo/client";
 import { AnalyticsEventNames } from "../../../../util/analytics-events.types";
@@ -102,7 +103,7 @@ function GitRepos({
               wrap
             >
               <Button
-                buttonStyle={EnumButtonStyle.Text}
+                buttonFormat={ButtonFormat.Text}
                 onClick={(e) => {
                   handleRefresh();
                 }}
@@ -116,7 +117,7 @@ function GitRepos({
           <h4>Page</h4>
           <SelectMenu
             title={page.toString()}
-            buttonStyle={EnumButtonStyle.Secondary}
+            buttonFormat={ButtonFormat.Outline}
             icon="chevron_down"
           >
             <SelectMenuModal>

@@ -1,4 +1,4 @@
-import { Icon } from "@amplication/ui/design-system";
+import { ButtonFormat, Icon } from "@amplication/ui/design-system";
 import classNames from "classnames";
 import { Link } from "react-router-dom";
 import { Formik } from "formik";
@@ -131,7 +131,7 @@ export const EntityRelationFieldsChart = ({
           {fixInPlace && (
             <Button
               className={`${CLASS_NAME}__fix`}
-              buttonStyle={EnumButtonStyle.Clear}
+              buttonFormat={ButtonFormat.Text}
               type="submit"
               eventData={{
                 eventName: AnalyticsEventNames.RelatedEntityFix,

@@ -6,6 +6,7 @@ import {
   SelectMenuModal,
   Tooltip,
   Dialog,
+  ButtonFormat,
 } from "@amplication/ui/design-system";
 import { useApolloClient } from "@apollo/client";
 import React, { useCallback, useContext, useState } from "react";
@@ -179,10 +180,10 @@ const WorkspaceHeader: React.FC<{}> = () => {
           >
             <Button
               className={`${CLASS_NAME}__version`}
-              buttonStyle={EnumButtonStyle.Clear}
-              onClick={async () => {
+              buttonFormat={ButtonFormat.Text}
+              onClick={() => {
                 setVersionAlert(true);
-                await navigator.clipboard.writeText(version);
+                navigator.clipboard.writeText(version);
               }}
               onMouseLeave={() => {
                 setVersionAlert(false);
@@ -217,7 +218,7 @@ const WorkspaceHeader: React.FC<{}> = () => {
                         {getSelectedEntities() || "Resource List"}
                       </p>
                     }
-                    buttonStyle={EnumButtonStyle.Text}
+                    buttonFormat={ButtonFormat.Text}
                     buttonClassName={isResourceRoute ? "highlight" : ""}
                     icon="chevron_down"
                     openIcon="chevron_up"
@@ -289,7 +290,7 @@ const WorkspaceHeader: React.FC<{}> = () => {
           <div className={`${CLASS_NAME}__links`}>
             <Button
               className={`${CLASS_NAME}__upgrade__btn`}
-              buttonStyle={EnumButtonStyle.Outline}
+              buttonFormat={ButtonFormat.Outline}
               onClick={handleUpgradeClick}
             >
               Upgrade
@@ -306,7 +307,7 @@ const WorkspaceHeader: React.FC<{}> = () => {
                 noDelay
               >
                 <Button
-                  buttonStyle={EnumButtonStyle.Text}
+                  buttonFormat={ButtonFormat.Text}
                   icon="search"
                   iconSize="small"
                 />
@@ -317,7 +318,7 @@ const WorkspaceHeader: React.FC<{}> = () => {
           <div className={`${CLASS_NAME}__help_popover`}>
             <SelectMenu
               title="Help"
-              buttonStyle={EnumButtonStyle.Text}
+              buttonFormat={ButtonFormat.Text}
               icon="chevron_down"
               openIcon="chevron_up"
               className={`${CLASS_NAME}__help_popover__menu`}
@@ -359,7 +360,7 @@ const WorkspaceHeader: React.FC<{}> = () => {
           <hr className={`${CLASS_NAME}__vertical_border`} />
 
           <Button
-            buttonStyle={EnumButtonStyle.Text}
+            buttonFormat={ButtonFormat.Text}
             icon="log_out"
             onClick={handleSignOut}
           />

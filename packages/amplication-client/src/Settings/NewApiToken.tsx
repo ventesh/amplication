@@ -124,11 +124,7 @@ const NewApiToken = ({ onCompleted }: Props) => {
                 placeholder="Token Name"
                 autoComplete="off"
               />
-              <Button
-                type="submit"
-                buttonStyle={EnumButtonStyle.Primary}
-                disabled={!formik.isValid || loading}
-              >
+              <Button type="submit" disabled={!formik.isValid || loading}>
                 Create Token
               </Button>
             </Form>

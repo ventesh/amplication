@@ -9,7 +9,7 @@ import { EntitiesDiagramRelations } from "./EntitiesDiagramRelations";
 import { EntitiesDiagramEntity } from "./EntitiesDiagramEntity";
 
 import { Button, EnumButtonStyle } from "../Components/Button";
-import { Snackbar } from "@amplication/ui/design-system";
+import { ButtonFormat, Snackbar } from "@amplication/ui/design-system";
 
 export type EntitiesDiagramFormData = models.ResourceCreateWithEntitiesInput;
 
@@ -305,21 +305,21 @@ export default function EntitiesDiagram() {
       <div className={`${CLASS_NAME}__toolbar`}>
         <Button
           className={`${CLASS_NAME}__toolbar__button`}
-          buttonStyle={EnumButtonStyle.Text}
+          buttonFormat={ButtonFormat.Text}
           type="button"
           onClick={zoomIn}
           icon="zoom_in"
         />
         <Button
           className={`${CLASS_NAME}__toolbar__button`}
-          buttonStyle={EnumButtonStyle.Text}
+          buttonFormat={ButtonFormat.Text}
           type="button"
           onClick={zoomOut}
           icon="zoom_out"
         />
         <Button
           className={`${CLASS_NAME}__toolbar__button`}
-          buttonStyle={EnumButtonStyle.Text}
+          buttonFormat={ButtonFormat.Text}
           type="button"
           onClick={zoomReset}
           icon="maximize_2"

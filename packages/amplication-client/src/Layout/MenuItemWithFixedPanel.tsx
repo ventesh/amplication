@@ -3,7 +3,7 @@ import classNames from "classnames";
 import { Button, EnumButtonStyle } from "../Components/Button";
 import { FixedMenuPanel } from "../util/teleporter";
 
-import { Icon, Tooltip } from "@amplication/ui/design-system";
+import { ButtonFormat, Icon, Tooltip } from "@amplication/ui/design-system";
 
 type Props = {
   /** Text to be displayed as a tooltip */
@@ -52,7 +52,7 @@ const MenuItemWithFixedPanel = ({
             direction={DIRECTION}
             noDelay
           >
-            <Button buttonStyle={EnumButtonStyle.Text} onClick={handleClick}>
+            <Button buttonFormat={ButtonFormat.Text} onClick={handleClick}>
               <Icon icon={icon as string} size={ICON_SIZE} />
             </Button>
             {badgeValue && (

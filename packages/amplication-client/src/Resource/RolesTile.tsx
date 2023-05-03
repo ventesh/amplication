@@ -6,7 +6,7 @@ import * as models from "../models";
 import {
   CircularProgress,
   Button,
-  EnumButtonStyle,
+  ButtonFormat,
 } from "@amplication/ui/design-system";
 
 import { GET_ROLES } from "../Roles/RoleList";
@@ -55,7 +55,7 @@ function RolesTile({ resourceId }: Props) {
       message="Create roles and define permissions. Whether at the Entity level or the Field level, granularity is key."
       footer={
         <Button
-          buttonStyle={EnumButtonStyle.Secondary}
+          buttonFormat={ButtonFormat.Outline}
           type="button"
           onClick={handleClick}
         >

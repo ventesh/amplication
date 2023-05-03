@@ -4,7 +4,7 @@ import { FieldArray } from "formik";
 import { Droppable } from "react-beautiful-dnd";
 import { DraggableCore, DraggableData, DraggableEvent } from "react-draggable";
 import { HotKeys } from "react-hotkeys";
-import { TextField, Icon } from "@amplication/ui/design-system";
+import { TextField, Icon, ButtonFormat } from "@amplication/ui/design-system";
 import { Button, EnumButtonStyle } from "../Components/Button";
 import * as models from "../models";
 import { DATA_TYPE_TO_LABEL_AND_ICON } from "../Entity/constants";
@@ -108,7 +108,7 @@ export const EntitiesDiagramEntity = React.memo(
                     {entityIndex > 0 && (
                       <Button
                         className={`${CLASS_NAME}__entities__entity__delete`}
-                        buttonStyle={EnumButtonStyle.Text}
+                        buttonFormat={ButtonFormat.Text}
                         type="button"
                         onClick={handleDeleteEntity}
                         icon="trash_2"
@@ -116,7 +116,7 @@ export const EntitiesDiagramEntity = React.memo(
                     )}
                     <Button
                       className={`${CLASS_NAME}__entities__entity__edit`}
-                      buttonStyle={EnumButtonStyle.Text}
+                      buttonFormat={ButtonFormat.Text}
                       type="button"
                       onClick={handleEditEntity}
                       icon="edit_2"
@@ -126,7 +126,6 @@ export const EntitiesDiagramEntity = React.memo(
 
                 <Button
                   className={`${CLASS_NAME}__entities__entity__add`}
-                  buttonStyle={EnumButtonStyle.Primary}
                   onClick={handleAddEntity}
                   type="button"
                   icon="plus"

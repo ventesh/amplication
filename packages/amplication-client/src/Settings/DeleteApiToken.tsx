@@ -1,4 +1,7 @@
-import { ConfirmationDialog } from "@amplication/ui/design-system";
+import {
+  ButtonFormat,
+  ConfirmationDialog,
+} from "@amplication/ui/design-system";
 import { gql, useMutation } from "@apollo/client";
 import React, { useCallback, useState } from "react";
 import { Button, EnumButtonStyle } from "../Components/Button";
@@ -69,7 +72,7 @@ export const DeleteApiToken = ({ apiToken, onDelete, onError }: Props) => {
       <div className={CLASS_NAME}>
         {!deleteLoading && (
           <Button
-            buttonStyle={EnumButtonStyle.Text}
+            buttonFormat={ButtonFormat.Text}
             icon="trash_2"
             onClick={handleDelete}
           />

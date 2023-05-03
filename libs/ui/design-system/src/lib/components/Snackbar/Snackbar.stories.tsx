@@ -30,7 +30,7 @@ export const WithIcon = (props: any) => {
 export const WithCustomAction = (props: any) => {
   return (
     <Snackbar
-      action={<Button buttonStyle={EnumButtonStyle.Text}>Click Me</Button>}
+      action={<Button buttonFormat={ButtonFormat.Text}>Click Me</Button>}
       open
       message="Message"
       autoHideDuration={-1}

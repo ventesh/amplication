@@ -3,7 +3,11 @@ import { gql, useMutation, Reference } from "@apollo/client";
 import { Formik, Form } from "formik";
 import { isEmpty } from "lodash";
 import classNames from "classnames";
-import { Snackbar, TextField } from "@amplication/ui/design-system";
+import {
+  ButtonFormat,
+  Snackbar,
+  TextField,
+} from "@amplication/ui/design-system";
 import { formatError } from "../util/error";
 import { Button, EnumButtonStyle } from "../Components/Button";
 import * as models from "../models";
@@ -137,7 +141,7 @@ const NewTopic = ({ onTopicAdd, resourceId }: Props) => {
               className={`${CLASS_NAME}__add-field__text`}
             />
             <Button
-              buttonStyle={EnumButtonStyle.Text}
+              buttonFormat={ButtonFormat.Text}
               icon="plus"
               className={classNames(`${CLASS_NAME}__add-field__button`, {
                 [`${CLASS_NAME}__add-field__button--show`]: !isEmpty(

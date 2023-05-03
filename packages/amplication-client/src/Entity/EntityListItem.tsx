@@ -6,6 +6,7 @@ import {
   UserAndTime,
   Panel,
   EnumPanelStyle,
+  ButtonFormat,
 } from "@amplication/ui/design-system";
 import { Link, useHistory } from "react-router-dom";
 import LockStatusIcon from "../VersionControl/LockStatusIcon";
@@ -140,7 +141,7 @@ export const EntityListItem = ({
           <span className="spacer" />
           {!deleteLoading && entity.name !== USER_ENTITY && (
             <Button
-              buttonStyle={EnumButtonStyle.Text}
+              buttonFormat={ButtonFormat.Text}
               icon="trash_2"
               onClick={handleDelete}
             />

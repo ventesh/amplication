@@ -4,6 +4,7 @@ import * as models from "../models";
 import { Button, EnumButtonStyle } from "../Components/Button";
 
 import {
+  ButtonFormat,
   EnumHorizontalRuleStyle,
   EnumPanelStyle,
   HorizontalRule,
@@ -79,13 +80,13 @@ function PluginsCatalogItem({
             {isDraggable && (
               <div className={`${CLASS_NAME}__order`}>
                 <Button
-                  buttonStyle={EnumButtonStyle.Text}
+                  buttonFormat={ButtonFormat.Text}
                   onClick={handleDemote}
                   icon="arrow_up"
                 />
                 <span>{order}</span>
                 <Button
-                  buttonStyle={EnumButtonStyle.Text}
+                  buttonFormat={ButtonFormat.Text}
                   onClick={handlePromote}
                   icon="arrow_down"
                 />
@@ -96,7 +97,7 @@ function PluginsCatalogItem({
             >
               <Button
                 className={`${CLASS_NAME}__install`}
-                buttonStyle={EnumButtonStyle.Secondary}
+                buttonFormat={ButtonFormat.Outline}
               >
                 Settings
               </Button>
@@ -114,11 +115,7 @@ function PluginsCatalogItem({
           </span>
         </div>
         {!pluginInstallation && (
-          <Button
-            className={`${CLASS_NAME}__install`}
-            buttonStyle={EnumButtonStyle.Primary}
-            onClick={handleInstall}
-          >
+          <Button className={`${CLASS_NAME}__install`} onClick={handleInstall}>
             Install
           </Button>
         )}

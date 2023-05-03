@@ -5,7 +5,8 @@ import { useQuery } from "@apollo/client";
 import {
   CircularProgress,
   Button,
-  EnumButtonStyle,
+  ButtonStyle,
+  ButtonFormat,
 } from "@amplication/ui/design-system";
 
 import { useTracking } from "../util/analytics";
@@ -61,9 +62,9 @@ function ServicesTile({ resourceId }: Props) {
       message="See connected services."
       footer={
         <Button
-          buttonStyle={EnumButtonStyle.Secondary}
           type="button"
           onClick={handleClick}
+          buttonFormat={ButtonFormat.Outline}
         >
           Go to services
         </Button>

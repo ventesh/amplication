@@ -41,11 +41,7 @@ export const Default = (props: any) => {
 
 export const Secondary = (props: any) => {
   return (
-    <SelectMenu
-      title="Create New"
-      buttonStyle={EnumButtonStyle.Clear}
-      icon="plus"
-    >
+    <SelectMenu title="Create New" buttonFormat={ButtonFormat.Text} icon="plus">
       <SelectMenuModal>
         <SelectMenuList>
           {ITEMS.map((item) => (
@@ -67,11 +63,7 @@ export const Secondary = (props: any) => {
 
 export const Clear = (props: any) => {
   return (
-    <SelectMenu
-      title="Create New"
-      buttonStyle={EnumButtonStyle.Text}
-      icon="plus"
-    >
+    <SelectMenu title="Create New" buttonFormat={ButtonFormat.Text} icon="plus">
       <SelectMenuModal>
         <SelectMenuList>
           {ITEMS.map((item) => (
@@ -93,7 +85,7 @@ export const Clear = (props: any) => {
 
 export const WithoutIcon = (props: any) => {
   return (
-    <SelectMenu title="Create New" buttonStyle={EnumButtonStyle.Secondary}>
+    <SelectMenu title="Create New" buttonFormat={ButtonFormat.Outline}>
       <SelectMenuModal>
         <SelectMenuList>
           {ITEMS.map((item) => (

@@ -4,7 +4,7 @@ import {
   Button,
   Dialog,
   DialogProps,
-  EnumButtonStyle,
+  ButtonFormat,
 } from "@amplication/ui/design-system";
 import { camelCase } from "camel-case";
 import { Formik, useFormikContext } from "formik";
@@ -99,7 +99,7 @@ export const RelatedFieldDialog = ({
             <div className={`${CLASS_NAME}__buttons`}>
               <Button
                 type="button"
-                buttonStyle={EnumButtonStyle.Text}
+                buttonFormat={ButtonFormat.Text}
                 onClick={onDismiss}
               >
                 Dismiss

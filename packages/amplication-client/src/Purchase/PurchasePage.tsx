@@ -6,8 +6,8 @@ import { Helmet } from "react-helmet";
 import * as models from "../models";
 import {
   Button,
-  EnumButtonStyle,
-  EnumIconPosition,
+  ButtonFormat,
+  ButtonIconPosition,
   Modal,
 } from "@amplication/ui/design-system";
 import "./PurchasePage.scss";
@@ -160,9 +160,9 @@ const PurchasePage = (props) => {
         <div className={`${CLASS_NAME}__layout`}>
           <Button
             className={`${CLASS_NAME}__layout__btn`}
-            buttonStyle={EnumButtonStyle.Outline}
+            buttonFormat={ButtonFormat.Outline}
             icon={"arrow_left"}
-            iconPosition={EnumIconPosition.Left}
+            iconPosition={ButtonIconPosition.Left}
             onClick={backUrl}
           >
             Back
@@ -216,12 +216,7 @@ const PurchasePage = (props) => {
               do our best to help you improve your project for the community!
             </div>
           </div>
-          <Button
-            buttonStyle={EnumButtonStyle.Primary}
-            onClick={handleContactUsClick}
-          >
-            Contact Us
-          </Button>
+          <Button onClick={handleContactUsClick}>Contact Us</Button>
         </div>
         <div className={`${CLASS_NAME}__footer`}>
           <div className={`${CLASS_NAME}__footer__copyright`}>

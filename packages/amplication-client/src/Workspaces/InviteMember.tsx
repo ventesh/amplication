@@ -91,11 +91,7 @@ const InviteMember = () => {
                 type="email"
                 disabled={loading}
               />
-              <Button
-                buttonStyle={EnumButtonStyle.Primary}
-                disabled={!formik.isValid || loading}
-                type="submit"
-              >
+              <Button disabled={!formik.isValid || loading} type="submit">
                 Invite
               </Button>
 

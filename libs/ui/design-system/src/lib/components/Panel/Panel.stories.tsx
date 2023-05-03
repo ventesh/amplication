@@ -99,7 +99,7 @@ export const WithContentHeader = (props: any) => {
     <Panel>
       <PanelHeader>
         <h3>Panel Title</h3>
-        <Button buttonStyle={EnumButtonStyle.Text} icon="edit" />
+        <Button buttonFormat={ButtonFormat.Text} icon="edit" />
       </PanelHeader>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod

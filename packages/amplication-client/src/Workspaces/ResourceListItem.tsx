@@ -2,7 +2,7 @@ import React, { useCallback, useContext, useState } from "react";
 import { NavLink } from "react-router-dom";
 
 import * as models from "../models";
-import { Button, EnumButtonStyle } from "../Components/Button";
+import { Button } from "../Components/Button";
 
 import "./ResourceListItem.scss";
 import {
@@ -13,6 +13,7 @@ import {
   HorizontalRule,
   EnumHorizontalRuleStyle,
   Icon,
+  ButtonFormat,
 } from "@amplication/ui/design-system";
 import ResourceCircleBadge from "../Components/ResourceCircleBadge";
 import { AppContext } from "../context/appContext";
@@ -94,7 +95,7 @@ function ResourceListItem({ resource, onDelete }: Props) {
             <span className="spacer" />
             {onDelete && (
               <Button
-                buttonStyle={EnumButtonStyle.Text}
+                buttonFormat={ButtonFormat.Text}
                 icon="trash_2"
                 onClick={handleDelete}
               />

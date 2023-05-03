@@ -22,7 +22,7 @@ export enum ButtonFormat {
   Text = "text",
 }
 
-export enum IconPosition {
+export enum ButtonIconPosition {
   Left = "left",
   Right = "right",
 }
@@ -34,7 +34,7 @@ export interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   buttonStyle?: ButtonStyle;
   icon?: string;
   iconSize?: IconSize;
-  iconPosition?: IconPosition;
+  iconPosition?: ButtonIconPosition;
   iconClassName?: string;
   children?: React.ReactNode;
 }
@@ -49,7 +49,7 @@ export const Button = ({
   icon,
   iconSize = calcIconSize(buttonSize),
   iconClassName,
-  iconPosition = IconPosition.Right,
+  iconPosition = ButtonIconPosition.Right,
   disabled,
   children,
   ...rest
@@ -64,15 +64,19 @@ export const Button = ({
         { [buttonStyle]: !disabled && buttonStyle },
         disabled,
         {
-          "icon-right": icon && children && iconPosition === IconPosition.Right,
+          "icon-right":
+            icon && children && iconPosition === ButtonIconPosition.Right,
         },
-        { "icon-left": icon && children && iconPosition === IconPosition.Left },
+        {
+          "icon-left":
+            icon && children && iconPosition === ButtonIconPosition.Left,
+        },
         { "icon-only": icon && !children }
       )}
       disabled={disabled}
       {...rest}
     >
-      {iconPosition === IconPosition.Right && children}
+      {iconPosition === ButtonIconPosition.Right && children}
       {icon && (
         <Icon
           icon={icon}
@@ -80,7 +84,7 @@ export const Button = ({
           className={classNames(`${CLASS_NAME}__icon`, iconClassName)}
         />
       )}
-      {iconPosition === IconPosition.Left && children}
+      {iconPosition === ButtonIconPosition.Left && children}
     </button>
   );
 };

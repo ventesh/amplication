@@ -1,4 +1,9 @@
-import { SelectField, TextField, Icon } from "@amplication/ui/design-system";
+import {
+  SelectField,
+  TextField,
+  Icon,
+  ButtonFormat,
+} from "@amplication/ui/design-system";
 import classNames from "classnames";
 import React, { useCallback } from "react";
 import { Draggable } from "react-beautiful-dnd";
@@ -71,7 +76,7 @@ export const EntitiesDiagramField = React.memo(
               <span className="spacer" />
               <Button
                 className={`${CLASS_NAME}__fields__field__edit`}
-                buttonStyle={EnumButtonStyle.Text}
+                buttonFormat={ButtonFormat.Text}
                 type="button"
                 onClick={handleClick}
                 icon="edit_2"

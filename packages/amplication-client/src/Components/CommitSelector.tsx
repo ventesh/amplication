@@ -1,10 +1,10 @@
 import {
-  EnumButtonStyle,
   SelectMenu,
   SelectMenuItem,
   SelectMenuList,
   SelectMenuModal,
   Label,
+  ButtonFormat,
 } from "@amplication/ui/design-system";
 import React from "react";
 import { Commit } from "../models";
@@ -28,7 +28,7 @@ const CommitSelector = ({ commits, onSelectCommit, selectedCommit }: Props) => {
       </div>
       <SelectMenu
         title={<CommitSelectorItem commit={selectedCommit} />}
-        buttonStyle={EnumButtonStyle.Secondary}
+        buttonFormat={ButtonFormat.Outline}
         className={`${CLASS_NAME}__menu`}
         icon="chevron_down"
       >

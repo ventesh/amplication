@@ -10,6 +10,7 @@ import {
   SelectMenuModal,
   SelectMenuItem,
   SelectMenuList,
+  ButtonFormat,
 } from "@amplication/ui/design-system";
 import { EntityPermissionField } from "./EntityPermissionField";
 import { EnumButtonStyle } from "../Components/Button";
@@ -176,7 +177,7 @@ export const EntityPermissionFields = ({
         <SelectMenu
           title="Add Field"
           icon="plus"
-          buttonStyle={EnumButtonStyle.Clear}
+          buttonFormat={ButtonFormat.Text}
         >
           <SelectMenuModal>
             <SelectMenuList>

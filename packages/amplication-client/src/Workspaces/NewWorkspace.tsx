@@ -62,7 +62,6 @@ const NewWorkspace = () => {
               />
               <Button
                 type="submit"
-                buttonStyle={EnumButtonStyle.Primary}
                 disabled={
                   !formik.isValid || !formik.dirty || loadingCreateNewWorkspace
                 }

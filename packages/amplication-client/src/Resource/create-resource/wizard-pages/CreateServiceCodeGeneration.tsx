@@ -3,7 +3,7 @@ import "../CreateServiceWizard.scss";
 import "./CreateServiceCodeGeneration.scss";
 import ActionLog from "../../../VersionControl/ActionLog";
 import CodeGenerationCompleted from "../../../assets/images/code-generation-completed.svg";
-import { Button, EnumButtonStyle } from "@amplication/ui/design-system";
+import { Button, ButtonFormat } from "@amplication/ui/design-system";
 import { WizardStepProps } from "./interfaces";
 import useBuildWatchStatus from "../../../VersionControl/useBuildWatchStatus";
 import { LogData } from "../../../VersionControl/BuildPage";
@@ -163,13 +163,13 @@ const CreateServiceCodeGeneration: React.FC<
             </div>
             <div className={`${className}__btn_actions`}>
               <Button
-                buttonStyle={EnumButtonStyle.Primary}
+                buttonFormat={ButtonFormat.Outline}
                 onClick={handleTryAgainClick}
               >
                 Try again
               </Button>
               <Button
-                buttonStyle={EnumButtonStyle.Clear}
+                buttonFormat={ButtonFormat.Text}
                 onClick={handleContinueClick}
               >
                 Continue anyway
@@ -203,8 +203,8 @@ const CreateServiceCodeGeneration: React.FC<
               <a href={githubUrl} target="docs">
                 <Button
                   type="button"
-                  buttonStyle={EnumButtonStyle.Clear}
                   onClick={handleViewCodeClick}
+                  buttonFormat={ButtonFormat.Text}
                 >
                   View my code
                 </Button>

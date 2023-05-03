@@ -1,16 +1,16 @@
 import {
   Button,
-  EnumButtonStyle,
   EnumPanelStyle,
   Icon,
   Panel,
 } from "@amplication/ui/design-system";
-import React from "react";
+
 import { EnumGitOrganizationType, Resource } from "../../../../models";
 import "../../AuthResourceWithGit.scss";
 import { GitOrganizationFromGitRepository } from "../../SyncWithGithubPage";
 import GithubSyncDetails from "./GithubSyncDetails";
 import "./RepositoryActions.scss";
+
 type Props = {
   onCreateRepository: () => void;
   onSelectRepository: () => void;
@@ -47,21 +47,14 @@ export default function RepositoryActions({
               {selectedGitOrganization && (
                 <>
                   <div className={`${CLASS_NAME}__action`}>
-                    <Button
-                      buttonStyle={EnumButtonStyle.Primary}
-                      onClick={onSelectRepository}
-                    >
+                    <Button onClick={onSelectRepository}>
                       Select repository
                     </Button>
                   </div>
                   {selectedGitOrganization.type ===
                     EnumGitOrganizationType.Organization && (
                     <div className={`${CLASS_NAME}__action`}>
-                      <Button
-                        buttonStyle={EnumButtonStyle.Primary}
-                        onClick={onCreateRepository}
-                        icon="plus"
-                      >
+                      <Button onClick={onCreateRepository} icon="plus">
                         Create repository
                       </Button>
                     </div>

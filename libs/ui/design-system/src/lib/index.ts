@@ -3,11 +3,18 @@ import "./style/css-variables.scss";
 import "./style/icon.scss";
 export {
   Button,
-  EnumButtonStyle,
-  EnumIconPosition,
-} from "./components/Button/Button";
+  ButtonFormat,
+  ButtonStyle,
+  ButtonIconPosition,
+} from "./components/ButtonV3/Button";
 
-export type { Props as ButtonProps } from "./components/Button/Button";
+// export {
+//   Button as ButtonV3,
+//   ButtonStyle as ButtonStyleV3,
+//   ButtonSize as ButtonSizeV3
+// } from "./components/ButtonV3/Button";
+
+export type { Props as ButtonProps } from "./components/ButtonV3/Button";
 
 export {
   default as CircleIcon,

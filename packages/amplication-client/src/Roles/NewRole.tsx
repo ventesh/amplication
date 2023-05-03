@@ -4,7 +4,11 @@ import { Formik, Form } from "formik";
 import { isEmpty } from "lodash";
 import classNames from "classnames";
 import { camelCase } from "camel-case";
-import { TextField, Snackbar } from "@amplication/ui/design-system";
+import {
+  TextField,
+  Snackbar,
+  ButtonFormat,
+} from "@amplication/ui/design-system";
 import { formatError } from "../util/error";
 import { Button, EnumButtonStyle } from "../Components/Button";
 import * as models from "../models";
@@ -131,7 +135,7 @@ const NewRole = ({ onRoleAdd, resourceId }: Props) => {
               className={`${CLASS_NAME}__add-field__text`}
             />
             <Button
-              buttonStyle={EnumButtonStyle.Text}
+              buttonFormat={ButtonFormat.Text}
               icon="plus"
               className={classNames(`${CLASS_NAME}__add-field__button`, {
                 [`${CLASS_NAME}__add-field__button--show`]: !isEmpty(

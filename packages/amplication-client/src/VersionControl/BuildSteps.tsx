@@ -5,7 +5,12 @@ import * as models from "../models";
 import { EnumButtonStyle, Button } from "../Components/Button";
 
 import useBuildWatchStatus from "./useBuildWatchStatus";
-import { Panel, EnumPanelStyle, Icon } from "@amplication/ui/design-system";
+import {
+  Panel,
+  EnumPanelStyle,
+  Icon,
+  ButtonFormat,
+} from "@amplication/ui/design-system";
 
 import { BuildStepsStatus } from "./BuildStepsStatus";
 
@@ -94,7 +99,7 @@ const BuildSteps = ({ build }: Props) => {
           {githubUrl && (
             <a href={githubUrl} target="github">
               <Button
-                buttonStyle={EnumButtonStyle.Text}
+                buttonFormat={ButtonFormat.Text}
                 icon="external_link"
                 disabled={
                   stepGenerateCode.status !==

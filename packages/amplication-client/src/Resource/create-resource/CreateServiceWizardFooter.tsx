@@ -1,7 +1,7 @@
 import {
   Button,
-  EnumButtonStyle,
-  EnumIconPosition,
+  ButtonFormat,
+  ButtonIconPosition,
 } from "@amplication/ui/design-system";
 import React, { useContext } from "react";
 import "./CreateServiceWizard.scss";
@@ -15,9 +15,9 @@ const CreateServiceWizardFooter: React.FC<{}> = () => {
   return (
     <div className={`create-service-wizard__footer`}>
       <Button
-        buttonStyle={EnumButtonStyle.Secondary}
+        buttonFormat={ButtonFormat.Outline}
         icon="arrow_left"
-        iconPosition={EnumIconPosition.Left}
+        iconPosition={ButtonIconPosition.Left}
         // onClick={}
       >
         {"Back to project"}
@@ -41,8 +41,7 @@ const CreateServiceWizardFooter: React.FC<{}> = () => {
         Repository
       </InnerTabLink>
       <Button
-        buttonStyle={EnumButtonStyle.Primary}
-        //onClick={handleCreateServiceClick}
+      //onClick={handleCreateServiceClick}
       >
         Continue
       </Button>

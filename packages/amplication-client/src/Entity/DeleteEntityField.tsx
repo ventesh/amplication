@@ -1,7 +1,10 @@
 import React, { useCallback, useState, useContext } from "react";
 import { gql, useMutation, Reference, useQuery } from "@apollo/client";
 import * as models from "../models";
-import { ConfirmationDialog } from "@amplication/ui/design-system";
+import {
+  ButtonFormat,
+  ConfirmationDialog,
+} from "@amplication/ui/design-system";
 import { Button, EnumButtonStyle } from "../Components/Button";
 import { SYSTEM_DATA_TYPES } from "./constants";
 import { AppContext } from "../context/appContext";
@@ -117,9 +120,7 @@ export const DeleteEntityField = ({
       <div className={CLASS_NAME}>
         {!deleteLoading && !SYSTEM_DATA_TYPES.has(entityField.dataType) && (
           <Button
-            buttonStyle={
-              showLabel ? EnumButtonStyle.Clear : EnumButtonStyle.Text
-            }
+            buttonFormat={showLabel ? ButtonFormat.Outline : ButtonFormat.Text}
             icon="trash_2"
             onClick={handleDelete}
           >

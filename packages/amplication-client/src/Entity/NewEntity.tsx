@@ -162,11 +162,7 @@ const NewEntity = ({ resourceId, onSuccess }: Props) => {
                 placeholder="Type New Entity Name"
                 autoComplete="off"
               />
-              <Button
-                type="submit"
-                buttonStyle={EnumButtonStyle.Primary}
-                disabled={!formik.isValid || loading}
-              >
+              <Button type="submit" disabled={!formik.isValid || loading}>
                 Create Entity
               </Button>
             </Form>

@@ -5,7 +5,7 @@ import React, {
   useEffect,
   useMemo,
 } from "react";
-import { Button, EnumButtonStyle, Icon } from "@amplication/ui/design-system";
+import { Button, ButtonFormat, Icon } from "@amplication/ui/design-system";
 import { ResourceSettings } from "./wizard-pages/interfaces";
 import { Form, Formik, FormikErrors } from "formik";
 import { validate } from "../../util/formikValidateJsonSchema";
@@ -54,7 +54,7 @@ const BackButton: React.FC<{
   !hideBackButton &&
   activePageIndex !== wizardPattern[0] &&
   activePageIndex !== wizardPattern[wizardPattern.length - 1] ? (
-    <Button buttonStyle={EnumButtonStyle.Outline} onClick={goPrevPage}>
+    <Button buttonFormat={ButtonFormat.Outline} onClick={goPrevPage}>
       Back
     </Button>
   ) : null;
@@ -192,7 +192,7 @@ const ServiceWizard: React.FC<ServiceWizardProps> = ({
     <div className={`${moduleCss}__wizard_container`}>
       {defineUser === "Create Service" && (
         <Button
-          buttonStyle={EnumButtonStyle.Clear}
+          buttonFormat={ButtonFormat.Text}
           className={`${moduleCss}__close`}
           onClick={() =>
             handleCloseWizard(

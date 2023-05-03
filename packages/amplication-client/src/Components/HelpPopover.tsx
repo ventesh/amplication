@@ -1,5 +1,10 @@
 import React, { useCallback } from "react";
-import { PopoverProps, Popover, Icon } from "@amplication/ui/design-system";
+import {
+  PopoverProps,
+  Popover,
+  Icon,
+  ButtonFormat,
+} from "@amplication/ui/design-system";
 import { Button, EnumButtonStyle } from "./Button";
 import "./HelpPopover.scss";
 
@@ -27,7 +32,7 @@ export const HelpPopover = ({
       </div>
 
       <div className={`${CLASS_NAME}__dismiss`}>
-        <Button buttonStyle={EnumButtonStyle.Text} onClick={handleDismiss}>
+        <Button buttonFormat={ButtonFormat.Text} onClick={handleDismiss}>
           Ok, Thanks
         </Button>
       </div>

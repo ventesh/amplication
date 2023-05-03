@@ -1,4 +1,8 @@
-import { Snackbar, TextField } from "@amplication/ui/design-system";
+import {
+  ButtonFormat,
+  Snackbar,
+  TextField,
+} from "@amplication/ui/design-system";
 import { gql, Reference, useMutation } from "@apollo/client";
 import classNames from "classnames";
 import { Form, Formik } from "formik";
@@ -127,7 +131,7 @@ const NewEntityField = ({ entity, onFieldAdd }: Props) => {
               className={`${CLASS_NAME}__add-field__text`}
             />
             <Button
-              buttonStyle={EnumButtonStyle.Text}
+              buttonFormat={ButtonFormat.Text}
               icon="plus"
               className={classNames(`${CLASS_NAME}__add-field__button`, {
                 [`${CLASS_NAME}__add-field__button--show`]:

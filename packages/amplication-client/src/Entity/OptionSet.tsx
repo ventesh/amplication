@@ -3,8 +3,8 @@ import { FieldArray, FieldArrayRenderProps, getIn } from "formik";
 import { pascalCase } from "pascal-case";
 import { get } from "lodash";
 
-import { Button, EnumButtonStyle } from "../Components/Button";
-import { TextField, Icon } from "@amplication/ui/design-system";
+import { Button } from "../Components/Button";
+import { TextField, Icon, ButtonFormat } from "@amplication/ui/design-system";
 import "./OptionSet.scss";
 
 type OptionItem = {
@@ -67,7 +67,7 @@ const OptionSetOptions = ({
           name={name}
         />
       ))}
-      <Button onClick={push} buttonStyle={EnumButtonStyle.Text}>
+      <Button onClick={push} buttonFormat={ButtonFormat.Text}>
         <Icon icon="plus" />
         Add option
       </Button>
@@ -141,7 +141,7 @@ const OptionSetOption = ({
 
       <div className="option-set__option__action">
         <Button
-          buttonStyle={EnumButtonStyle.Text}
+          buttonFormat={ButtonFormat.Text}
           icon="trash_2"
           onClick={handleRemoveOption}
         />

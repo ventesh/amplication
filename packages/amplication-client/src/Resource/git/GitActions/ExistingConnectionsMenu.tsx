@@ -1,10 +1,11 @@
 import {
-  EnumButtonStyle,
+  ButtonFormat,
   SelectMenu,
   SelectMenuItem,
   SelectMenuList,
   SelectMenuModal,
 } from "@amplication/ui/design-system";
+
 import { GitOrganizationFromGitRepository } from "../SyncWithGithubPage";
 import "./ExistingConnectionsMenu.scss";
 import { GitOrganizationMenuItemContent } from "./GitOrganizationMenuItemContent";
@@ -49,7 +50,7 @@ export default function ExistingConnectionsMenu({
           "Select Git Provider"
         )
       }
-      buttonStyle={EnumButtonStyle.Text}
+      buttonFormat={ButtonFormat.Text}
       className={`${CLASS_NAME}__menu`}
       icon="chevron_down"
     >

@@ -1,10 +1,11 @@
 import React, { useContext } from "react";
-import { Button, EnumButtonStyle } from "../../Components/Button";
+import { Button } from "../../Components/Button";
 import {
-  EnumIconPosition,
+  ButtonIconPosition,
   Icon,
   Label,
   Tooltip,
+  ButtonFormat,
 } from "@amplication/ui/design-system";
 import { Link } from "react-router-dom";
 import * as models from "../../models";
@@ -51,9 +52,9 @@ const AppGitStatusPanel = ({ resource, showDisconnectedMessage }: Props) => {
             to={`/${currentWorkspace?.id}/${currentProject?.id}/${resource?.id}/github`}
           >
             <Button
-              buttonStyle={EnumButtonStyle.Secondary}
+              buttonFormat={ButtonFormat.Outline}
               icon="github"
-              iconPosition={EnumIconPosition.Left}
+              iconPosition={ButtonIconPosition.Left}
               className={`${CLASS_NAME}__connect__button`}
             >
               Connect to GitHub
@@ -71,7 +72,7 @@ const AppGitStatusPanel = ({ resource, showDisconnectedMessage }: Props) => {
               target="github"
             >
               <Button
-                buttonStyle={EnumButtonStyle.Text}
+                buttonFormat={ButtonFormat.Text}
                 icon="external_link"
                 eventData={{
                   eventName: AnalyticsEventNames.GithubCodeViewClick,

@@ -167,7 +167,6 @@ const BuildNewVersion = ({
               />
               <Button
                 type="submit"
-                buttonStyle={EnumButtonStyle.Primary}
                 eventData={{
                   eventName: AnalyticsEventNames.ResourceBuild,
                 }}

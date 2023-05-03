@@ -102,7 +102,6 @@ const ProfileForm = () => {
                 <div className={`${CLASS_NAME}__submitButton`}>
                   <Button
                     type="submit"
-                    buttonStyle={EnumButtonStyle.Primary}
                     disabled={!formik.isValid || !formik.dirty || loading}
                   >
                     Save changes

@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, EnumButtonStyle } from "@amplication/ui/design-system";
+import { Button, ButtonFormat } from "@amplication/ui/design-system";
 import "./PendingChangesBar.scss";
 import PendingChanges from "./PendingChanges";
 
@@ -15,7 +15,7 @@ const PendingChangesBar = ({ projectId, handleClick }: Props) => {
     <div className={CLASS_NAME}>
       <div className={`${CLASS_NAME}__heading`}>
         <Button
-          buttonStyle={EnumButtonStyle.Text}
+          buttonFormat={ButtonFormat.Text}
           icon="close"
           iconSize="xsmall"
           onClick={handleClick}

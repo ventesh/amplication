@@ -11,6 +11,7 @@ import {
   Panel,
   UserAvatar,
   Tooltip,
+  ButtonFormat,
 } from "@amplication/ui/design-system";
 import { gql, useMutation } from "@apollo/client";
 import { AnalyticsEventNames } from "../util/analytics-events.types";
@@ -149,7 +150,7 @@ function MemberListItem({ member, onDelete, onError }: Props) {
               noDelay
             >
               <Button
-                buttonStyle={EnumButtonStyle.Text}
+                buttonFormat={ButtonFormat.Text}
                 icon="mail"
                 onClick={handleResendInvitation}
               />
@@ -164,7 +165,7 @@ function MemberListItem({ member, onDelete, onError }: Props) {
               noDelay
             >
               <Button
-                buttonStyle={EnumButtonStyle.Text}
+                buttonFormat={ButtonFormat.Text}
                 icon="trash_2"
                 onClick={handleDelete}
               />

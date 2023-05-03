@@ -13,12 +13,13 @@ import SearchField, {
   Props as SearchFieldProps,
 } from "../SearchField/SearchField";
 
-import { Button, EnumButtonStyle } from "../Button/Button";
+import { Button, ButtonStyle, ButtonFormat } from "../ButtonV3/Button";
 
 import "./SelectMenu.scss";
 
 export interface Props extends Omit<SelectMenuProps, "title"> {
-  buttonStyle?: EnumButtonStyle;
+  buttonStyle?: ButtonStyle;
+  buttonFormat?: ButtonFormat;
   disabled?: boolean;
   title: string | React.ReactNode;
   icon?: string;
@@ -29,6 +30,7 @@ export interface Props extends Omit<SelectMenuProps, "title"> {
 const SelectButton: React.FC<Props> = ({
   disabled,
   buttonStyle,
+  buttonFormat,
   title,
   icon,
   openIcon,
@@ -41,6 +43,7 @@ const SelectButton: React.FC<Props> = ({
       {...(disabled ? { disabled } : { as: "summary" })}
       className={className}
       buttonStyle={buttonStyle}
+      buttonFormat={buttonFormat}
       icon={openIcon ? ((menuContext as any).open ? openIcon : icon) : icon}
       iconSize={"xsmall"}
     >

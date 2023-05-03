@@ -1,6 +1,6 @@
 import React, { useCallback, useContext } from "react";
 
-import { Button, EnumButtonStyle } from "@amplication/ui/design-system";
+import { Button, ButtonFormat } from "@amplication/ui/design-system";
 
 import { useTracking } from "../util/analytics";
 import OverviewSecondaryTile from "./OverviewSecondaryTile";
@@ -29,7 +29,7 @@ function ViewCodeViewTile({ resourceId }: Props) {
       message="Amplication generates the code automatically. You can use the 'Code View' page to view and explore the generated code."
       footer={
         <Button
-          buttonStyle={EnumButtonStyle.Secondary}
+          buttonFormat={ButtonFormat.Outline}
           type="button"
           onClick={handleClick}
         >

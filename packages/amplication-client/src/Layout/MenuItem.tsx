@@ -1,9 +1,9 @@
 import React, { ReactNode } from "react";
 import { useRouteMatch, NavLink } from "react-router-dom";
 import classNames from "classnames";
-import { Button, EnumButtonStyle } from "../Components/Button";
+import { Button } from "../Components/Button";
 
-import { Icon, Tooltip } from "@amplication/ui/design-system";
+import { ButtonFormat, Icon, Tooltip } from "@amplication/ui/design-system";
 import "./MenuItem.scss";
 
 type Props = {
@@ -27,6 +27,8 @@ const NON_URL = "non-url";
 const DIRECTION = "e";
 const ICON_SIZE = "medium";
 
+const CLASS_NAME = "amp-menu-item";
+
 /**
  *
  * @title is for the aria-label of the badge
@@ -45,19 +47,14 @@ const MenuItem = ({
   const match = useRouteMatch(to || NON_URL);
 
   const content = (
-    <Button
-      buttonStyle={EnumButtonStyle.Text}
-      as={to ? NavLink : Button}
-      onClick={onClick}
-      to={to}
-    >
-      {children ? children : <Icon icon={icon || ""} size={ICON_SIZE} />}
-    </Button>
+    <NavLink to={to} className={`${CLASS_NAME}__link`}>
+      {children ? children : <Icon icon={icon} size={ICON_SIZE} />}
+    </NavLink>
   );
 
   return (
     <div
-      className={classNames("amp-menu-item", className, {
+      className={classNames(CLASS_NAME, className, {
         "amp-menu-item--active": match !== null,
         "amp-menu-item--no-hover": disableHover,
       })}
@@ -66,7 +63,7 @@ const MenuItem = ({
         content
       ) : (
         <Tooltip
-          className="amp-menu-item__tooltip"
+          className={`${CLASS_NAME}__tooltip`}
           aria-label={overrideTooltip || title}
           direction={DIRECTION}
           noDelay

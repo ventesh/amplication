@@ -16,6 +16,14 @@ $inverted-border-radius: 6px;
   transition: all var(--menu-expand-animation-duration) ease-in;
   height: auto !important;
 
+  &__link {
+    display: flex;
+  }
+
+  &__tooltip {
+    margin: auto;
+  }
+
   .amp-button {
     justify-content: flex-start;
   }
@@ -41,14 +49,10 @@ $inverted-border-radius: 6px;
   }
 
   i {
-    width: var(--menu-item-width);
-    min-width: var(--menu-item-width);
-    height: var(--menu-item-height);
     background-size: contain;
     transition: all var(--menu-expand-animation-duration) ease-in;
     box-sizing: border-box;
     color: var(--menu-item-color);
-    height: auto;
   }
 
   &--active {

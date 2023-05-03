@@ -1,6 +1,6 @@
-import React, { useCallback } from "react";
+import { useCallback } from "react";
 
-import { Button, EnumButtonStyle } from "@amplication/ui/design-system";
+import { Button, ButtonFormat } from "@amplication/ui/design-system";
 
 import { useTracking } from "../util/analytics";
 import OverviewSecondaryTile from "./OverviewSecondaryTile";
@@ -25,7 +25,7 @@ function FeatureRequestTile() {
           rel="noopener"
           onClick={handleClick}
         >
-          <Button buttonStyle={EnumButtonStyle.Secondary} type="button">
+          <Button buttonFormat={ButtonFormat.Outline} type="button">
             Share your idea
           </Button>
         </a>

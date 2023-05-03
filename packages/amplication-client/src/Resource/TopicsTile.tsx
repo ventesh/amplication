@@ -6,7 +6,7 @@ import * as models from "../models";
 import {
   CircularProgress,
   Button,
-  EnumButtonStyle,
+  ButtonFormat,
 } from "@amplication/ui/design-system";
 
 import { GET_TOPICS } from "../Topics/TopicList";
@@ -55,7 +55,7 @@ function TopicsTile({ resourceId }: Props) {
       message="Create topics and define properties."
       footer={
         <Button
-          buttonStyle={EnumButtonStyle.Secondary}
+          buttonFormat={ButtonFormat.Outline}
           type="button"
           onClick={handleClick}
         >

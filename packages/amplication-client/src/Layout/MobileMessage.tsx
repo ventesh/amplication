@@ -18,9 +18,7 @@ function MobileMessage() {
       </div>
       <div className={`${CLASS_NAME}__action`}>
         <a href="https://docs.amplication.com">
-          <Button buttonStyle={EnumButtonStyle.Primary}>
-            Explore Our Docs
-          </Button>
+          <Button>Explore Our Docs</Button>
         </a>
       </div>
       <div className={`${CLASS_NAME}__action`}>

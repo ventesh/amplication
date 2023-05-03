@@ -21,8 +21,7 @@ $modal-top-position: 20vh;
     max-width: 100%;
   }
 
-  // hide the button added by primer
-  button:not(.amp-button) {
+  button[aria-label="Close"] {
     display: none;
   }
 

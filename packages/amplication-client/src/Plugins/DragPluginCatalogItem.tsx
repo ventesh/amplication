@@ -6,6 +6,7 @@ import * as models from "../models";
 import { Button, EnumButtonStyle } from "../Components/Button";
 
 import {
+  ButtonFormat,
   EnumHorizontalRuleStyle,
   EnumPanelStyle,
   HorizontalRule,
@@ -121,13 +122,13 @@ function DragPluginsCatalogItem({
             />
             <div className={`${CLASS_NAME}__order`}>
               <Button
-                buttonStyle={EnumButtonStyle.Text}
+                buttonFormat={ButtonFormat.Text}
                 onClick={handlePromote}
                 icon="arrow_up"
               />
               <span>{(pluginInstallation as any).order}</span>
               <Button
-                buttonStyle={EnumButtonStyle.Text}
+                buttonFormat={ButtonFormat.Text}
                 onClick={handleDemote}
                 icon="arrow_down"
               />
@@ -151,11 +152,7 @@ function DragPluginsCatalogItem({
           </span>
         </div>
         {!pluginInstallation && (
-          <Button
-            className={`${CLASS_NAME}__install`}
-            buttonStyle={EnumButtonStyle.Primary}
-            onClick={handleInstall}
-          >
+          <Button className={`${CLASS_NAME}__install`} onClick={handleInstall}>
             Install
           </Button>
         )}{" "}

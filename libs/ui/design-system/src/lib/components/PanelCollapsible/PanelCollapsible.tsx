@@ -2,7 +2,7 @@ import React, { ReactNode, useCallback, useState } from "react";
 import classNames from "classnames";
 import AnimateHeight from "react-animate-height";
 
-import { Button, EnumButtonStyle } from "../Button/Button";
+import { Button, ButtonFormat } from "../ButtonV3/Button";
 import { Panel, Props as PanelProps } from "../Panel/Panel";
 import "./PanelCollapsible.scss";
 
@@ -103,7 +103,7 @@ const PanelCollapsibleHeader = ({
         <Button
           className={`${CLASS_NAME}__header__collapse`}
           type="button"
-          buttonStyle={EnumButtonStyle.Text}
+          buttonFormat={ButtonFormat.Text}
           icon="chevron_down"
           onClick={handleCollapseChange}
           disabled={!collapseEnabled}
