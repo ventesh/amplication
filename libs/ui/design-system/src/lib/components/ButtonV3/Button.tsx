@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ButtonHTMLAttributes } from "react";
 import classNames from "classnames";
 import { Icon, IconSize } from "../Icon/Icon";
 
@@ -16,7 +16,7 @@ export enum ButtonSize {
   Large = "large",
 }
 
-export enum ButtonType {
+export enum ButtonFormat {
   Primary = "primary",
   Outline = "outline",
   Text = "text",
@@ -27,17 +27,15 @@ export enum IconPosition {
   Right = "right",
 }
 
-export interface Props {
-  /** The display style of the button */
+export interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
-  buttonStyle?: ButtonStyle;
+  buttonFormat?: ButtonFormat;
   buttonSize?: ButtonSize;
-  buttonType?: ButtonType;
+  buttonStyle?: ButtonStyle;
   icon?: string;
   iconSize?: IconSize;
-  iconClassName?: string;
-  /** Icon can have left or right position. Default position is right */
   iconPosition?: IconPosition;
+  iconClassName?: string;
   children?: React.ReactNode;
 }
 
@@ -45,14 +43,15 @@ const CLASS_NAME = "amplication-button";
 
 export const Button = ({
   buttonStyle = ButtonStyle.Regular,
-  buttonSize = ButtonSize.Medium,
-  buttonType = ButtonType.Primary,
+  buttonSize = ButtonSize.Small,
+  buttonFormat = ButtonFormat.Primary,
   className,
-  children,
   icon,
   iconSize = calcIconSize(buttonSize),
   iconClassName,
   iconPosition = IconPosition.Right,
+  disabled,
+  children,
   ...rest
 }: Props) => {
   return (
@@ -60,12 +59,17 @@ export const Button = ({
       className={classNames(
         CLASS_NAME,
         className,
-        buttonStyle,
-        buttonType,
+        buttonFormat,
         buttonSize,
-        { "right-icon": icon && iconPosition === IconPosition.Right },
-        { "left-icon": icon && iconPosition === IconPosition.Left }
+        { [buttonStyle]: !disabled && buttonStyle },
+        disabled,
+        {
+          "icon-right": icon && children && iconPosition === IconPosition.Right,
+        },
+        { "icon-left": icon && children && iconPosition === IconPosition.Left },
+        { "icon-only": icon && !children }
       )}
+      disabled={disabled}
       {...rest}
     >
       {iconPosition === IconPosition.Right && children}

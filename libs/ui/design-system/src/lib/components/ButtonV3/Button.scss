@@ -3,6 +3,10 @@
 
 $button-hover-color: #b7bac7;
 
+$button-height-small: 28px;
+$button-height-medium: 34px;
+$button-height-large: 40px;
+
 .amplication-button {
   display: inline-flex;
   justify-content: center;
@@ -18,16 +22,22 @@ $button-hover-color: #b7bac7;
 
   &.small {
     font-size: var(--font-size-xsmall);
-    height: 28px;
+    height: $button-height-small;
     gap: 4px;
     padding: 0 var(--default-spacing);
 
-    &.right-icon {
+    &.icon-left {
       padding-right: var(--default-spacing-small);
     }
 
-    &.left-icon {
+    &.icon-left {
       padding-left: var(--default-spacing-small);
+    }
+
+    &.icon-only {
+      padding: 0;
+      justify-content: center;
+      width: $button-height-small;
     }
   }
 
@@ -37,12 +47,18 @@ $button-hover-color: #b7bac7;
     gap: 6px;
     padding: 0 var(--default-spacing);
 
-    &.right-icon {
+    &.icon-right {
       padding-right: var(--default-spacing-small);
     }
 
-    &.left-icon {
+    &.icon-left {
       padding-left: var(--default-spacing-small);
+    }
+
+    &.icon-only {
+      padding: 0;
+      justify-content: center;
+      width: $button-height-medium;
     }
   }
 
@@ -52,12 +68,18 @@ $button-hover-color: #b7bac7;
     gap: 6px;
     padding: 0 var(--large-spacing);
 
-    &.right-icon {
+    &.icon-right {
       padding-right: var(--default-spacing-small);
     }
 
-    &.left-icon {
+    &.icon-left {
       padding-left: var(--default-spacing-small);
+    }
+
+    &.icon-only {
+      padding: 0;
+      justify-content: center;
+      width: $button-height-large;
     }
   }
 
