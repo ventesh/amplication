@@ -8,7 +8,7 @@ $button-height-medium: 34px;
 $button-height-large: 40px;
 
 .amplication-button {
-  display: inline-flex;
+  display: inline-flex !important;
   justify-content: center;
   align-items: center;
 
