@@ -67,6 +67,8 @@ export default function WizardGitCreateRepo({
     createRepositoryInput.public,
   ]);
 
+  console.log("I am here");
+
   return (
     <div>
       <div className={`${CLASS_NAME}__header`}>
